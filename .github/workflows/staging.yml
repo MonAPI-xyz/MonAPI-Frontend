@@ -9,8 +9,7 @@ jobs:
     environment: staging
     steps:
       - run: 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
-      - run: eval $(ssh-agent -s)
-      - run: echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' | ssh-add -
+      - run: eval `ssh-agent -s` && echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' | ssh-add -
       - run: mkdir -p ~/.ssh
       - run: chmod 700 ~/.ssh
       - run: ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
