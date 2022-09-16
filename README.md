@@ -23,6 +23,7 @@ This repository is providing frontend service for MonAPI, written using Preact.
 - [Our Websites](#our-websites)
 - [Our Teams](#our-teams)
 - [CLI Commands](#cli-commands)
+- [Release Notes](#release-notes)
 - [Acknowledgements](#acknowledgements)
 
 ## Features
@@ -59,7 +60,9 @@ npm run test
 For detailed explanation on how things work, checkout the [CLI Readme](https://github.com/developit/preact-cli/blob/master/README.md).
 
 ## Release Notes
-- 
+Version: Pre-release<br>Date: 16th November 2022
+1. Staging server is now officially online! checkout on https://staging.monapi.xyz
+2. Our blog is now officially online! checkout on https://blog.monapi.xyz
 
 ## Our websites
 🌐 [Main Site - https://monapi.xyz](https://monapi.xyz)
