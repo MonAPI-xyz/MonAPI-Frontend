@@ -8,9 +8,15 @@ This repository is providing frontend service for MonAPI, written using Preact.
 | Pipeline | Status |
 | ----------- | ----------- |
 | Sonarcloud Scanner | [![pipeline status](https://github.com/MonAPI-xyz/MonAPI-Frontend/actions/workflows/build.yml/badge.svg)](https://github.com/MonAPI-xyz/MonAPI-Frontend) |
-| Staging Deploy | [![pipeline status](https://github.com/MonAPI-xyz/MonAPI-Frontend/actions/workflows/staging.yml/badge.svg)](https://github.com/MonAPI-xyz/MonAPI-Frontend) | 
+| Quality Gate Production | [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=MonAPI-xyz_MonAPI-Frontend&metric=alert_status&branch=main)](https://sonarcloud.io/summary/new_code?id=MonAPI-xyz_MonAPI-Frontend) | 
+| Security Rating Production | [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=MonAPI-xyz_MonAPI-Frontend&metric=security_rating&branch=main)](https://sonarcloud.io/summary/new_code?id=MonAPI-xyz_MonAPI-Frontend) | 
+| Coverage Production | [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=MonAPI-xyz_MonAPI-Frontend&metric=coverage&branch=main)](https://sonarcloud.io/summary/new_code?id=MonAPI-xyz_MonAPI-Frontend) | 
+| Quality Gate Staging | [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=MonAPI-xyz_MonAPI-Frontend&metric=alert_status&branch=staging)](https://sonarcloud.io/summary/new_code?id=MonAPI-xyz_MonAPI-Frontend) | 
+| Security Rating Staging | [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=MonAPI-xyz_MonAPI-Frontend&metric=security_rating&branch=staging)](https://sonarcloud.io/summary/new_code?id=MonAPI-xyz_MonAPI-Frontend) | 
+| Coverage Staging | [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=MonAPI-xyz_MonAPI-Frontend&metric=coverage&branch=staging)](https://sonarcloud.io/summary/new_code?id=MonAPI-xyz_MonAPI-Frontend) | 
 | Production Deploy | [![pipeline status](https://github.com/MonAPI-xyz/MonAPI-Frontend/actions/workflows/production.yml/badge.svg)](https://github.com/MonAPI-xyz/MonAPI-Frontend) | 
-| Coverage | - | 
+| Staging Deploy | [![pipeline status](https://github.com/MonAPI-xyz/MonAPI-Frontend/actions/workflows/staging.yml/badge.svg)](https://github.com/MonAPI-xyz/MonAPI-Frontend) | 
+
 
 ## Table of contents
 - [Features](#features)
@@ -30,17 +36,6 @@ This repository is providing frontend service for MonAPI, written using Preact.
 - [ ] Team Management
 - [ ] Integrated Status Page
 
-## Our websites
-🌐 [Main Site - https://monapi.xyz](https://monapi.xyz)
-
-📝  [Blog Site - https://blog.monapi.xyz](https://blog.monapi.xyz)
-
-## Our Teams
-- Lucky Susanto
-- Ferdi Fadillah
-- Hugo Irwanto
-- Muhammad Luthfi Fahlevi
-- Andrew
 
 ## CLI Commands
 
@@ -63,5 +58,24 @@ npm run test
 
 For detailed explanation on how things work, checkout the [CLI Readme](https://github.com/developit/preact-cli/blob/master/README.md).
 
+## Release Notes
+- 
+
+## Our websites
+🌐 [Main Site - https://monapi.xyz](https://monapi.xyz)
+
+📝  [Blog Site - https://blog.monapi.xyz](https://blog.monapi.xyz)
+
+## Our Teams
+- Lucky Susanto
+- Ferdi Fadillah
+- Hugo Irwanto
+- Muhammad Luthfi Fahlevi
+- Andrew
+
+
 ## Acknowledgements
 * Computer Science Universitas Indonesia - Software Engineering Project 2022
+
+
+[![SonarCloud](https://sonarcloud.io/images/project_badges/sonarcloud-white.svg)](https://sonarcloud.io/summary/new_code?id=MonAPI-xyz_MonAPI-Frontend)
