@@ -1,0 +1,20 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+      - staging
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: |
+          npm install
+          npm run test
