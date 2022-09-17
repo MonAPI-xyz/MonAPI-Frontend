@@ -20,10 +20,12 @@ This repository is providing frontend service for MonAPI, written using Preact.
 
 ## Table of contents
 - [Features](#features)
+- [CLI Commands](#cli-commands)
+- [Related Documentation](#related-documentation)
+- [Latest Release Notes](#latest-release-notes)
 - [Our Websites](#our-websites)
 - [Our Teams](#our-teams)
-- [CLI Commands](#cli-commands)
-- [Release Notes](#release-notes)
+- [License](#license)
 - [Acknowledgements](#acknowledgements)
 
 ## Features
@@ -59,10 +61,17 @@ npm run test
 
 For detailed explanation on how things work, checkout the [CLI Readme](https://github.com/developit/preact-cli/blob/master/README.md).
 
-## Release Notes
-Version: Pre-release<br>Date: 16th November 2022
+## Related Documentation
+
+- [Run Development Server](https://github.com/MonAPI-xyz/MonAPI-Frontend/blob/staging/docs/development.md)
+
+## Latest Release Notes
+Version: Pre-release<br>
+Date: 16th November 2022
 1. Staging server is now officially online! checkout on https://staging.monapi.xyz
 2. Our blog is now officially online! checkout on https://blog.monapi.xyz
+
+Full release notes can be found in [Release Notes](https://github.com/MonAPI-xyz/MonAPI-Frontend/blob/staging/docs/release_notes.md)
 
 ## Our websites
 🌐 [Main Site - https://monapi.xyz](https://monapi.xyz)
@@ -75,6 +84,9 @@ Version: Pre-release<br>Date: 16th November 2022
 - Hugo Irwanto
 - Muhammad Luthfi Fahlevi
 - Andrew
+
+## License
+The scripts and documentation in this project are released under the [GNU General Public License v3.0](https://github.com/MonAPI-xyz/MonAPI-Frontend/blob/main/LICENSE).
 
 
 ## Acknowledgements
