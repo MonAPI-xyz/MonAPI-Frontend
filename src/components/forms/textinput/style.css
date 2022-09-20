@@ -1,0 +1,26 @@
+.input {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-title {
+    margin: 10px 0px;
+    font-size: 14px;
+}
+
+.input-box {
+    background-color: #f1f1f1;
+    border: 0px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.input-box.invalid {
+    border: 1px solid #E11900 ;
+    background-color: #FFEFED;
+}

@@ -27,9 +27,15 @@
     "sirv-cli": "1.0.3"
   },
   "dependencies": {
+    "@chakra-ui/layout": "^2.1.7",
+    "@chakra-ui/react": "^2.3.4",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "framer-motion": "^7.3.5",
     "preact": "^10.3.2",
     "preact-render-to-string": "^5.1.4",
-    "preact-router": "^3.2.1"
+    "preact-router": "^3.2.1",
+    "react-icons": "^4.4.0"
   },
   "jest": {
     "preset": "jest-preset-preact",
