@@ -1,9 +1,30 @@
 import TextInput from '../../components/forms/textinput/index.js';
 import PasswordInput from '../../components/forms/passwordinput/index.js';
 import { Button, Text  } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 import {Box, Flex, Grid, GridItem } from '@chakra-ui/layout';
-
 const Login = () => {
+  
+    const {
+      handleSubmit,
+      register,
+      formState: { errors, isSubmitting },
+    } = useForm();
+
+    const fetchLogin = async (values) => {
+        try {
+            console.log('Success login');
+        } catch (error) {
+            console.log('Error when login');
+        }
+      };
+    
+      const onSubmit = (values) => {
+        return new Promise(async (resolve) => {
+          await fetchLogin(values);
+          resolve();
+        });
+      };
     return (
         <Flex
             minH='100vh'
@@ -11,19 +32,46 @@ const Login = () => {
             justify='center'
             align='center'
         >   
-            <Grid w='full' h='full' px='49px' templateColumns='repeat(10, 1fr)' gap={40}>
-                <GridItem colSpan={4} >
+            <Grid w='full' h='full' px='49px' templateColumns='repeat(10, 1fr)' gap={40} 
+            >
+                <GridItem colSpan={4} 
+                alignSelf='center'
+                >
                     <Box verticalAlign='center'>
                         <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
                             Login
                         </Text>
-                        <TextInput title='Email' placeholder='john@example.com' isRequired={true} />
-                        <Box mb='20px'/>
-                        <PasswordInput title='Password' placeholder='************' isRequired={true} />
-                        <Box mb='20px'/>
-                        <Button colorScheme='teal' type='submit' width='12em' borderRadius={10}>
-                            Buat
-                        </Button>
+                        <Box as='form' onSubmit={handleSubmit(onSubmit)}>
+                            <TextInput 
+                            id="email"
+                                title='Email' 
+                                placeholder='john@example.com' 
+                                errors={errors}
+                                rules={{
+                                    required: 'Wajib diisi',
+                                    minLength: { value: 3, message: 'Minimum length should be 3' },
+                                }}
+                                register={register}
+                            />
+                            <Box mb='20px'/>
+                            
+                            <PasswordInput
+                                id="password"
+                                register={register}
+                                errors={errors}
+                                title="Password"
+                                placeholder='************'
+                                rules={{
+                                required: 'Wajib diisi',
+                                minLength: { value: 8, message: 'Minimal panjang password adalah 8' },
+                                }}
+                            />
+                            <Box mb='20px'/>
+                            <Button colorScheme='teal' type='submit' width='12em' borderRadius={10}>
+                                Buat
+                            </Button>
+                        </Box>
+                        
                         <Box mb='20px'/>
                         <Text as='span'>or </Text>
                         <Text as='u' fontWeight='600'>    

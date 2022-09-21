@@ -7,15 +7,15 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import Asterisk from '../asterisk/index.js';
 
 const PasswordInput = (props) => {
-  const { id, errors, isRequired, register, title, placeholder, ...rest } = props;
+  const { id, errors, rules, register, title, placeholder, ...rest } = props;
 
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
   return (
-    <FormControl>
+    <FormControl {...rest} isInvalid={errors[id]}>
       <FormLabel htmlFor={id}>
-        {title} <Asterisk isRequired={isRequired} />
+        {title} <Asterisk isRequired={rules?.['required']} />
       </FormLabel>
     
         <InputGroup size='md'>
@@ -26,7 +26,7 @@ const PasswordInput = (props) => {
             placeholder={placeholder}
             borderRadius={10}
 
-            // {...register(id, rules)}
+            {...register(id, rules)}
           />
           <InputRightElement mr={3}>
             <Button h='1.75rem' size='sm' onClick={handleClick}>
@@ -34,7 +34,7 @@ const PasswordInput = (props) => {
             </Button>
           </InputRightElement>
         </InputGroup>
-        <FormErrorMessage>{errors}</FormErrorMessage>
+        <FormErrorMessage>{errors[id] && errors[id].message}</FormErrorMessage>
       
     </FormControl>
   );
