@@ -1,10 +1,16 @@
+import { h } from 'preact';
 import TextInput from '../../components/forms/textinput/index.js';
 import PasswordInput from '../../components/forms/passwordinput/index.js';
 import { Button, Text  } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import {Box, Flex, Grid, GridItem } from '@chakra-ui/layout';
-const Login = () => {
-  
+// import {store, useGlobalState} from 'preact-global-state';
+import { connect } from 'unistore/preact';
+import { actions } from '../../config/store/store.js';
+
+const Login = connect('count', actions)( 
+    ({ count, increment, incrementBy }) =>{
+
     const {
       handleSubmit,
       register,
@@ -14,6 +20,7 @@ const Login = () => {
     const fetchLogin = async (values) => {
         try {
             console.log('Success login');
+
         } catch (error) {
             console.log('Error when login');
         }
@@ -43,7 +50,7 @@ const Login = () => {
                         </Text>
                         <Box as='form' onSubmit={handleSubmit(onSubmit)}>
                             <TextInput 
-                            id="email"
+                                id="email"
                                 title='Email' 
                                 placeholder='john@example.com' 
                                 errors={errors}
@@ -62,8 +69,8 @@ const Login = () => {
                                 title="Password"
                                 placeholder='************'
                                 rules={{
-                                required: 'Wajib diisi',
-                                minLength: { value: 8, message: 'Minimal panjang password adalah 8' },
+                                    required: 'Wajib diisi',
+                                    minLength: { value: 8, message: 'Minimum length should be 8' },
                                 }}
                             />
                             <Box mb='20px'/>
@@ -89,5 +96,6 @@ const Login = () => {
         </Flex>
             );
 }
+)
 
 export default Login;

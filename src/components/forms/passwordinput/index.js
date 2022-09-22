@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import { Button } from '@chakra-ui/button';
 import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/form-control';
 import Icon from '@chakra-ui/icon';

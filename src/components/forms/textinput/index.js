@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import { FormControl, FormLabel, FormErrorMessage } from '@chakra-ui/react';
 import { Input } from '@chakra-ui/input';
 import Asterisk from '../asterisk';

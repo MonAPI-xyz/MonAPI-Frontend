@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import { Box } from "@chakra-ui/layout";
 
 const Asterisk = ({isRequired}) => {
