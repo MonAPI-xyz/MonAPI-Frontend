@@ -20,6 +20,8 @@ jobs:
       - run: |
           npm install
           npm run test
+      - name: Override Coverage Source Path for Sonar
+        run: sed -i "s/SF:\/home\/runner\/work\/MonAPI-Frontend\/MonAPI-Frontend/SF:\/github\/workspace/g" /home/runner/work/MonAPI-Frontend/MonAPI-Frontend/coverage/lcov.info          
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
