@@ -4,12 +4,11 @@ import PasswordInput from '../../components/forms/passwordinput/index.js';
 import { Button, Text  } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import {Box, Flex, Grid, GridItem } from '@chakra-ui/layout';
-// import {store, useGlobalState} from 'preact-global-state';
 import { connect } from 'unistore/preact';
 import { actions } from '../../config/store/store.js';
 
-const Login = connect('count', actions)( 
-    ({ count, increment, incrementBy }) =>{
+const Login = connect('user', actions)( 
+    ({ user, getUser }) =>{
 
     const {
       handleSubmit,
@@ -20,9 +19,12 @@ const Login = connect('count', actions)(
     const fetchLogin = async (values) => {
         try {
             console.log('Success login');
+            // console.log(await increment());
+            console.log( await getUser());
+            console.log( user);
 
         } catch (error) {
-            console.log('Error when login');
+            console.log('Error when login', error);
         }
       };
     
