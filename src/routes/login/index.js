@@ -13,13 +13,10 @@ const Login = connect('user', actions)(
     const {
       handleSubmit,
       register,
-      formState: { errors, isSubmitting },
+      formState: { errors },
     } = useForm();
 
-    const fetchLogin = async (values) => {
-      };
-    
-    const onSubmit = (values) => {
+    const onSubmit = () => {
     };
     return (
         <Flex
@@ -63,8 +60,8 @@ const Login = connect('user', actions)(
                                 }}
                             />
                             <Box mb='20px'/>
-                            <Button colorScheme='teal' type='submit' width='12em' borderRadius={10}>
-                                Buat
+                            <Button id='signInButton' colorScheme='teal' type='submit' width='12em' borderRadius={10}>
+                                Sign In
                             </Button>
                         </Box>
                         

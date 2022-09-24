@@ -1,6 +1,5 @@
 import { h } from 'preact';
-import { render } from '@testing-library/preact';
-import { fireEvent, screen} from '@testing-library/preact';
+import { render, screen} from '@testing-library/preact';
 import Home from '../../../src/routes/home/index.js';
 
 describe('Test Home', () => {

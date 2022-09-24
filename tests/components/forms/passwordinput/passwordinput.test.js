@@ -1,6 +1,5 @@
 import { h } from 'preact';
-import { render } from '@testing-library/preact';
-import { fireEvent, waitFor} from '@testing-library/preact';
+import { render, fireEvent, waitFor} from '@testing-library/preact';
 import PasswordInput from '../../../../src/components/forms/passwordinput/index.js';
 
 describe('Test PasswordInput', () => {

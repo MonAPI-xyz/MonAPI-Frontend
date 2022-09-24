@@ -8,38 +8,36 @@ import {setup} from '../../utils/setup.js';
 
 describe('Test Login', () => {
 	
+	const button = (container) => container.querySelector('#signInButton');
+
 	test('success login', async () => {
-		setup(<Provider store={store}><Login /></Provider>);
+		const { container } = setup(<Provider store={store}><Login /></Provider>);
 		const emailField = await screen.findByPlaceholderText('john@example.com');
 		const passwordField = await screen.findByPlaceholderText('************');
-		const button = await screen.getByText('Buat');
 
 		// type in the field
 		fireEvent.change(emailField, { value: 'user@gmail.com' });
 		fireEvent.change(passwordField, { value: 'password123' });
-		fireEvent.click(button);
+		fireEvent.click(button(container));
 		
 	
 	});
 
 	test('failed login', async () => {
-		setup(<Provider store={store}><Login /></Provider>);
+		const { container } = setup(<Provider store={store}><Login /></Provider>);
 		const emailField = await screen.findByPlaceholderText('john@example.com');
 		const passwordField = await screen.findByPlaceholderText('************');
-		const button = await screen.getByText('Buat');
 
-		// type in the field
 		fireEvent.change(emailField, { value: 'us' });
 		fireEvent.change(passwordField, { value: 'pass' });
 
-		fireEvent.click(button);
+		fireEvent.click(button(container));
 	});
 
 	test('require to fill the both email and password', async () => {
-		setup(<Provider store={store}><Login /></Provider>);
-		const button = await screen.getByText('Buat');
+		const { container } = setup(<Provider store={store}><Login /></Provider>);
 
-		fireEvent.click(button);
+		fireEvent.click(button(container));
 
 		await waitFor(() => {
 			// getAllByText return array that must have length of 2 (for email and password)
@@ -49,15 +47,13 @@ describe('Test Login', () => {
 	});
 
 	test('email minimum length should be 3', async () => {
-		const {user} = setup(<Provider store={store}><Login /></Provider>);
+		const {container, user} = setup(<Provider store={store}><Login /></Provider>);
 		const emailField = await screen.findByPlaceholderText('john@example.com');
-		const button = await screen.getByText('Buat');
-		user.type(emailField, 'user@gmail.com')
-		fireEvent.click(button);
-
+		
+		user.type(emailField, 'us')
+		
 		await waitFor(() => {
-			// getAllByText return array that must have length of 2
-			expect(screen.getByText("Minimum length should be 3"));
+			expect(container.textContent.match('Minimum length should be 3'))
 		});
 	});
 });
