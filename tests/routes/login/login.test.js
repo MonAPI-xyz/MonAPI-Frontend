@@ -1,9 +1,9 @@
 import { h } from 'preact';
-import Login from '../../src/routes/login';
+import Login from '../../../src/routes/login/index.js';
 import { Provider } from 'unistore/preact';
-import { store } from '../../src/config/store/store';
+import { store } from '../../../src/config/store/store';
 import { fireEvent, screen, waitFor } from '@testing-library/preact';
-import {setup} from '../utils/setup.js';
+import {setup} from '../../utils/setup.js';
 
 
 describe('Test Login', () => {
@@ -60,8 +60,4 @@ describe('Test Login', () => {
 			expect(screen.getByText("Minimum length should be 3"));
 		});
 	});
-
-
-
-	
 });

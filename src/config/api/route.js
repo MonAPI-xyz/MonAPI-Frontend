@@ -2,5 +2,5 @@ const ROUTE = {
     LOGIN: '/login',
   };
   
-  export default ROUTE;
+export default ROUTE;
   

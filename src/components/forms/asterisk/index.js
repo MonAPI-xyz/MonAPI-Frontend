@@ -1,5 +1,6 @@
 import { h } from 'preact';
 import { Box } from "@chakra-ui/layout";
+import { Fragment } from 'preact';
 
 const Asterisk = ({isRequired}) => {
     return isRequired ? (
@@ -7,7 +8,7 @@ const Asterisk = ({isRequired}) => {
           *
         </Box>
       ) : (
-        <></>
+        <Fragment/>
       );
 }
 export default Asterisk;

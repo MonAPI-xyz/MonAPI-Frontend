@@ -30,9 +30,9 @@ const PasswordInput = (props) => {
             {...register(id, rules)}
           />
           <InputRightElement mr={3}>
-            <Button h='1.75rem' size='sm' onClick={handleClick}>
-              <Icon h={4} w={4} as={show ? BsFillEyeFill : BsFillEyeSlashFill} />
-            </Button>
+              <Button id='bsEye' h='1.75rem' size='sm' onClick={handleClick}>
+                <Icon h={4} w={4} as={show ? BsFillEyeFill : BsFillEyeSlashFill} />
+              </Button>
           </InputRightElement>
         </InputGroup>
         <FormErrorMessage>{errors[id] && errors[id].message}</FormErrorMessage>

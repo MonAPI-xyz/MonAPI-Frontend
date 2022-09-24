@@ -6,6 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../config/theme';
 import { Provider } from 'unistore/preact';
 import { store } from '../config/store/store.js';
+import ROUTE from '../config/api/route';
 
 const App = () => {
 	return (<div id="app">
@@ -13,7 +14,7 @@ const App = () => {
 			<ChakraProvider theme={theme}>
 				<Router>
 					<Home path="/" />
-					<Login path="/login" />
+					<Login path={ROUTE.LOGIN} />
 				</Router>
 			</ChakraProvider>
 		</Provider>

@@ -17,23 +17,10 @@ const Login = connect('user', actions)(
     } = useForm();
 
     const fetchLogin = async (values) => {
-        try {
-            console.log('Success login');
-            // console.log(await increment());
-            console.log( await getUser());
-            console.log( user);
-
-        } catch (error) {
-            console.log('Error when login', error);
-        }
       };
     
-      const onSubmit = (values) => {
-        return new Promise(async (resolve) => {
-          await fetchLogin(values);
-          resolve();
-        });
-      };
+    const onSubmit = (values) => {
+    };
     return (
         <Flex
             minH='100vh'
