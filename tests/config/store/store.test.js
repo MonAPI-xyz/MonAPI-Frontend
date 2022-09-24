@@ -1,8 +1,7 @@
 import { h } from 'preact';
-import { render } from '@testing-library/preact';
 import { connect, Provider } from 'unistore/preact';
 import actions, { store } from '../../../src/config/store/store.js';
-import { fireEvent, screen} from '@testing-library/preact';
+import { render, fireEvent, screen} from '@testing-library/preact';
 
 describe('Test Store', () => {
     function GetUserButton({ onClick }) {

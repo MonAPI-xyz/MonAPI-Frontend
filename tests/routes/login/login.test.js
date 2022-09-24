@@ -23,17 +23,6 @@ describe('Test Login', () => {
 	
 	});
 
-	test('failed login', async () => {
-		const { container } = setup(<Provider store={store}><Login /></Provider>);
-		const emailField = await screen.findByPlaceholderText('john@example.com');
-		const passwordField = await screen.findByPlaceholderText('************');
-
-		fireEvent.change(emailField, { value: 'us' });
-		fireEvent.change(passwordField, { value: 'pass' });
-
-		fireEvent.click(button(container));
-	});
-
 	test('require to fill the both email and password', async () => {
 		const { container } = setup(<Provider store={store}><Login /></Provider>);
 
