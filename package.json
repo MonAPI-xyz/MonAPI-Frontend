@@ -51,9 +51,6 @@
     "setupFiles": [
       "<rootDir>/tests/__mocks__/browserMocks.js",
       "<rootDir>/tests/__mocks__/setupTests.js"
-    ],
-    "transform": {
-      "^.+\\.(js|jsx)$": "babel-jest"
-    }
+    ]
   }
 }
