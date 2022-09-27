@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { Router } from 'preact-router';
 import Home from '../routes/home';
 import Login from '../routes/login';
+import ViewListMonitor from '../routes/view_list_monitor';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../config/theme';
 import { Provider } from 'unistore/preact';
@@ -15,6 +16,7 @@ const App = () => {
 				<Router>
 					<Home path="/" />
 					<Login path={ROUTE.LOGIN} />
+					<ViewListMonitor path="/view_list_monitor" />
 				</Router>
 			</ChakraProvider>
 		</Provider>

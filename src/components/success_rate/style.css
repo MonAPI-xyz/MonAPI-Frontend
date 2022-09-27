@@ -1,0 +1,27 @@
+.home {
+	padding: 56px 20px;
+	min-height: 100%;
+	width: 100%;
+}
+
+.green-bar {
+	margin-top: 1px;
+	margin-bottom: 2px;
+	margin-left: 3px;
+	margin-right: 4px;
+	height:25px;
+	width:7px;
+	background-color:green;
+	border-radius: 2px;
+}
+
+.red-bar {
+	margin-top: 1px;
+	margin-bottom: 2px;
+	margin-left: 3px;
+	margin-right: 4px;
+	height:25px;
+	width:7px;
+	background-color:red;
+	border-radius: 2px;
+}

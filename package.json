@@ -37,6 +37,7 @@
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "framer-motion": "^7.3.5",
+    "axios": "^0.27.2",
     "preact": "^10.3.2",
     "preact-global-state": "^1.0.5",
     "preact-render-to-string": "^5.1.4",
