@@ -2,47 +2,96 @@ import { h } from 'preact';
 import Login from '../../../src/routes/login/index.js';
 import { Provider } from 'unistore/preact';
 import { store } from '../../../src/config/store/store';
-import { fireEvent, screen, waitFor } from '@testing-library/preact';
+import { fireEvent, screen, waitFor, render } from '@testing-library/preact';
 import {setup} from '../../utils/setup.js';
+import * as axios from 'axios';
+import { getCurrentUrl, route, Router, setUrl  } from 'preact-router';
+import App from '../../../src/components/app.js';
+import Home from '../../../src/routes/home/index.js';
+import userEvent from '@testing-library/user-event'
+
+jest.mock("axios");
 
 
 describe('Test Login', () => {
-	
 	const button = (container) => container.querySelector('#signInButton');
 
 	test('success login', async () => {
-		const { container } = setup(<Provider store={store}><Login /></Provider>);
+		let response = {
+			"response": "Sign-in successful.",
+			"email": "user@gmail.com",
+			"token": "d16c4059484867e8d12ff535072509e3f29719e7"
+		}
+		axios.post.mockImplementation(() => Promise.resolve({ data: response}));
+		render(<App/>);
+		route('/login')
 		const emailField = await screen.findByPlaceholderText('john@example.com');
 		const passwordField = await screen.findByPlaceholderText('************');
+		const signIn = screen.getByText('Sign In');
 
-		// type in the field
-		fireEvent.change(emailField, { value: 'user@gmail.com' });
-		fireEvent.change(passwordField, { value: 'password123' });
-		fireEvent.click(button(container));
+		userEvent.type(emailField, 'tes4@gmail.com')
+		userEvent.type(passwordField, 'Tes12345')
 		
-	
-	});
-
-	test('require to fill the both email and password', async () => {
-		const { container } = setup(<Provider store={store}><Login /></Provider>);
-
-		fireEvent.click(button(container));
+		userEvent.click(signIn);
 
 		await waitFor(() => {
-			// getAllByText return array that must have length of 2 (for email and password)
-			expect(screen.getAllByText("Wajib diisi")).toHaveLength(2);
+			expect(getCurrentUrl()).toBe('/homepage');
+		})
+	  })
+
+	test('failed login', async () => {
+		let response = {
+			"response": "Invalid email or password."
+		}
+		axios.post.mockImplementation(() => Promise.resolve({ data: response}));
+		render(<App/>);
+		route('/login')
+		const emailField = await screen.findByPlaceholderText('john@example.com');
+		const passwordField = await screen.findByPlaceholderText('************');
+		const signIn = screen.getByText('Sign In');
+
+		userEvent.type(emailField, 'tes4@gmail.com')
+		userEvent.type(passwordField, 'Tes123425')
+		
+		userEvent.click(signIn);
+
+		await waitFor(() => {
+			expect(getCurrentUrl()).toBe('/login');
+		})
+	})
+
+	test('require to fill the both email and password', async () => {
+		render(<Provider store={store}><Login /></Provider>);
+
+		const signIn = screen.getByText('Sign In');
+		userEvent.click(signIn);
+		await waitFor(() => {
+			expect(screen.getAllByText("Required")).toHaveLength(2);
 		});
 		
 	});
 
 	test('email minimum length should be 3', async () => {
-		const {container, user} = setup(<Provider store={store}><Login /></Provider>);
+		render(<Provider store={store}><Login /></Provider>);
 		const emailField = await screen.findByPlaceholderText('john@example.com');
-		
-		user.type(emailField, 'us')
-		
+		const signIn = screen.getByText('Sign In');
+
+		userEvent.type(emailField, 'us')
+		userEvent.click(signIn);
 		await waitFor(() => {
-			expect(container.textContent.match('Minimum length should be 3'))
+			expect(screen.getByText('Minimum length should be 3'))
+		});
+	});
+
+	test('password minimum length should be 8', async () => {
+		render(<Provider store={store}><Login /></Provider>);
+		const passwordField = await screen.findByPlaceholderText('************');
+		const signIn = screen.getByText('Sign In');
+		
+		userEvent.type(passwordField, 'pass')
+		userEvent.click(signIn);
+		await waitFor(() => {
+			expect(screen.getByText('Minimum length should be 8'))
 		});
 	});
 });
