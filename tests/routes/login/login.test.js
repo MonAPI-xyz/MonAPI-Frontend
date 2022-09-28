@@ -41,9 +41,13 @@ describe('Test Login', () => {
 
 	test('failed login', async () => {
 		let response = {
-			"response": "Invalid email or password."
+			"data": {"response": "Invalid email or password."}
 		}
-		axios.post.mockImplementation(() => Promise.resolve({ data: response}));
+		axios.post.mockImplementation(() => Promise.reject({
+			status:401,
+			response: response
+			})
+		);
 		render(<App/>);
 		route('/login')
 		const emailField = await screen.findByPlaceholderText('john@example.com');
@@ -56,6 +60,7 @@ describe('Test Login', () => {
 		userEvent.click(signIn);
 
 		await waitFor(() => {
+			expect(screen.getByText('Invalid email or password.'))
 			expect(getCurrentUrl()).toBe('/login');
 		})
 	})
