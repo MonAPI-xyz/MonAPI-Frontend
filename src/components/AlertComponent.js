@@ -19,7 +19,7 @@ function AlertComponent({isButton, displayText, header, body, buttonLeftText, bu
 
   return (
     <>
-      { isButton ? (<Button onClick={onOpen}>{displayText}</Button>) : (<div onClick={onOpen}>{displayText}</div>)}
+      { isButton ? (<Button id='button-alert' onClick={onOpen}>{displayText}</Button>) : (<div role='clickable-text' onClick={onOpen}>{displayText}</div>)}
       <AlertDialog
         motionPreset='slideInBottom'
         leastDestructiveRef={cancelRef}
@@ -36,10 +36,10 @@ function AlertComponent({isButton, displayText, header, body, buttonLeftText, bu
             {body}
           </AlertDialogBody>
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
+            <Button id='leftButton-popup' ref={cancelRef} onClick={onClose}>
               <Link href={buttonLeftLink}>{buttonLeftText}</Link>
             </Button>
-            <Button colorScheme={buttonRightColor} ml={3}>
+            <Button id='rightButton-popup' colorScheme={buttonRightColor} ml={3}>
               <Link href={ButtonRightLink}>{buttonRightText}</Link>
             </Button>
           </AlertDialogFooter>
