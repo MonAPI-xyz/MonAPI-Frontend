@@ -7,7 +7,7 @@ export const store = createStore({
 
 // Your actions for mutating the global state
 export let actions = store => ({
-  async getUser(state) {
-    return {user: state.user};
+  async setUser(state, userEmail) {
+    return {user: {'email': userEmail}};
   },
 });
