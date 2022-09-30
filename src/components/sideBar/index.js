@@ -26,16 +26,29 @@ import {
   FaRegArrowAltCircleLeft,
   FaRegArrowAltCircleRight
 } from 'react-icons/fa';
-import { useState } from 'react';
-import 'react-pro-sidebar/dist/css/styles.css';
+import { getUserToken, deleteUserToken } from '../../config/api/auth.js';
+import { route } from 'preact-router';
+import { useState } from 'preact/hooks';
 import AlertComponent from '../alertComponent/index.js';
+import axios from 'axios';
+import BASE_URL from '../../config/api/constant.js';
 import logo from '../../assets/icons/logo-monapi.svg';
+import ROUTE from '../../config/api/route.js';
+import 'react-pro-sidebar/dist/css/styles.css';
 
 const SideBar = () => {
   const [menuCollapse, setMenuCollapse] = useState(false)
+  const [logoutPopup, setLogoutPopup] = useState(false) 
   const menuIconClick = () => {
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   }
+  const onSubmit = () => {
+    axios.post(`${BASE_URL}/logout/`, {}, { headers: {Authorization : `Token ${getUserToken()}`} })
+   .then(() => {
+      deleteUserToken()
+      route(ROUTE.LOGIN)
+  })
+};
   
   return (
     <ProSidebar collapsed={menuCollapse}>
@@ -44,9 +57,7 @@ const SideBar = () => {
         {menuCollapse ? <img src={logo} alt="MonAPI" style={{width:'75%'}} /> : (<img src={logo} alt="MonAPI" />)}
         </div>
         <div id="navArrow-header" role='iconarrow' onClick={menuIconClick}>
-          {/* <button aria-label='navArrow' > */}
           {menuCollapse ? (<FaRegArrowAltCircleRight role=''/>) : (<FaRegArrowAltCircleLeft/>)}
-          {/* </button> */}
         </div>
       </SidebarHeader>
 
@@ -100,7 +111,7 @@ const SideBar = () => {
           </Accordion>
         </Box>)
       }
-        <Menu>
+        <Menu onClick={() => {setLogoutPopup(true)}}>
           <div style={{ color: 'red' }}>
             <MenuItem icon={<FaSignOutAlt />}>
               <div id='logoutButton'>
@@ -111,6 +122,9 @@ const SideBar = () => {
                   body='Are you sure want to logout?'
                   buttonLeftText='Cancel'
                   buttonRightText='Yes'
+                  popupOpen={logoutPopup}
+                  setPopupOpen={setLogoutPopup}
+                  onSubmit={onSubmit}
                   buttonRightColor='red'>
                 </AlertComponent>
               </div>

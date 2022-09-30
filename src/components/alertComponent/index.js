@@ -1,5 +1,5 @@
 import { h, Fragment } from 'preact';
-import React from 'react';
+import {useRef} from 'preact/hooks';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -9,22 +9,19 @@ import {
   AlertDialogOverlay,
   AlertDialogCloseButton,
   Button,
-  Link,
-  useDisclosure
 } from '@chakra-ui/react'
 
-function AlertComponent({isButton, displayText, header, body, buttonLeftText, buttonLeftLink, buttonRightText, ButtonRightLink, buttonRightColor}) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = React.useRef()
-
+function AlertComponent({isButton, displayText, header, body, buttonLeftText, buttonRightText, popupOpen, setPopupOpen, onSubmit, buttonRightColor}) {
+  const cancelRef = useRef()
   return (
     <>
-      { isButton ? (<Button id='button-alert' onClick={onOpen}>{displayText}</Button>) : (<div role='clickable-text' onClick={onOpen}>{displayText}</div>)}
+      { isButton ? (<Button id='button-alert' onClick={() => {setPopupOpen(true)}}>{displayText}</Button>) : 
+        (<div role='clickable-text' onClick={() => {setPopupOpen(true)}}>{displayText}</div>)}
       <AlertDialog
         motionPreset='slideInBottom'
         leastDestructiveRef={cancelRef}
-        onClose={onClose}
-        isOpen={isOpen}
+        onClose={() => {setPopupOpen(false)}}
+        isOpen={popupOpen}
         isCentered
       >
         <AlertDialogOverlay />
@@ -36,11 +33,11 @@ function AlertComponent({isButton, displayText, header, body, buttonLeftText, bu
             {body}
           </AlertDialogBody>
           <AlertDialogFooter>
-            <Button id='leftButton-popup' ref={cancelRef} onClick={onClose}>
-              <Link href={buttonLeftLink}>{buttonLeftText}</Link>
+            <Button id='leftButton-popup' ref={cancelRef} onClick={() => {setPopupOpen(false)}}>
+              {buttonLeftText}
             </Button>
-            <Button id='rightButton-popup' colorScheme={buttonRightColor} ml={3}>
-              <Link href={ButtonRightLink}>{buttonRightText}</Link>
+            <Button id='rightButton-popup' colorScheme={buttonRightColor} onClick={onSubmit} ml={3}>
+              {buttonRightText}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
