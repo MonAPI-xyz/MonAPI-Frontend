@@ -5,12 +5,16 @@ import PasswordInput from '../../components/forms/passwordinput/index.js'
 import { Button, Text  } from '@chakra-ui/react';
 import {Box, Flex, Grid, GridItem } from '@chakra-ui/layout';
 import { useForm } from 'react-hook-form';
+import { route } from 'preact-router';
+import ROUTE from '../../config/api/route.js';
 import * as axios from "axios";
 
 function Register() {
     console.log("Entering Register")
     
     const [errl, setErrl] = useState([])
+    // Success
+    const [succ, setSucc] = useState([])
 
     const {
       handleSubmit,
@@ -27,9 +31,11 @@ function Register() {
 
         axios.post(`https://api-staging.monapi.xyz/register/api`, data)
         .then(data => {
-            console.log("Entering then")
+            setSucc("User Created Successfully!");
+            setErrl([]);
         }) 
         .catch((error) => {
+            console.log("ERROR FROM VIEW: ", error)
             let error_logs = []
             if (error.response.data.response) {
                 error_logs = error_logs.concat(error.response.data.response)
@@ -48,6 +54,7 @@ function Register() {
                 error_logs = error_logs.concat(password_error)
             }
             if (error_logs){
+                setSucc([])
                 setErrl(error_logs)
             }
         });
@@ -68,6 +75,11 @@ function Register() {
         alignSelf='center'
         >
             <Box verticalAlign='center'>
+                {succ.length != 0 && (
+                    <Text color='green'>
+                        User Created Successfully!
+                    </Text>
+                )}
                 <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
                     Register
                 </Text>
