@@ -104,7 +104,8 @@ describe('Test Register', () => {
         }))
 
         // render the page and save in container
-        const container = render(<Register />)
+        const container = render(<App />)
+        route('/register')
         // find 3 input form and the button
         const emailField = await container.findByPlaceholderText("Your Email");
         const passField = await container.findByPlaceholderText("Password");
@@ -119,8 +120,12 @@ describe('Test Register', () => {
         userEvent.click(registerButton)
 
         await waitFor(async () => {
-            console.log("TEST 3: User should be given information when register succeed")
             expect(screen.getByText('User Created Successfully!'))
+        })
+
+        await waitFor(async () => {
+            console.log("TEST 3: User should be given information when register succeed")
+            expect(getCurrentUrl()).toBe('/login?isRegistered=true')
         })
 
     })

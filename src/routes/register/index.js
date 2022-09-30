@@ -13,8 +13,6 @@ function Register() {
     console.log("Entering Register")
     
     const [errl, setErrl] = useState([])
-    // Success
-    const [succ, setSucc] = useState([])
 
     const {
       handleSubmit,
@@ -31,8 +29,7 @@ function Register() {
 
         axios.post(`https://api-staging.monapi.xyz/register/api`, data)
         .then(data => {
-            setSucc("User Created Successfully!");
-            setErrl([]);
+            route(ROUTE.LOGIN + "?isRegistered=true")
         }) 
         .catch((error) => {
             console.log("ERROR FROM VIEW: ", error)
@@ -53,7 +50,6 @@ function Register() {
                 }
                 error_logs = error_logs.concat(password_error)
             }
-            setSucc([])
             setErrl(error_logs)
         });
 
@@ -73,11 +69,6 @@ function Register() {
         alignSelf='center'
         >
             <Box verticalAlign='center'>
-                {succ.length != 0 && (
-                    <Text color='green'>
-                        User Created Successfully!
-                    </Text>
-                )}
                 <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
                     Register
                 </Text>
