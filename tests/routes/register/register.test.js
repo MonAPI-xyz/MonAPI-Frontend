@@ -3,6 +3,7 @@ import Register from '../../../src/routes/register/index.js'; // Does not exist 
 import { fireEvent, screen, waitFor, render } from '@testing-library/preact';
 import * as axios from 'axios';
 import userEvent from '@testing-library/user-event';
+import { wait } from "@testing-library/user-event/dist/utils/index.js";
 
 jest.mock("axios");
 describe('Test Register', () => {
@@ -91,6 +92,33 @@ describe('Test Register', () => {
         await waitFor(async () => {
             console.log("FROM TEST AWAIT2: ENTERING NO DUPLICATE TEST");
             expect(screen.getByText('User already registered! Please use a different email to register.'))
+        })
+
+    })
+
+    test('user is given information that register is successful', async() => {
+        axios.post.mockImplementation(() => Promise.resolve({
+            status: 200
+        }))
+
+        // render the page and save in container
+        const container = render(<Register />)
+        // find 3 input form and the button
+        const emailField = await container.findByPlaceholderText("Your Email");
+        const passField = await container.findByPlaceholderText("Password");
+        const pass2Field = await container.findByPlaceholderText("Confirm Password");
+        const registerButton = await container.getByText("Sign Up");
+
+        // Input the field
+        userEvent.type(emailField, 'goodemail@goodemail.com')
+        userEvent.type(passField, 'Pass1ngby')
+        userEvent.type(pass2Field, 'Pass1ngby')
+        // click the button
+        userEvent.click(registerButton)
+
+        await waitFor(async () => {
+            console.log("TEST 3: User should be given information when register succeed")
+            expect(screen.getByText('User Created Successfully!'))
         })
 
     })
