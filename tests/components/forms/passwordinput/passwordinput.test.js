@@ -22,7 +22,6 @@ describe('Test PasswordInput', () => {
 		fireEvent.click(button);
         
         await waitFor( ()=> {
-            console.log('passwe',container.querySelector('#password').getAttribute('type'));
             expect(container.querySelector('#password').getAttribute('type')).toEqual('text')
         })
 	});

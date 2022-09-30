@@ -1,4 +1,5 @@
 const ROUTE = {
+    DASHBOARD: '/',
     LOGIN: '/login',
     REGISTER: '/register',
   };
