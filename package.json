@@ -19,7 +19,6 @@
   "devDependencies": {
     "@testing-library/dom": "^8.18.1",
     "@testing-library/preact": "^3.2.2",
-    "@testing-library/user-event": "^14.4.3",
     "enzyme": "^3.10.0",
     "enzyme-adapter-preact-pure": "^2.0.0",
     "eslint": "^6.0.1",
@@ -36,6 +35,9 @@
     "@chakra-ui/react": "^2.3.4",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^0.27.2",
     "framer-motion": "^7.3.5",
     "preact": "^10.3.2",
     "preact-global-state": "^1.0.5",

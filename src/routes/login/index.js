@@ -6,17 +6,38 @@ import { useForm } from 'react-hook-form';
 import {Box, Flex, Grid, GridItem } from '@chakra-ui/layout';
 import { connect } from 'unistore/preact';
 import { actions } from '../../config/store/store.js';
+import axios from 'axios';
+import BASE_URL from '../../config/api/constant.js';
+import { setUserToken } from '../../config/api/auth.js';
+import { route } from 'preact-router';
+import { useState } from 'preact/hooks';
+import { isAuthenticate } from '../../config/middleware/middleware.js';
+import ROUTE from '../../config/api/route.js';
 
 const Login = connect('user', actions)( 
-    ({ user, getUser }) =>{
-
+    ({ setUser }) =>{
+    
+    if (!isAuthenticate()) {
     const {
       handleSubmit,
       register,
       formState: { errors },
     } = useForm();
 
-    const onSubmit = () => {
+    const [responseMessage, setResponseMessage] = useState('')
+
+    const onSubmit = async (data) => {
+        try {
+            await axios.post(`${BASE_URL}/login/`, data)
+            .then((response) => {
+                setResponseMessage('')
+                setUserToken(response['data']['token'])
+                setUser(response['data']['email'])
+                route(ROUTE.LOGIN)
+            })
+        } catch(error) {
+            setResponseMessage(error['response']['data']['response'])
+        }
     };
     return (
         <Flex
@@ -34,14 +55,14 @@ const Login = connect('user', actions)(
                         <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
                             Login
                         </Text>
-                        <Box as='form' onSubmit={handleSubmit(onSubmit)}>
+                        <Box as='form' onSubmit={handleSubmit(onSubmit)} id="form-login">
                             <TextInput 
                                 id="email"
                                 title='Email' 
                                 placeholder='john@example.com' 
                                 errors={errors}
                                 rules={{
-                                    required: 'Wajib diisi',
+                                    required: 'Required',
                                     minLength: { value: 3, message: 'Minimum length should be 3' },
                                 }}
                                 register={register}
@@ -55,20 +76,26 @@ const Login = connect('user', actions)(
                                 title="Password"
                                 placeholder='************'
                                 rules={{
-                                    required: 'Wajib diisi',
+                                    required: 'Required',
                                     minLength: { value: 8, message: 'Minimum length should be 8' },
                                 }}
                             />
-                            <Box mb='20px'/>
-                            <Button id='signInButton' colorScheme='teal' type='submit' width='12em' borderRadius={10}>
+                            <Box mb='10px'/>
+                            {responseMessage != '' && <Text fontSize='14px' color='red.500'>{responseMessage}</Text>}
+                            <Box mb={responseMessage ? '10px' : '20px'}/>
+
+                            <Button form="form-login" id='signInButton' colorScheme='teal' type='submit' width='12em' borderRadius={10}>
                                 Sign In
                             </Button>
+                            
                         </Box>
+                        
+                        
                         
                         <Box mb='20px'/>
                         <Text as='span'>or </Text>
                         <Text as='u' fontWeight='600'>    
-                            <Text as='span' color='#4B8F8C'>sign up</Text> to create new account
+                            <Text as='span' onClick={()=>route(ROUTE.REGISTER)} color='#4B8F8C'>sign up</Text> to create new account
                         </Text>
                     </Box>
                                         
@@ -81,6 +108,9 @@ const Login = connect('user', actions)(
             </Grid>
         </Flex>
             );
+        } else {
+            route(ROUTE.DASHBOARD)
+        }
 }
 )
 
