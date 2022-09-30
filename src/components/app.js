@@ -18,7 +18,7 @@ const App = () => {
 						<SideBar path={ROUTE.DASHBOARD} />
 					</AuthenticationChecker>
 					<Login path={ROUTE.LOGIN} />
-					<div path={ROUTE.REGISTER}></div>
+					<div path={ROUTE.REGISTER} />
 				</Router>
 			</ChakraProvider>
 		</Provider>
