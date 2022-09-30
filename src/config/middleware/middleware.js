@@ -1,5 +1,4 @@
-import { h } from "preact"
-import { Fragment } from "preact"
+import { h, Fragment } from "preact"
 import { getCurrentUrl, route } from "preact-router"
 import { getUserToken } from "../api/auth"
 import ROUTE from "../api/route"

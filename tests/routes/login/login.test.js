@@ -2,15 +2,14 @@ import { h } from 'preact';
 import Login from '../../../src/routes/login/index.js';
 import { Provider } from 'unistore/preact';
 import { store } from '../../../src/config/store/store';
-import { fireEvent, screen, waitFor, render } from '@testing-library/preact';
-import {setup} from '../../utils/setup.js';
+import { screen, waitFor, render } from '@testing-library/preact';
 import * as axios from 'axios';
-import { getCurrentUrl, route, Router, setUrl  } from 'preact-router';
+import { getCurrentUrl, route } from 'preact-router';
 import App from '../../../src/components/app.js';
 import userEvent from '@testing-library/user-event'
 import { deleteUserToken, setUserToken } from '../../../src/config/api/auth.js';
-jest.mock("axios");
 
+jest.mock("axios");
 
 describe('Test Success Login', () => {
 	test('try to login and success login and redirected to dashboard', async () => {
