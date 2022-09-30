@@ -9,7 +9,7 @@ import { actions } from '../../config/store/store.js';
 import axios from 'axios';
 import BASE_URL from '../../config/api/constant.js';
 import { setUserToken } from '../../config/api/auth.js';
-import { getCurrentUrl, route } from 'preact-router';
+import { route } from 'preact-router';
 import { useState } from 'preact/hooks';
 import { isAuthenticate } from '../../config/middleware/middleware.js';
 import ROUTE from '../../config/api/route.js';
