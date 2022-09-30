@@ -53,10 +53,8 @@ function Register() {
                 }
                 error_logs = error_logs.concat(password_error)
             }
-            if (error_logs){
-                setSucc([])
-                setErrl(error_logs)
-            }
+            setSucc([])
+            setErrl(error_logs)
         });
 
         return data
