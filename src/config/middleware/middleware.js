@@ -5,10 +5,7 @@ import { getUserToken } from "../api/auth"
 import ROUTE from "../api/route"
 
 const AuthenticationChecker = () => {
-    console.log("AuthenticationChecker", getCurrentUrl())
-    if (getCurrentUrl() == ROUTE.REGISTER) {
-        route(ROUTE.REGISTER)
-    } else if (!isAuthenticate()) {
+    if (getCurrentUrl() != ROUTE.REGISTER && !isAuthenticate()) {
         route(ROUTE.LOGIN)
     }
     return <Fragment/>
