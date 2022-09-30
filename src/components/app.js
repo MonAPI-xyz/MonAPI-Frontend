@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { Router } from 'preact-router';
 import SideBar from './sideBar/index.js';
 import Login from '../routes/login';
+import Register from '../routes/register';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../config/theme';
 import { Provider } from 'unistore/preact';
@@ -18,7 +19,7 @@ const App = () => {
 						<SideBar path={ROUTE.DASHBOARD} />
 					</AuthenticationChecker>
 					<Login path={ROUTE.LOGIN} />
-					<div path={ROUTE.REGISTER}></div>
+					<Register path={ROUTE.REGISTER} />
 				</Router>
 			</ChakraProvider>
 		</Provider>

@@ -122,11 +122,15 @@ const SideBar = () => {
                   body='Are you sure want to logout?'
                   buttonLeftText='Cancel'
                   buttonRightText='Yes'
+<<<<<<< HEAD
                   popupOpen={logoutPopup}
                   setPopupOpen={setLogoutPopup}
                   onSubmit={onSubmit}
                   buttonRightColor='red'>
                 </AlertComponent>
+=======
+                  buttonRightColor='red' />
+>>>>>>> 6e97c8854787027d674b048ba41567f9b63488a6
               </div>
             </MenuItem>
           </div>
