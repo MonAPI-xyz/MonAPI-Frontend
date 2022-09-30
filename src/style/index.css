@@ -52,3 +52,47 @@ html, body {
 #app {
 	height: 100%;
 }
+
+#app .pro-sidebar-inner {
+	background: #ffff;
+}
+
+#app .pro-sidebar {
+	color: black;
+}
+
+#app #navArrow-header {
+	color: black;
+	position: absolute;
+	right: 0;
+	z-index: 9999;
+	line-height: 20px;
+	border-radius: 50%;
+	font-weight: bold;
+	font-size: 22px;
+	top:auto;
+	cursor: pointer;
+}
+
+#app .pro-sidebar-header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#app .pro-sidebar .pro-menu a:hover {
+	color: #226666;
+}
+
+#app .pro-sidebar .pro-menu .pro-menu-item.active {
+	color: #226666;
+}
+
+#app .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item:hover {
+	color: #226666;
+	font-weight: bold;
+}
+
+#app .pro-sidebar .pro-menu .pro-menu-item > .pro-inner-item:focus {
+	color: #226666; 
+}
