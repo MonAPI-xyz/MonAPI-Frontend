@@ -53,7 +53,6 @@ describe('Test Register', () => {
         userEvent.click(registerButton)
 
         await waitFor(async () => {
-            console.log("FROM TEST AWAIT 1: ENTERING WAIT FOR")
             expect(screen.getByText('Error:'))
             expect(screen.getByText('Enter a valid email address.'))
             expect(screen.getByText('This password is too short. It must contain at least 8 characters.'))
@@ -91,7 +90,6 @@ describe('Test Register', () => {
         userEvent.click(registerButton)
 
         await waitFor(async () => {
-            console.log("FROM TEST AWAIT2: ENTERING NO DUPLICATE TEST");
             expect(screen.getByText('User already registered! Please use a different email to register.'))
         })
 
@@ -123,7 +121,6 @@ describe('Test Register', () => {
         })
 
         await waitFor(async () => {
-            console.log("TEST 3: User should be given information when register succeed")
             expect(getCurrentUrl()).toBe('/login?isRegistered=true')
         })
 

@@ -10,7 +10,6 @@ import ROUTE from '../../config/api/route.js';
 import * as axios from "axios";
 
 function Register() {
-    console.log("Entering Register")
     
     const [errl, setErrl] = useState([])
 
@@ -32,7 +31,6 @@ function Register() {
             route(ROUTE.LOGIN + "?isRegistered=true")
         }) 
         .catch((error) => {
-            console.log("ERROR FROM VIEW: ", error)
             let error_logs = []
             if (error.response.data.response) {
                 error_logs = error_logs.concat(error.response.data.response)
