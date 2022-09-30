@@ -14,13 +14,9 @@ const App = () => {
 		<Provider store={store}>
 			<ChakraProvider theme={theme}>
 				<Router>
-<<<<<<< HEAD
-					<SideBar path="/" />
-=======
 					<AuthenticationChecker path="/:*?">
 						<SideBar path={ROUTE.DASHBOARD} />
 					</AuthenticationChecker>
->>>>>>> 97aaa7e00dbc7db243e9c587c2e20188065ee5ae
 					<Login path={ROUTE.LOGIN} />
 					<div path={ROUTE.REGISTER}></div>
 				</Router>
