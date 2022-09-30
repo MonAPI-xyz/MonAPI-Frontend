@@ -1,13 +1,20 @@
 const getUserToken = () => {
-    return localStorage.getItem('MONAPI_TOKEN');
+    if (typeof window !== "undefined") {
+        return localStorage.getItem('MONAPI_TOKEN');
+    }
+    return "";
 }
 
 const setUserToken = (token) => {
-    localStorage.setItem('MONAPI_TOKEN', token);
+    if (typeof window !== "undefined") {
+        localStorage.setItem('MONAPI_TOKEN', token);
+    }
 }
 
 const deleteUserToken = () => {
-    localStorage.removeItem('MONAPI_TOKEN');
+    if (typeof window !== "undefined") {
+        localStorage.removeItem('MONAPI_TOKEN');
+    }
 }
 
 export { getUserToken, setUserToken, deleteUserToken }
