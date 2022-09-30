@@ -67,7 +67,7 @@ const Login = connect('user', actions)(
                                 }}
                                 register={register}
                             />
-                            <Box mb='20px'/>
+                            <Box mb='20px' />
                             
                             <PasswordInput
                                 id="password"
@@ -80,9 +80,9 @@ const Login = connect('user', actions)(
                                     minLength: { value: 8, message: 'Minimum length should be 8' },
                                 }}
                             />
-                            <Box mb='10px'/>
+                            <Box mb='10px' />
                             {responseMessage != '' && <Text fontSize='14px' color='red.500'>{responseMessage}</Text>}
-                            <Box mb={responseMessage ? '10px' : '20px'}/>
+                            <Box mb={responseMessage ? '10px' : '20px'} />
 
                             <Button form="form-login" id='signInButton' colorScheme='teal' type='submit' width='12em' borderRadius={10}>
                                 Sign In
@@ -92,7 +92,7 @@ const Login = connect('user', actions)(
                         
                         
                         
-                        <Box mb='20px'/>
+                        <Box mb='20px' />
                         <Text as='span'>or </Text>
                         <Text as='u' fontWeight='600'>    
                             <Text as='span' onClick={()=>route(ROUTE.REGISTER)} color='#4B8F8C'>sign up</Text> to create new account
@@ -108,9 +108,9 @@ const Login = connect('user', actions)(
             </Grid>
         </Flex>
             );
-        } else {
+        } 
             route(ROUTE.DASHBOARD)
-        }
+        
 }
 )
 

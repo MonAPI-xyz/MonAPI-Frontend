@@ -37,7 +37,7 @@
     "@emotion/styled": "^11.10.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^0.27.2",
+    "axios": "0.21.1",
     "framer-motion": "^7.3.5",
     "preact": "^10.3.2",
     "preact-global-state": "^1.0.5",
