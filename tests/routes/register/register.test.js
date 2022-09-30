@@ -139,5 +139,36 @@ describe('Test Register', () => {
 			expect(getCurrentUrl()).toBe('/login');
 		})
     })
+
+    test('user must put exactly same password to create account', async() => {
+        // set mock response
+        axios.post.mockImplementation(() => Promise.reject({
+            status: 400,
+            response: {
+                data: {
+                    password: "Password must match."
+                }
+            }
+        }))
+
+        // render the page and save in container
+        const container = render(<Register />)
+        // find 3 input form and the button
+        const emailField = await container.findByPlaceholderText("Your Email");
+        const passField = await container.findByPlaceholderText("Password");
+        const pass2Field = await container.findByPlaceholderText("Confirm Password");
+        const registerButton = await container.getByText("Sign Up");
+
+        // Input the field
+        userEvent.type(emailField, 'e')
+        userEvent.type(passField, 'e')
+        userEvent.type(pass2Field, 'e')
+        // click the button
+        userEvent.click(registerButton)
+
+        await waitFor(async () => {
+            expect(screen.getByText('Password must match.'))
+        }, 5000)
+    })
         
 })
