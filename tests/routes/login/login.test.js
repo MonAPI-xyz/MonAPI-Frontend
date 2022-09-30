@@ -115,4 +115,15 @@ describe('Test Form Login', () => {
 			expect(screen.getByText('Minimum length should be 8'))
 		});
 	});
+
+	test('click sign up text span', async () => {
+		render(<App/>);
+		route('/login')
+		
+		userEvent.click(screen.getByText('sign up'));
+
+		await waitFor(() => {
+			expect(getCurrentUrl()).toBe('/register');
+		})
+	})
 });
