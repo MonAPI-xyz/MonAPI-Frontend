@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { Router } from 'preact-router';
-import Home from '../routes/home';
+import SideBar from './sideBar/index.js';
 import Login from '../routes/login';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../config/theme';
@@ -14,7 +14,7 @@ const App = () => {
 		<Provider store={store}>
 			<ChakraProvider theme={theme}>
 				<Router>
-					<Home path={ROUTE.DASHBOARD} />
+					<SideBar path={ROUTE.DASHBOARD} />
 					<Login path={ROUTE.LOGIN} />
 					<div path={ROUTE.REGISTER}></div>
 				</Router>
