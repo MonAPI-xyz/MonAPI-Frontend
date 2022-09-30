@@ -1,13 +1,10 @@
-import { h, Fragment } from "preact"
-import { getCurrentUrl, route } from "preact-router"
+import { h } from "preact"
+import { route } from "preact-router"
 import { getUserToken } from "../api/auth"
 import ROUTE from "../api/route"
 
-const AuthenticationChecker = () => {
-    if (getCurrentUrl() != ROUTE.REGISTER && !isAuthenticate()) {
-        route(ROUTE.LOGIN)
-    }
-    return <Fragment/>
+const AuthenticationChecker = ({children}) => {
+    return isAuthenticate() ? children : route(ROUTE.LOGIN)
 }
 
 function isAuthenticate() {
