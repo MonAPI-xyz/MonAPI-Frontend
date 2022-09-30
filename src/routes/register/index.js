@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { route } from 'preact-router';
 import ROUTE from '../../config/api/route.js';
 import { isAuthenticate } from '../../config/middleware/middleware.js';
+import BASE_URL from '../../config/api/constant.js';
 import * as axios from "axios";
 
 function Register() {
@@ -28,7 +29,7 @@ function Register() {
                 password2: res.password2
             }
 
-            axios.post(`https://api-staging.monapi.xyz/register/api`, data)
+            axios.post(`${BASE_URL}/register/api`, data)
             .then(data => {
                 route(ROUTE.LOGIN + "?isRegistered=true")
             }) 
@@ -141,6 +142,8 @@ function Register() {
         </Grid>
     </Flex>
         );
+    } else {
+        route(ROUTE.DASHBOARD)
     }
 }
 

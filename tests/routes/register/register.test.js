@@ -4,6 +4,7 @@ import { fireEvent, screen, waitFor, render } from '@testing-library/preact';
 import * as axios from 'axios';
 import userEvent from '@testing-library/user-event';
 import { getCurrentUrl, route } from 'preact-router';
+import { deleteUserToken, setUserToken } from '../../../src/config/api/auth.js';
 import App from '../../../src/components/app.js';
 
 jest.mock("axios");
@@ -155,5 +156,16 @@ describe('Test Register', () => {
             expect(screen.getByText('Password must match.'))
         }, 5000)
     })
+
+	test('authenticated and try accessing register route', async () => {
+		setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+		
+		render(<App/>);
+		route('/register')
+
+		await waitFor(() => {
+			expect(getCurrentUrl()).toBe('/');
+		})
+	})
         
 })
