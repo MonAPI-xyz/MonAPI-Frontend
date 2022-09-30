@@ -7,22 +7,20 @@ import {setup} from '../../utils/setup.js';
 import * as axios from 'axios';
 import { getCurrentUrl, route, Router, setUrl  } from 'preact-router';
 import App from '../../../src/components/app.js';
-import Home from '../../../src/routes/home/index.js';
 import userEvent from '@testing-library/user-event'
-
+import { deleteUserToken, setUserToken } from '../../../src/config/api/auth.js';
 jest.mock("axios");
 
 
-describe('Test Login', () => {
-	const button = (container) => container.querySelector('#signInButton');
-
-	test('success login', async () => {
+describe('Test Success Login', () => {
+	test('try to login and success login and redirected to dashboard', async () => {
 		let response = {
 			"response": "Sign-in successful.",
 			"email": "user@gmail.com",
 			"token": "d16c4059484867e8d12ff535072509e3f29719e7"
 		}
 		axios.post.mockImplementation(() => Promise.resolve({ data: response}));
+		
 		render(<App/>);
 		route('/login')
 		const emailField = await screen.findByPlaceholderText('john@example.com');
@@ -35,11 +33,27 @@ describe('Test Login', () => {
 		userEvent.click(signIn);
 
 		await waitFor(() => {
-			expect(getCurrentUrl()).toBe('/homepage');
+			expect(getCurrentUrl()).toBe('/');
 		})
-	  })
+	})
+});
 
-	test('failed login', async () => {
+describe('Test Accessing Routes', () => {
+	test('authenticated and try accessing login route', async () => {
+		setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+		
+		render(<App/>);
+		route('/login')
+
+		await waitFor(() => {
+			expect(getCurrentUrl()).toBe('/');
+		})
+	})
+})
+	
+describe('Test Failed Login', () => {
+	test('try to login and failed login and keep on login page', async () => {
+		deleteUserToken()
 		let response = {
 			"data": {"response": "Invalid email or password."}
 		}
@@ -64,7 +78,9 @@ describe('Test Login', () => {
 			expect(getCurrentUrl()).toBe('/login');
 		})
 	})
+});
 
+describe('Test Form Login', () => {
 	test('require to fill the both email and password', async () => {
 		render(<Provider store={store}><Login /></Provider>);
 
