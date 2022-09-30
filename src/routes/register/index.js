@@ -139,7 +139,7 @@ function Register() {
                 <Box mb='20px'/>
                 <Text as='span'>Already have an account? </Text>
                 <Text as='u' fontWeight='600'>    
-                    <Text as='span' color='#4B8F8C'>sign in</Text>
+                    <Text as='span' style={{cursor: "pointer"}} onClick={()=>route(ROUTE.LOGIN)} color='#4B8F8C'>Sign in</Text>
                 </Text>
             </Box>
                                 
