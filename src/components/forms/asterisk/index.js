@@ -7,7 +7,7 @@ const Asterisk = ({isRequired}) => {
           *
         </Box>
       ) : (
-        <Fragment/>
+        <Fragment />
       );
 }
 export default Asterisk;

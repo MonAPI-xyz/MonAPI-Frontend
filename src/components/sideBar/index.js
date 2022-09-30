@@ -45,7 +45,7 @@ const SideBar = () => {
         </div>
         <div id="navArrow-header" role='iconarrow' onClick={menuIconClick}>
           {/* <button aria-label='navArrow' > */}
-          {menuCollapse ? (<FaRegArrowAltCircleRight role=''/>) : (<FaRegArrowAltCircleLeft/>)}
+          {menuCollapse ? (<FaRegArrowAltCircleRight role='' />) : (<FaRegArrowAltCircleLeft />)}
           {/* </button> */}
         </div>
       </SidebarHeader>
@@ -111,8 +111,7 @@ const SideBar = () => {
                   body='Are you sure want to logout?'
                   buttonLeftText='Cancel'
                   buttonRightText='Yes'
-                  buttonRightColor='red'>
-                </AlertComponent>
+                  buttonRightColor='red' />
               </div>
             </MenuItem>
           </div>
