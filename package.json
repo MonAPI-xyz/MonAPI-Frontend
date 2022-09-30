@@ -46,6 +46,7 @@
     "react": "^18.2.0",
     "react-hook-form": "^7.36.0",
     "react-icons": "^4.4.0",
+    "react-pro-sidebar": "^0.7.1",
     "unistore": "^3.5.2"
   },
   "jest": {

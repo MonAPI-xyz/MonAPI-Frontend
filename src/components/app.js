@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { Router } from 'preact-router';
-import Home from '../routes/home';
+import SideBar from './sideBar/index.js';
 import Login from '../routes/login';
 import Register from '../routes/register';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -15,13 +15,15 @@ const App = () => {
 		<Provider store={store}>
 			<ChakraProvider theme={theme}>
 				<Router>
-					<Home path={ROUTE.DASHBOARD} />
+					<AuthenticationChecker path="/:*?">
+						<SideBar path={ROUTE.DASHBOARD} />
+					</AuthenticationChecker>
 					<Login path={ROUTE.LOGIN} />
 					<Register path={ROUTE.REGISTER} />
 				</Router>
 			</ChakraProvider>
 		</Provider>
-		<AuthenticationChecker/>
+		
 	</div>);
 }
 
