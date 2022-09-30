@@ -31,6 +31,9 @@ function Register() {
         }) 
         .catch((error) => {
             let error_logs = []
+            if (error.response.data.response) {
+                error_logs = error_logs.concat(error.response.data.response)
+            }
             if (error.response.data.email) {
                 const email_error = error.response.data.email
                 error_logs = error_logs.concat(email_error)
