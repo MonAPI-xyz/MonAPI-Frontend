@@ -2,9 +2,13 @@ import { h } from 'preact';
 import SideBar from '../sideBar';
 import style from './style.css';
 
-const DashboardWrapper = () => {
+const DashboardWrapper = ({children}) => {
     return (
-        <div>
+        <div class={style['dashboard']}>
+            <SideBar />
+            <div class={style['dashboard-content']}>
+                {children}
+            </div>
         </div>
     )
 }
