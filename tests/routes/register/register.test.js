@@ -9,22 +9,6 @@ import App from '../../../src/components/app.js';
 jest.mock("axios");
 describe('Test Register', () => {
 
-    test('user can fill and register', async () => {
-        // render the page and save in container
-        const container = render(<Register />)
-        // find 3 input form and the button
-        const emailField = await container.findByPlaceholderText("Your Email");
-        const passField = await container.findByPlaceholderText("Password");
-        const pass2Field = await container.findByPlaceholderText("Confirm Password");
-        const registerButton = container.getByText("Sign Up");
-        // Input the field
-        fireEvent.change(emailField, { value: "e"})
-        fireEvent.change(passField, { value: "Pass1ngBy"})
-        fireEvent.change(pass2Field, { value: "Pass1ngBy"})
-        // click the button
-        fireEvent.click(registerButton)
-    })
-
     test('user must enter valid email and password', async() => {
         // set mock response
         axios.post.mockImplementation(() => Promise.reject({
