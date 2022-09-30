@@ -3,6 +3,8 @@ import Register from '../../../src/routes/register/index.js'; // Does not exist 
 import { fireEvent, screen, waitFor, render } from '@testing-library/preact';
 import * as axios from 'axios';
 import userEvent from '@testing-library/user-event';
+import { getCurrentUrl, route } from 'preact-router';
+import App from '../../../src/components/app.js';
 import { wait } from "@testing-library/user-event/dist/utils/index.js";
 
 jest.mock("axios");
@@ -121,6 +123,21 @@ describe('Test Register', () => {
             expect(screen.getByText('User Created Successfully!'))
         })
 
+    })
+
+    test('user can go to /login from "sign in" text', async() => {
+		render(<App/>);
+		route('/register');
+
+        await waitFor(async () => {
+            expect(screen.getByText('Sign in'))
+        })
+		
+		userEvent.click(screen.getByText('Sign in'));
+
+		await waitFor(async () => {
+			expect(getCurrentUrl()).toBe('/login');
+		})
     })
         
 })
