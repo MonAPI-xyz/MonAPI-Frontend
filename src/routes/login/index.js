@@ -17,6 +17,11 @@ import ROUTE from '../../config/api/route.js';
 const Login = connect('user', actions)( 
     ({ setUser }) =>{
     
+    const param = new URLSearchParams(window.location.search).get('isRegistered')
+    const [isRegistered, setIsRegistered] = useState(null)
+    if (param) {
+        setIsRegistered(true)
+    }
     if (!isAuthenticate()) {
     const {
       handleSubmit,
@@ -52,6 +57,11 @@ const Login = connect('user', actions)(
                 alignSelf='center'
                 >
                     <Box verticalAlign='center'>
+                    {isRegistered && (
+                    <Text color='green'>
+                        User Created Successfully!
+                    </Text>
+                    )}
                         <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
                             Login
                         </Text>

@@ -125,4 +125,13 @@ describe('Test Form Login', () => {
 			expect(getCurrentUrl()).toBe('/register');
 		})
 	})
+
+	test('successfully registered user is redirected to /login', async() => {
+		render(<App/>);
+		route('/login?isRegistered=true')
+
+		await waitFor(async () => {
+            expect(screen.getByText('User Created Successfully!'))
+		})
+	})
 });
