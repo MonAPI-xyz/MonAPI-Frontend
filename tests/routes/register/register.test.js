@@ -5,7 +5,6 @@ import * as axios from 'axios';
 import userEvent from '@testing-library/user-event';
 import { getCurrentUrl, route } from 'preact-router';
 import App from '../../../src/components/app.js';
-import { wait } from "@testing-library/user-event/dist/utils/index.js";
 
 jest.mock("axios");
 describe('Test Register', () => {
@@ -17,7 +16,7 @@ describe('Test Register', () => {
         const emailField = await container.findByPlaceholderText("Your Email");
         const passField = await container.findByPlaceholderText("Password");
         const pass2Field = await container.findByPlaceholderText("Confirm Password");
-        const registerButton = await container.getByText("Sign Up");
+        const registerButton = container.getByText("Sign Up");
         // Input the field
         fireEvent.change(emailField, { value: "e"})
         fireEvent.change(passField, { value: "Pass1ngBy"})
@@ -44,7 +43,7 @@ describe('Test Register', () => {
         const emailField = await container.findByPlaceholderText("Your Email");
         const passField = await container.findByPlaceholderText("Password");
         const pass2Field = await container.findByPlaceholderText("Confirm Password");
-        const registerButton = await container.getByText("Sign Up");
+        const registerButton = container.getByText("Sign Up");
 
         // Input the field
         userEvent.type(emailField, 'e')
@@ -82,7 +81,7 @@ describe('Test Register', () => {
         const emailField = await container.findByPlaceholderText("Your Email");
         const passField = await container.findByPlaceholderText("Password");
         const pass2Field = await container.findByPlaceholderText("Confirm Password");
-        const registerButton = await container.getByText("Sign Up");
+        const registerButton = container.getByText("Sign Up");
 
         // Input the field
         userEvent.type(emailField, 'goodemail@goodemail.com')
@@ -110,7 +109,7 @@ describe('Test Register', () => {
         const emailField = await container.findByPlaceholderText("Your Email");
         const passField = await container.findByPlaceholderText("Password");
         const pass2Field = await container.findByPlaceholderText("Confirm Password");
-        const registerButton = await container.getByText("Sign Up");
+        const registerButton = container.getByText("Sign Up");
 
         // Input the field
         userEvent.type(emailField, 'goodemail@goodemail.com')
@@ -162,7 +161,7 @@ describe('Test Register', () => {
         const emailField = await container.findByPlaceholderText("Your Email");
         const passField = await container.findByPlaceholderText("Password");
         const pass2Field = await container.findByPlaceholderText("Confirm Password");
-        const registerButton = await container.getByText("Sign Up");
+        const registerButton = container.getByText("Sign Up");
 
         // Input the field
         userEvent.type(emailField, 'e')
