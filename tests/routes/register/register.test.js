@@ -61,5 +61,38 @@ describe('Test Register', () => {
         }, 5000)
 
     })
+
+    test('user cannot register with existing email', async() => {
+        // set mock response
+        axios.post.mockImplementation(() => Promise.reject({
+            status: 400,
+            response: {
+                data: {
+                    response: "User already registered! Please use a different email to register."
+                }
+            }
+        }))
+
+        // render the page and save in container
+        const container = render(<Register />)
+        // find 3 input form and the button
+        const emailField = await container.findByPlaceholderText("Your Email");
+        const passField = await container.findByPlaceholderText("Password");
+        const pass2Field = await container.findByPlaceholderText("Confirm Password");
+        const registerButton = await container.getByText("Sign Up");
+
+        // Input the field
+        userEvent.type(emailField, 'goodemail@goodemail.com')
+        userEvent.type(passField, 'Pass1ngby')
+        userEvent.type(pass2Field, 'Pass1ngby')
+        // click the button
+        userEvent.click(registerButton)
+
+        await waitFor(async () => {
+            console.log("FROM TEST AWAIT2: ENTERING NO DUPLICATE TEST");
+            expect(screen.getByText('User already registered! Please use a different email to register.'))
+        })
+
+    })
         
 })
