@@ -28,8 +28,8 @@ import {
 } from 'react-icons/fa';
 import { useState } from 'react';
 import 'react-pro-sidebar/dist/css/styles.css';
-import AlertComponent from './AlertComponent.js';
-import logo from '../assets/icons/logo-monapi.svg';
+import AlertComponent from '../alertComponent/index.js';
+import logo from '../../assets/icons/logo-monapi.svg';
 
 const SideBar = () => {
   const [menuCollapse, setMenuCollapse] = useState(false)

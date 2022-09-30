@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { render, fireEvent, waitFor, screen } from '@testing-library/preact';
-import SideBar from '../../src/components/SideBar'
+import SideBar from '../../../src/components/sideBar/index'
 
 describe('Test SideBar', () => {
 

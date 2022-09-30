@@ -1,6 +1,6 @@
 import { h } from 'preact';
 import { Router } from 'preact-router';
-import SideBar from './SideBar';
+import SideBar from './sideBar/index.js';
 import Login from '../routes/login';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '../config/theme';

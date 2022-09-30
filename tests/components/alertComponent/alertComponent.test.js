@@ -1,6 +1,6 @@
 import { h, Fragment } from 'preact';
 import { render, fireEvent, waitFor, screen } from '@testing-library/preact';
-import AlertComponent from '../../src/components/AlertComponent'
+import AlertComponent from '../../../src/components/alertComponent'
 
 describe('Test alert component', () => {
 
