@@ -1,10 +1,16 @@
 import { h } from 'preact';
 import { render, fireEvent, waitFor, screen } from '@testing-library/preact';
 import SideBar from '../../../src/components/sideBar/index'
+import * as axios from 'axios';
+import App from '../../../src/components/app.js';
+import { route } from 'preact-router'
+import { setUserToken } from '../../../src/config/api/auth'
 
-describe('Test SideBar', () => {
+jest.mock('axios');
 
-  test('Test render success', async () => {
+describe('Test sideBar', () => {
+
+  test('When render, then succes', async () => {
     render(<SideBar/>);
 
     await waitFor(() => {
@@ -13,7 +19,7 @@ describe('Test SideBar', () => {
   });
 
 
-  test('Test popup logout', async () => {
+  test('When click logout, then popup appears', async () => {
     render(<SideBar/>);
 
     fireEvent.click(screen.getByText('Logout'));
@@ -22,7 +28,46 @@ describe('Test SideBar', () => {
     })
 	});
 
-  test('Test collapse true', async () => {
+  test('When click Close button (x) in logout popup, then popup to be close', async () => {
+    render(<SideBar/>);
+
+    fireEvent.click(screen.getByText('Logout'));
+    fireEvent.click(screen.getByRole('button', {name:'Close'}));
+    await waitFor(() => {
+      expect(screen.queryByText("Are you sure want to logout?")).toBeNull();
+    })
+  })
+
+
+  test('When click Cancel button in logout popup, then popup to be close', async () => {
+    render(<SideBar/>);
+
+    fireEvent.click(screen.getByText('Logout'));
+    fireEvent.click(screen.getByRole('button', {name:'Cancel'}));
+    await waitFor(() => {
+      expect(screen.queryByText("Are you sure want to logout?")).toBeNull();
+    })
+  })
+
+  test('When click Yes button in logout popup, then will be render to login page', async () => {
+    setUserToken("TOKEN")
+    render(<App/>);
+    route('/');
+    await waitFor(() => {
+      expect(screen.getByText('Logout')).toBeDefined();
+    })
+
+    const response = "User Logged out successfully"
+    axios.post.mockImplementation(() => Promise.resolve({ data: response }));
+
+    fireEvent.click(screen.getByText('Logout'));
+    fireEvent.click(screen.getByRole('button', {name:'Yes'}));
+    await waitFor(() => {
+      expect(screen.getByText("Login")).toBeDefined();
+    })
+  })
+
+  test('When click arrow icon, then the collapsed status to be true', async () => {
     render(<SideBar/>);
 
     fireEvent.click(screen.getByRole('iconarrow'))
@@ -32,7 +77,7 @@ describe('Test SideBar', () => {
     })
   })
 
-  test('Test collapse false', async () => {
+  test('When the collapsed was true and click the arrow icon, then the collapsed status to be false', async () => {
     render(<SideBar/>);
 
     fireEvent.click(screen.getByRole('iconarrow'))
@@ -43,12 +88,22 @@ describe('Test SideBar', () => {
     })
   })
 
-  test('Test expanded accordion', async () => {
+  test('When click accordion, then it become expand', async () => {
     render(<SideBar/>);
 
     fireEvent.click(screen.getByRole('button', { expanded: false}))
     await waitFor(() => {
       expect(screen.getByRole('button', { expanded: true})).toBeDefined()
+    })
+  })
+
+  test('When click expanded accordion, then it become shrink', async () => {
+    render(<SideBar/>);
+
+    fireEvent.click(screen.getByRole('button', { expanded: false}))
+    fireEvent.click(screen.getByRole('button', { expanded: true}))
+    await waitFor(() => {
+      expect(screen.getByRole('button', { expanded: false})).toBeDefined()
     })
   })
 })
