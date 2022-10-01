@@ -39,6 +39,8 @@ describe('Test Success Login', () => {
 
 describe('Test Accessing Routes', () => {
 	test('authenticated and try accessing login route', async () => {
+		const response = []
+		axios.get.mockImplementation(() => Promise.resolve({data: response}))
 		setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
 		
 		render(<App/>);
