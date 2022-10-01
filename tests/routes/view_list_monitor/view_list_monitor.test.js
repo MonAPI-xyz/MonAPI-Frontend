@@ -36,7 +36,7 @@ describe('Test API Monitors sites', () => {
 			expect(screen.getByText('Ferdi'))
 			expect(screen.getByText('url'))
 			expect(screen.getByText('100%'))
-			expect(screen.getByText('0'))
+			expect(screen.getByText('0 ms'))
 			expect(getCurrentUrl()).toBe('/');
 		})
 	})

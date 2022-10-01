@@ -13,6 +13,7 @@ jest.mock("axios");
 
 describe('Test Success Login', () => {
 	test('try to login and success login and redirected to dashboard', async () => {
+		deleteUserToken()
 		let response = {
 			"response": "Sign-in successful.",
 			"email": "user@gmail.com",
@@ -33,6 +34,38 @@ describe('Test Success Login', () => {
 
 		await waitFor(() => {
 			expect(getCurrentUrl()).toBe('/');
+		})
+	})
+
+	test('when process login then show loader', async () => {
+		deleteUserToken()
+		let response = {
+			"response": "Sign-in successful.",
+			"email": "user@gmail.com",
+			"token": "d16c4059484867e8d12ff535072509e3f29719e7"
+		}
+
+		axios.post.mockImplementation(() => 
+			new Promise((resolve)=> {
+				setTimeout(() =>  resolve({ 
+					data: response
+				}), 3000)
+			})
+		)
+		
+		render(<App/>);
+		route('/login')
+		const emailField = await screen.findByPlaceholderText('john@example.com');
+		const passwordField = await screen.findByPlaceholderText('************');
+		const signIn = screen.getByText('Sign In');
+
+		userEvent.type(emailField, 'tes4@gmail.com')
+		userEvent.type(passwordField, 'Tes12345')
+		
+		userEvent.click(signIn);
+
+		await waitFor(() => {
+			expect(screen.getByText('Loading...')).toBeDefined()
 		})
 	})
 });

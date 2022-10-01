@@ -102,11 +102,42 @@ describe('Test Register', () => {
         userEvent.click(registerButton)
 
         await waitFor(async () => {
-            expect(screen.getByText('User Created Successfully!'))
+            expect(screen.getByText('User Created Successfully!')).toBeDefined()
         })
 
         await waitFor(async () => {
             expect(getCurrentUrl()).toBe('/login?isRegistered=true')
+        })
+
+    })
+
+    test('when processing data then show loader', async() => {
+        axios.post.mockImplementation(() => 
+            new Promise((resolve) => {
+                setTimeout(()=> resolve({
+                    status: 200
+                }), 3000)
+            })   
+        )
+
+        // render the page and save in container
+        const container = render(<App />)
+        route('/register')
+        // find 3 input form and the button
+        const emailField = await container.findByPlaceholderText("Your Email");
+        const passField = await container.findByPlaceholderText("Password");
+        const pass2Field = await container.findByPlaceholderText("Confirm Password");
+        const registerButton = container.getByText("Sign Up");
+
+        // Input the field
+        userEvent.type(emailField, 'goodemail@goodemail.com')
+        userEvent.type(passField, 'Pass1ngby')
+        userEvent.type(pass2Field, 'Pass1ngby')
+        // click the button
+        userEvent.click(registerButton)
+
+        await waitFor(async () => {
+            expect(screen.getByText('Loading...')).toBeDefined()
         })
 
     })

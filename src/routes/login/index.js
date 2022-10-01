@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import TextInput from '../../components/forms/textinput/index.js';
 import PasswordInput from '../../components/forms/passwordinput/index.js';
-import { Button, Text  } from '@chakra-ui/react';
+import { Button, Spinner, Text  } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import {Box, Flex, Grid, GridItem } from '@chakra-ui/layout';
 import { connect } from 'unistore/preact';
@@ -19,6 +19,8 @@ const Login = connect('user', actions)(
     
     const param = new URLSearchParams(window.location.search).get('isRegistered')
     const [isRegistered, setIsRegistered] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+
     if (param) {
         setIsRegistered(true)
     }
@@ -32,6 +34,7 @@ const Login = connect('user', actions)(
     const [responseMessage, setResponseMessage] = useState('')
 
     const onSubmit = async (data) => {
+        setIsLoading(true);
         try {
             await axios.post(`${BASE_URL}/login/`, data)
             .then((response) => {
@@ -42,6 +45,7 @@ const Login = connect('user', actions)(
             })
         } catch(error) {
             setResponseMessage(error['response']['data']['response'])
+            setIsLoading(false)
         }
     };
     return (
@@ -95,7 +99,7 @@ const Login = connect('user', actions)(
                             <Box mb={responseMessage ? '10px' : '20px'} />
 
                             <Button form="form-login" id='signInButton' colorScheme='teal' type='submit' width='12em' borderRadius={10}>
-                                Sign In
+                                {isLoading ? <Spinner /> : "Sign In"}
                             </Button>
                             
                         </Box>
@@ -104,8 +108,8 @@ const Login = connect('user', actions)(
                         
                         <Box mb='20px' />
                         <Text as='span'>or </Text>
-                        <Text as='u' fontWeight='600'>    
-                            <Text as='span' onClick={()=>route(ROUTE.REGISTER)} color='#4B8F8C'>sign up</Text> to create new account
+                        <Text as='span' fontWeight='600'>    
+                            <Text as='span' onClick={()=>route(ROUTE.REGISTER)} color='#4B8F8C' style={{cursor:'pointer', textDecoration: 'underline'}}>sign up</Text> to create new account
                         </Text>
                     </Box>
                                         
