@@ -50,6 +50,8 @@ describe('Test sideBar', () => {
   })
 
   test('When click Yes button in logout popup, then will be render to login page', async () => {
+    const responseMonitor = []
+		axios.get.mockImplementation(() => Promise.resolve({data: responseMonitor}))
     setUserToken("TOKEN")
     render(<App/>);
     route('/');

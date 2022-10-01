@@ -158,6 +158,8 @@ describe('Test Register', () => {
     })
 
 	test('authenticated and try accessing register route', async () => {
+        const response = []
+		axios.get.mockImplementation(() => Promise.resolve({data: response}))
 		setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
 		
 		render(<App/>);
