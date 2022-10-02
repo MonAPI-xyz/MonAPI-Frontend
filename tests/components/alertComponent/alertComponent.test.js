@@ -1,7 +1,6 @@
 import { h } from 'preact';
 import { render, fireEvent, waitFor, screen } from '@testing-library/preact';
 import AlertComponent from '../../../src/components/alertComponent';
-import React from 'react';
 
 describe('Test alert component', () => {
   test('When render with isButton false, then success', async () => {

@@ -10,7 +10,8 @@ const jestConfig = {
         '<rootDir>/{src,test,tests}/**/*.{spec,test}.{mjs,js,jsx,ts,tsx}',
         '<rootDir>/tests/**.test.js',
         '<rootDir>/tests/*/**.test.js',
-        '<rootDir>/tests/*/*/**.test.js'
+        '<rootDir>/tests/*/*/**.test.js',
+        '<rootDir>/tests/*/*/*/**.test.js'
     ],
     transform: {
       "^.+\\.svg$": "<rootDir>/tests/transform/svgTransform.js" 

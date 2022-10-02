@@ -1,15 +1,16 @@
 import { h } from 'preact';
 import { Router } from 'preact-router';
-import Login from '../routes/login';
-import Register from '../routes/register';
 import { ChakraProvider } from '@chakra-ui/react';
-import theme from '../config/theme';
 import { Provider } from 'unistore/preact';
 import { store } from '../config/store/store.js';
+import theme from '../config/theme';
 import ROUTE from '../config/api/route';
 import { AuthenticationChecker } from '../config/middleware/middleware';
-import DashboardWrapper from './dashboardWrapper/index.js';
-import ViewListMonitor from '../routes/view_list_monitor/index.js';
+import DashboardWrapper from './dashboardWrapper';
+import ViewListMonitor from '../routes/view_list_monitor';
+import Login from '../routes/login';
+import Register from '../routes/register';
+import '../config/middleware/axios';
 
 const App = () => {
 	return (<div id="app">
