@@ -6,6 +6,7 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
+  Spinner,
 } from '@chakra-ui/react'
 import { 
   ProSidebar,
@@ -39,15 +40,19 @@ import 'react-pro-sidebar/dist/css/styles.css';
 const SideBar = () => {
   const [menuCollapse, setMenuCollapse] = useState(false)
   const [logoutPopup, setLogoutPopup] = useState(false) 
+  const [isLoadingLogout, setIsLoadingLogout] = useState(false)
+
   const menuIconClick = () => {
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   }
   const onSubmit = () => {
+    setIsLoadingLogout(true)
     axios.post(`${BASE_URL}/logout/`, {}, { headers: {Authorization : `Token ${getUserToken()}`} })
-   .then(() => {
+    .then(() => {
       deleteUserToken()
       route(ROUTE.LOGIN)
-  })
+      setIsLoadingLogout(false)
+    })
 };
   
   return (
@@ -57,7 +62,7 @@ const SideBar = () => {
         {menuCollapse ? <img src={logo} alt="MonAPI" style={{width:'75%'}} /> : (<img src={logo} alt="MonAPI" />)}
         </div>
         <div id="navArrow-header" role='iconarrow' onClick={menuIconClick}>
-          {menuCollapse ? (<FaRegArrowAltCircleRight role=''/>) : (<FaRegArrowAltCircleLeft/>)}
+          {menuCollapse ? (<FaRegArrowAltCircleRight role='' />) : (<FaRegArrowAltCircleLeft />)}
         </div>
       </SidebarHeader>
 
@@ -121,12 +126,11 @@ const SideBar = () => {
                   header='Logout'
                   body='Are you sure want to logout?'
                   buttonLeftText='Cancel'
-                  buttonRightText='Yes'
+                  buttonRightText={isLoadingLogout ? <Spinner /> : 'Yes'}
                   popupOpen={logoutPopup}
                   setPopupOpen={setLogoutPopup}
                   onSubmit={onSubmit}
-                  buttonRightColor='red'>
-                </AlertComponent>
+                  buttonRightColor='red' />
               </div>
             </MenuItem>
           </div>
