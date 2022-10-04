@@ -4,14 +4,22 @@ import style from './style.css';
 const SuccessRate = ({success,failed})=> {
     return (
         <>
-            {(success >= failed)?
+            {(success > failed)?
                 <div class={style['green-bar']}>
                     
                 </div>
                 :
-                <div class={style['red-bar']}>
+                <>
+                    {(success < failed)?
+                        <div class={style['red-bar']}>
+                            
+                        </div>
+                        :
+                        <div class={style['grey-bar']}>
 
-                </div>
+                        </div>
+                    }
+                </>       
             }
         </>        
     )
