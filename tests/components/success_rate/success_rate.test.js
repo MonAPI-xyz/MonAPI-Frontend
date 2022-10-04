@@ -27,4 +27,12 @@ describe('Test success rate', () => {
     })
   });
 
+  test('When render, then nothing', async () => {
+    const {container} = render(<SuccessRate success={0} failed={0}/>);
+
+    await waitFor(() => {
+      expect(container.getElementsByClassName("grey-bar").length).toBe(1)
+    })
+  });
+
 })
