@@ -1,0 +1,29 @@
+name: Production Deployment
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: |
+          npm install
+          npm run test
+  deployment:
+    needs: test
+    runs-on: ubuntu-20.04
+    environment: production
+    steps:
+      - run: |
+          command -v ssh-agent >/dev/null 
+          apt-get update -y && apt-get install openssh-client -y
+          eval `ssh-agent -s` && echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' | ssh-add -
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+          ssh root@${{ secrets.SERVER_IP }} "set -x && ./deploy_frontend_production.sh && exit"
