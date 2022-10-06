@@ -1,5 +1,4 @@
-import { h } from 'preact';
-import { createRef } from 'preact';
+import { createRef, h } from 'preact';
 import Chart from 'chart.js/auto';
 import { useEffect, useState } from 'preact/hooks';
 
