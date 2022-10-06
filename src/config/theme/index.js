@@ -15,6 +15,11 @@ const theme = extendTheme({
     '2xl': '96em',
     '4xl': '118em',
   },
+  colors: {
+    blueChill: {
+      500: '#4B8F8C',
+    }
+  }
 });
 
 export default theme;
