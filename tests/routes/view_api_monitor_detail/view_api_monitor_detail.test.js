@@ -85,7 +85,7 @@ describe('Integration test detail page', () => {
 		}
 
     axios.get.mockImplementation((url) => {
-      if(url.includes('/1/detail')) {
+      if(url.includes('/1')) {
         return Promise.resolve({ data: responseDetail });
       } else {
         return Promise.resolve({ data: responseDashboard });
