@@ -30,7 +30,7 @@ This repository is providing frontend service for MonAPI, written using Preact.
 
 ## Features
 
-- [ ] Authentication
+- [x] Authentication
 - [ ] API Monitor Dashboard
 - [ ] API Monitor Alert
 - [ ] API Monitor Error Log
@@ -67,10 +67,10 @@ For detailed explanation on how things work, checkout the [CLI Readme](https://g
 - [Docker Container](https://github.com/MonAPI-xyz/MonAPI-Frontend/blob/staging/docs/docker.md)
 
 ## Latest Release Notes
-Version: Pre-release<br>
-Date: 16th November 2022
-1. Staging server is now officially online! checkout on https://staging.monapi.xyz
-2. Our blog is now officially online! checkout on https://blog.monapi.xyz
+Version: v0.1.0<br>
+Date: 25th September 2022
+1. Add feature for login and register
+2. Add feature for view list API Monitor
 
 Full release notes can be found in [Release Notes](https://github.com/MonAPI-xyz/MonAPI-Frontend/blob/staging/docs/release_notes.md)
 
