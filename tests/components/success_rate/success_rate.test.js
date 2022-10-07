@@ -19,6 +19,14 @@ describe('Test success rate', () => {
     })
   });
 
+  test('When render, then succes, but both values are the same and non zero', async () => {
+    const {container} = render(<SuccessRate success={2} failed={2}/>);
+
+    await waitFor(() => {
+      expect(container.getElementsByClassName("green-bar").length).toBe(1)
+    })
+  });
+
   test('When render, then failed', async () => {
     const {container} = render(<SuccessRate success={0} failed={1}/>);
 
