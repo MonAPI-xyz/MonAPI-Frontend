@@ -36,7 +36,7 @@ const ViewAPIMonitorDetail = ({id}) => {
 
   const onDelete = () => {
     setIsLoadingDelete(true)
-    axios.delete(`${BASE_URL}/monitor/${id}`, {
+    axios.delete(`${BASE_URL}/monitor/${id}/`, {
       headers: {
         Authorization: `Token ${getUserToken()}`
       } 
@@ -47,7 +47,7 @@ const ViewAPIMonitorDetail = ({id}) => {
   }
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/monitor/${id}/detail`, {
+    axios.get(`${BASE_URL}/monitor/${id}/`, {
       params:{
         range: `${selectValue}`
       },
@@ -55,7 +55,6 @@ const ViewAPIMonitorDetail = ({id}) => {
         Authorization: `Token ${getUserToken()}`
       } 
     }).then((response) => {
-      console.log('response select time:', response.data)
       setDetail(response.data)
     })
   }, [selectValue]);
