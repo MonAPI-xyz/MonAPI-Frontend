@@ -14,7 +14,6 @@ const Dropdown = (props) => {
     
         <Select 
             bgColor='#F1F1F1'
-            onChange={() => {console.log('hahah')}}
             data-testid={dataTestId}
         >
             {options.map(({ key, value }) => (
