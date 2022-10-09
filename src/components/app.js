@@ -13,6 +13,7 @@ import Register from '../routes/register';
 import '../config/middleware/axios';
 import ViewAPIMonitorDetail from '../routes/view_api_monitor_detail/index.js';
 import ErrorLogs from '../routes/error_logs/index.js';
+import CreateAPIMonitor from '../routes/createAPIMonitor';
 
 const App = () => {
 	return (<div id="app">
@@ -25,11 +26,14 @@ const App = () => {
 								<ViewListMonitor path={ROUTE.DASHBOARD} />
 								<ViewAPIMonitorDetail path={ROUTE.DETAIL} />
 								<ErrorLogs path={ROUTE.ERROR_LOGS} />
+								<CreateAPIMonitor path={ROUTE.CREATE_API_MONITOR} />			
 							</Router>							
 						</DashboardWrapper>
 					</AuthenticationChecker>
+					
 					<Login path={ROUTE.LOGIN} />
 					<Register path={ROUTE.REGISTER} />
+					{/* <CreateAPIMonitor path={ROUTE.CREATE_API_MONITOR} />			 */}
 				</Router>
 			</ChakraProvider>
 		</Provider>

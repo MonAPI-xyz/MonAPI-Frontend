@@ -2,8 +2,7 @@ import TextInput from '../../components/forms/textinput/index.js'
 import { h } from "preact";
 import { useState } from "preact/hooks";
 import PasswordInput from '../../components/forms/passwordinput/index.js'
-import { Button, Text, Spinner  } from '@chakra-ui/react';
-import {Box, Flex, Grid, GridItem } from '@chakra-ui/layout';
+import { Button, Text, Spinner,Box, Flex, Grid, GridItem } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { route } from 'preact-router';
 import ROUTE from '../../config/api/route.js';
@@ -121,8 +120,8 @@ function Register() {
                                 <div>
                                 <Text color='red'>Error:</Text>
                                 <ul data-testid='errl'>
-                                    {errl.map(e => (
-                                        <li>{e}</li>
+                                    {errl.map((e,i) => (
+                                        <li key={i}>{e}</li>
                                     ))}
                                 </ul>
                                 </div>

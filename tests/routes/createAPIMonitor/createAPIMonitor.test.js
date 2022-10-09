@@ -47,12 +47,13 @@ describe('Test Create API Monitor', () => {
 		const requestUrl = await screen.findByPlaceholderText("Request URL");
         const interval = await screen.getByTestId("interval");
         const previousStep = await screen.getByTestId('previousStep');
+        const createAPIMonitorButton = screen.getByText('Create API Monitor');
 		console.log("monitorName",monitorName, requestUrl, interval, previousStep)
 		userEvent.type(monitorName, 'API Monitor 1')
         userEvent.type(requestUrl, 'www.example.com')
         userEvent.selectOptions(interval, '1 Minute');
         userEvent.selectOptions(previousStep, '1 Minute');
-   
+        userEvent.click(createAPIMonitorButton)
 		
 	})
 
