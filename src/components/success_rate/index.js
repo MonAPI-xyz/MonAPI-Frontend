@@ -19,7 +19,7 @@ const SuccessRate = ({success,failed})=> {
 
                         </div>
                     }
-                </>       
+                </>     
             }
         </>        
     )

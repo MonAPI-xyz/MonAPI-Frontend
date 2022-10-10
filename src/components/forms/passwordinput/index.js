@@ -3,7 +3,7 @@ import { Button } from '@chakra-ui/button';
 import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/form-control';
 import Icon from '@chakra-ui/icon';
 import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
-import {  useState } from 'react';
+import { useState } from 'preact/hooks';
 import { BsFillEyeFill, BsFillEyeSlashFill } from 'react-icons/bs';
 import Asterisk from '../asterisk/index.js';
 

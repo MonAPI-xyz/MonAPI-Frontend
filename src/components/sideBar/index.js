@@ -6,6 +6,7 @@ import {
   AccordionPanel,
   AccordionIcon,
   Box,
+  Spinner,
 } from '@chakra-ui/react'
 import { 
   ProSidebar,
@@ -28,6 +29,7 @@ import {
 } from 'react-icons/fa';
 import { getUserToken, deleteUserToken } from '../../config/api/auth.js';
 import { route } from 'preact-router';
+import { Link } from 'preact-router/match';
 import { useState } from 'preact/hooks';
 import AlertComponent from '../alertComponent/index.js';
 import axios from 'axios';
@@ -35,38 +37,45 @@ import BASE_URL from '../../config/api/constant.js';
 import logo from '../../assets/icons/logo-monapi.svg';
 import ROUTE from '../../config/api/route.js';
 import 'react-pro-sidebar/dist/css/styles.css';
+import style from './style.css';
 
 const SideBar = () => {
   const [menuCollapse, setMenuCollapse] = useState(false)
   const [logoutPopup, setLogoutPopup] = useState(false) 
+  const [isLoadingLogout, setIsLoadingLogout] = useState(false)
+
   const menuIconClick = () => {
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
   }
   const onSubmit = () => {
+    setIsLoadingLogout(true)
     axios.post(`${BASE_URL}/logout/`, {}, { headers: {Authorization : `Token ${getUserToken()}`} })
-   .then(() => {
+    .then(() => {
       deleteUserToken()
       route(ROUTE.LOGIN)
-  })
+      setIsLoadingLogout(false)
+    })
 };
   
   return (
     <ProSidebar collapsed={menuCollapse}>
       <SidebarHeader style={{ textAlign: 'center', padding: '10px' }}>
-        <div>
-        {menuCollapse ? <img src={logo} alt="MonAPI" style={{width:'75%'}} /> : (<img src={logo} alt="MonAPI" />)}
-        </div>
+        <Link href="/">
+          {menuCollapse ? <img src={logo} alt="MonAPI" style={{width:'75%'}} /> : (<img src={logo} alt="MonAPI" />)}
+        </Link>
         <div id="navArrow-header" role='iconarrow' onClick={menuIconClick}>
-          {menuCollapse ? (<FaRegArrowAltCircleRight role=''/>) : (<FaRegArrowAltCircleLeft/>)}
+          {menuCollapse ? (<FaRegArrowAltCircleRight role='' />) : (<FaRegArrowAltCircleLeft />)}
         </div>
       </SidebarHeader>
 
       <SidebarContent>
         <Menu>
-          <MenuItem
-            icon={<FaTachometerAlt />}>
-            Dashboard
-          </MenuItem>
+          <Link class={style['menu-button']} activeClassName={style['active']} href="/">
+            <MenuItem
+              icon={<FaTachometerAlt />}>
+              Dashboard
+            </MenuItem>
+          </Link>        
           <MenuItem
             icon={<FaExclamationCircle />}>
             Error Logs
@@ -121,12 +130,11 @@ const SideBar = () => {
                   header='Logout'
                   body='Are you sure want to logout?'
                   buttonLeftText='Cancel'
-                  buttonRightText='Yes'
+                  buttonRightText={isLoadingLogout ? <Spinner /> : 'Yes'}
                   popupOpen={logoutPopup}
                   setPopupOpen={setLogoutPopup}
                   onSubmit={onSubmit}
-                  buttonRightColor='red'>
-                </AlertComponent>
+                  buttonRightColor='red' />
               </div>
             </MenuItem>
           </div>
