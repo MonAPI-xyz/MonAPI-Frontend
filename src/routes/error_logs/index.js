@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react'
 import BASE_URL from '../../config/api/constant';
 import style from './style.css';
-import './style.css';
 import axios from 'axios';
 import { getUserToken } from '../../config/api/auth';
 import { FaAngleRight } from 'react-icons/fa';
