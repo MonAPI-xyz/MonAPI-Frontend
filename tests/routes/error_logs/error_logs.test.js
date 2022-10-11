@@ -90,8 +90,8 @@ describe('Functional test all feature of view error logs', () => {
     render(<ErrorLogs />);
     await waitFor(() => {
       expect(screen.getByText("Error Logs")).toBeDefined()
-      expect(screen.getByText("07/10/2022, 21:27:20")).toBeDefined()
-      expect(screen.getByText("08/10/2022, 22:27:20")).toBeDefined()
+      expect(screen.getByText("Test1")).toBeDefined()
+      expect(screen.getByText("Test2")).toBeDefined()
     })
 
     const detailButton = screen.getAllByRole('detail-button')
@@ -99,29 +99,25 @@ describe('Functional test all feature of view error logs', () => {
     // detail of api monitor Test1 on modal
     fireEvent.click(detailButton[0])
     await waitFor(() => {
-      expect(screen.getByText("Response")).toBeDefined()
-      expect(screen.getByText("Fri Oct 07 2022 21:27:20 GMT+0700 (Indochina Time)")).toBeDefined()
+      expect(screen.getByText("response1")).toBeDefined()
     })
 
     //back to list of error logs (close modal in x button)
     fireEvent.click(screen.getAllByRole('button', {name:'Close'})[0]);
     await waitFor(() => {
-      expect(screen.getByText("Error Logs")).toBeDefined()
-      expect(screen.queryByText("Fri Oct 07 2022 21:27:20 GMT+0700 (Indochina Time)")).toBeNull()
+      expect(screen.queryByText("response1")).toBeNull()
     })
 
     // detail of api monitor Test2 on modal
     fireEvent.click(detailButton[1])
     await waitFor(() => {
-      expect(screen.getByText("Response")).toBeDefined()
-      expect(screen.getByText("Sat Oct 08 2022 22:27:20 GMT+0700 (Indochina Time)")).toBeDefined()
+      expect(screen.getByText("response2")).toBeDefined()
     })
 
     //back to list of error logs (button close in bottom modal)
     fireEvent.click(screen.getAllByRole('button', {name:'Close'})[1])
     await waitFor(() => {
-      expect(screen.getByText("Error Logs")).toBeDefined()
-      expect(screen.queryByText("Sat Oct 08 2022 22:27:20 GMT+0700 (Indochina Time)")).toBeNull()
+      expect(screen.queryByText("response2")).toBeNull()
     })
   });
 })
