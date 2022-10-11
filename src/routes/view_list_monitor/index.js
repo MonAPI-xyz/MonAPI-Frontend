@@ -51,7 +51,7 @@ const ViewListMonitor = () => {
 							</div>											
 						</td>
 						<td>
-							<Link href={`/${val.id}/detail/`}>
+							<Link aria-label="view-api-monitor-detail" href={`/${val.id}/detail/`}>
 								<FaAngleRight />
 							</Link>
 						</td>

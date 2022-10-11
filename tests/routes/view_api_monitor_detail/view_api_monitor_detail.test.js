@@ -101,7 +101,7 @@ describe('Integration test detail page', () => {
 			expect(getCurrentUrl()).toBe('/');
 		})
 
-    fireEvent.click(screen.getByRole('link'));
+    fireEvent.click(screen.getByRole('link', { name: "view-api-monitor-detail" }));
 
     await waitFor(() => {
       expect(screen.getByText("mySchedule")).toBeDefined();
