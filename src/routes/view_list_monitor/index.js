@@ -1,10 +1,12 @@
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks'
+import { Link } from 'preact-router/match'
 import BASE_URL from '../../config/api/constant';
 import style from './style.css';
 import axios from 'axios';
 import SuccessRate from '../../components/success_rate';
 import { getUserToken } from '../../config/api/auth';
+import { FaAngleRight } from 'react-icons/fa';
 
 const ViewListMonitor = () => {
 	const [monitor,setMonitor]=useState([])
@@ -47,6 +49,11 @@ const ViewListMonitor = () => {
 								<SuccessRate success={history.success} failed={history.failed} key={idx} /> 						
 							))}	
 							</div>											
+						</td>
+						<td>
+							<Link href={`/${val.id}/detail/`}>
+								<FaAngleRight />
+							</Link>
 						</td>
 					</tr>
 				))}

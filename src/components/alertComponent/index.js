@@ -15,7 +15,7 @@ function AlertComponent({isButton, displayText, header, body, buttonLeftText, bu
   const cancelRef = useRef()
   return (
     <>
-      { isButton ? (<Button id='button-alert' onClick={() => {setPopupOpen(true)}}>{displayText}</Button>) : 
+      { isButton ? (<Button colorScheme={buttonRightColor} id='button-alert' onClick={() => {setPopupOpen(true)}}>{displayText}</Button>) : 
         (<div role='clickable-text' onClick={() => {setPopupOpen(true)}}>{displayText}</div>)}
       <AlertDialog
         motionPreset='slideInBottom'
