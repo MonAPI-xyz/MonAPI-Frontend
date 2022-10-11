@@ -11,6 +11,7 @@ import ViewListMonitor from '../routes/view_list_monitor';
 import Login from '../routes/login';
 import Register from '../routes/register';
 import '../config/middleware/axios';
+import ViewAPIMonitorDetail from '../routes/view_api_monitor_detail/index.js';
 
 const App = () => {
 	return (<div id="app">
@@ -21,6 +22,7 @@ const App = () => {
 						<DashboardWrapper path="/:*?">
 							<Router>
 								<ViewListMonitor path={ROUTE.DASHBOARD} />
+								<ViewAPIMonitorDetail path={ROUTE.DETAIL} />
 							</Router>							
 						</DashboardWrapper>
 					</AuthenticationChecker>

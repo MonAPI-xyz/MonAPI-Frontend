@@ -3,6 +3,7 @@ const ROUTE = {
     LOGIN: '/login',
     REGISTER: '/register',
     LOGOUT: '/logout',
+    DETAIL: '/:id/detail',
   };
   
 export default ROUTE;
