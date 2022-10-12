@@ -77,7 +77,7 @@ const SuccessRatePercentageChart = ({data}) => {
     });
     
     setChart(myChart);
-  }, [])
+  }, [data])
 
   return (
     <canvas

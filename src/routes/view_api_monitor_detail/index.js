@@ -64,10 +64,10 @@ const ViewAPIMonitorDetail = ({id}) => {
   }
 
   function successRateDictToPercentageNumber(dict) {
-    if (dict.failed == 0) {
+    if (dict.success+dict.failed === 0) {
       return 0;
     }
-    return dict.success/dict.failed
+    return dict.success/(dict.success+dict.failed)
   }
 
   function successRateList(success_rate) {
@@ -96,7 +96,7 @@ const ViewAPIMonitorDetail = ({id}) => {
   
   return (
     <div class={style.home}>
-      <Flex minWidth='max-content' alignItems='center' gap='2'>
+      <Flex alignItems='center' gap='2'>
         <Box p='2'>
           <Heading size='md'>Testing API Name</Heading>
         </Box>
