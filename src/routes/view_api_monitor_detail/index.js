@@ -65,7 +65,7 @@ const ViewAPIMonitorDetail = ({id}) => {
 
   function successRateDictToPercentageNumber(dict) {
     if (dict.success+dict.failed === 0) {
-      return 0;
+      return -1;
     }
     return dict.success/(dict.success+dict.failed)
   }
@@ -89,7 +89,11 @@ const ViewAPIMonitorDetail = ({id}) => {
 
     const listOfNumber = []
     response_time.forEach(dict => {
-      listOfNumber.push(dict.avg)
+      if (dict.avg === 0) {
+        listOfNumber.push(-1)
+      } else {
+        listOfNumber.push(dict.avg)
+      }
     });
     return listOfNumber
   }

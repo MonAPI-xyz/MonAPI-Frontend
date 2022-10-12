@@ -20,6 +20,9 @@ const SuccessRatePercentageChart = ({data}) => {
     for (let i=0; i < data.length; i++) {
       if (data[i] > 0.5) {
         colors[i] = "#36CB72";
+      } else if (data[i] === -1) {
+        colors[i] = "grey";
+        data[i] += 1;
       } else {
         colors[i] = "#CB5136";
       }
@@ -35,6 +38,7 @@ const SuccessRatePercentageChart = ({data}) => {
           backgroundColor: colors,
           borderRadius: Number.MAX_VALUE,
           borderSkipped: false,
+          minBarLength: 5,
         }]
       },
       options: {

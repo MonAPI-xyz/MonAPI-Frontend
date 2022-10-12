@@ -16,6 +16,16 @@ const ResponseTimeChart = ({data}) => {
 
     if (chart != null) { chart.destroy() }
 
+    const colors=[];
+    for (let i=0; i < data.length; i++) {
+      if (data[i] === -1) {
+        colors[i] = "grey";
+        data[i] += 1;
+      } else {
+        colors[i] = "#36CB72";
+      }
+    }
+
     const myChart = new Chart(ctx, {
       type: "bar",
       data: {
@@ -23,9 +33,10 @@ const ResponseTimeChart = ({data}) => {
         datasets: [{
           label: "Response Time Chart",
           data: data,
-          backgroundColor: "#36CB72",
+          backgroundColor: colors,
           borderRadius: Number.MAX_VALUE,
           borderSkipped: false,
+          minBarLength: 5,
         }]
       },
       options: {
