@@ -12,6 +12,7 @@ import Login from '../routes/login';
 import Register from '../routes/register';
 import '../config/middleware/axios';
 import ViewAPIMonitorDetail from '../routes/view_api_monitor_detail/index.js';
+import ErrorLogs from '../routes/error_logs/index.js';
 
 const App = () => {
 	return (<div id="app">
@@ -23,6 +24,7 @@ const App = () => {
 							<Router>
 								<ViewListMonitor path={ROUTE.DASHBOARD} />
 								<ViewAPIMonitorDetail path={ROUTE.DETAIL} />
+								<ErrorLogs path={ROUTE.ERROR_LOGS} />
 							</Router>							
 						</DashboardWrapper>
 					</AuthenticationChecker>
