@@ -62,6 +62,37 @@ const ViewAPIMonitorDetail = ({id}) => {
   const onChange = (e) => {
     setSelectValue(e.target.value)
   }
+
+  function successRateDictToPercentageNumber(dict) {
+    if (dict.failed == 0) {
+      return 0;
+    }
+    return dict.success/dict.failed
+  }
+
+  function successRateList(success_rate) {
+    if (success_rate == undefined) {
+      return undefined
+    }
+
+    const listOfNumber = []
+    success_rate.forEach(dict => {
+      listOfNumber.push(successRateDictToPercentageNumber(dict))
+    });
+    return listOfNumber
+  }
+
+  function responseTimeList(response_time) {
+    if (response_time == undefined) {
+      return undefined
+    }
+
+    const listOfNumber = []
+    response_time.forEach(dict => {
+      listOfNumber.push(dict.avg)
+    });
+    return listOfNumber
+  }
   
   return (
     <div class={style.home}>
@@ -110,11 +141,11 @@ const ViewAPIMonitorDetail = ({id}) => {
         <div class={style['chart-container']}>
         <div class={style['chart']}>
           <SuccessRatePercentageChart 
-          data={detail.success_rate_list}/>
+          data={successRateList(detail.success_rate)}/>
         </div>
         <div class={style['chart']}>
           <ResponseTimeChart 
-          data={detail.response_time_list}/>
+          data={responseTimeList(detail.response_time)}/>
         </div>
       </div>
       </div>
