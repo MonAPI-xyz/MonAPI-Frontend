@@ -13,9 +13,33 @@ describe('Test view api monitor detail', () => {
   test('When render, then success', async () => {
     const response = {
 			"url": "https://pacil.com",
-			"schedule": "Daily at 06.00",
-			"success_rate_list": [0.5, 1],
-      "response_time_list": [10, 100],
+			"schedule": "mySchedule",
+			"success_rate": [
+        {
+          "start_time": "2022-10-12T00:24:54.784248+07:00",
+          "end_time": "2022-10-12T00:25:54.784248+07:00",
+          "success": 20,
+          "failed": 10
+        },
+        {
+          "start_time": "2022-10-12T00:24:54.784248+07:00",
+          "end_time": "2022-10-12T00:25:54.784248+07:00",
+          "success": 0,
+          "failed": 10
+        },
+      ],
+      "response_time": [
+        {
+          "start_time": "2022-10-11T23:55:54.784248+07:00",
+          "end_time": "2022-10-11T23:56:54.784248+07:00",
+          "avg": 20
+        },
+        {
+          "start_time": "2022-10-11T23:55:54.784248+07:00",
+          "end_time": "2022-10-11T23:56:54.784248+07:00",
+          "avg": 0
+        },
+      ],
 		}
 
 		axios.get.mockImplementation(() => Promise.resolve({ data: response }));
@@ -37,15 +61,63 @@ describe('Test view api monitor detail', () => {
     const response = {
 			"url": "https://pacil.com",
 			"schedule": "Before select change",
-			"success_rate_list": [0.5, 1],
-      "response_time_list": [50, 100],
+			"success_rate": [
+        {
+          "start_time": "2022-10-12T00:24:54.784248+07:00",
+          "end_time": "2022-10-12T00:25:54.784248+07:00",
+          "success": 5,
+          "failed": 10
+        },
+        {
+          "start_time": "2022-10-12T00:24:54.784248+07:00",
+          "end_time": "2022-10-12T00:25:54.784248+07:00",
+          "success": 0,
+          "failed": 10
+        },
+      ],
+      "response_time": [
+        {
+          "start_time": "2022-10-11T23:55:54.784248+07:00",
+          "end_time": "2022-10-11T23:56:54.784248+07:00",
+          "avg": 20
+        },
+        {
+          "start_time": "2022-10-11T23:55:54.784248+07:00",
+          "end_time": "2022-10-11T23:56:54.784248+07:00",
+          "avg": 10
+        },
+      ],
 		}
 
     const responseSelect = {
 			"url": "https://pacil.com",
 			"schedule": "After select change",
-			"success_rate_list": [0.8, 0.2],
-      "response_time_list": [80, 20],
+			"success_rate": [
+        {
+          "start_time": "2022-10-12T00:24:54.784248+07:00",
+          "end_time": "2022-10-12T00:25:54.784248+07:00",
+          "success": 5,
+          "failed": 0
+        },
+        {
+          "start_time": "2022-10-12T00:24:54.784248+07:00",
+          "end_time": "2022-10-12T00:25:54.784248+07:00",
+          "success": 0,
+          "failed": 0
+        },
+      ],
+      "response_time": [
+        {
+          "start_time": "2022-10-11T23:55:54.784248+07:00",
+          "end_time": "2022-10-11T23:56:54.784248+07:00",
+          "avg": 20
+        },
+        {
+          "start_time": "2022-10-11T23:55:54.784248+07:00",
+          "end_time": "2022-10-11T23:56:54.784248+07:00",
+          "avg": 0
+        },
+      ],
 		}
 
 		axios.get.mockImplementation((url, data) => {
@@ -80,8 +152,44 @@ describe('Integration test detail page', () => {
     const responseDetail = {
 			"url": "https://pacil.com",
 			"schedule": "mySchedule",
-			"success_rate_list": [0.8, 0.2],
-      "response_time_list": [80, 20],
+			"success_rate": [
+        {
+          "start_time": "2022-10-12T00:24:54.784248+07:00",
+          "end_time": "2022-10-12T00:25:54.784248+07:00",
+          "success": 20,
+          "failed": 10
+        },
+        {
+          "start_time": "2022-10-12T00:24:54.784248+07:00",
+          "end_time": "2022-10-12T00:25:54.784248+07:00",
+          "success": 0,
+          "failed": 10
+        },
+        {
+          "start_time": "2022-10-12T00:24:54.784248+07:00",
+          "end_time": "2022-10-12T00:25:54.784248+07:00",
+          "success": 10,
+          "failed": 0
+        },
+        {
+          "start_time": "2022-10-12T00:24:54.784248+07:00",
+          "end_time": "2022-10-12T00:25:54.784248+07:00",
+          "success": 0,
+          "failed": 0
+        },
+      ],
+      "response_time": [
+        {
+          "start_time": "2022-10-11T23:55:54.784248+07:00",
+          "end_time": "2022-10-11T23:56:54.784248+07:00",
+          "avg": 20
+        },
+        {
+          "start_time": "2022-10-11T23:55:54.784248+07:00",
+          "end_time": "2022-10-11T23:56:54.784248+07:00",
+          "avg": 0
+        },
+      ],
 		}
 
     axios.get.mockImplementation((url) => {

@@ -67,7 +67,7 @@ const ResponseTimeChart = ({data}) => {
     });
 
     setChart(myChart);
-  }, [])
+  }, [data])
 
   return (
     <canvas
