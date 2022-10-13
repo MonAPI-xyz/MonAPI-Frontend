@@ -1,7 +1,7 @@
 import { createRef, h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import Chart from 'chart.js/auto';
-import ChartComponent from '../ChartComponent';
+import ChartConfig from '../ChartConfig';
 
 const ResponseTimeChart = ({response_time}) => {
   const [chart, setChart] = useState(null);
@@ -43,7 +43,7 @@ const ResponseTimeChart = ({response_time}) => {
       }
     }
 
-    const y_scale_option = {
+    const y_scale_config = {
       beginAtZero: true,
       ticks: {
         callback: function(value) {
@@ -52,7 +52,7 @@ const ResponseTimeChart = ({response_time}) => {
       }
     }
     
-    const responseTimeChart = new Chart(ctx, ChartComponent("Response Time", labels, data, colors, y_scale_option))
+    const responseTimeChart = new Chart(ctx, ChartConfig("Response Time", labels, data, colors, y_scale_config))
 
     setChart(responseTimeChart);
   }, [response_time])

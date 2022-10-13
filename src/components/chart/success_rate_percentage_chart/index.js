@@ -1,7 +1,7 @@
 import { createRef, h } from 'preact';
 import { useEffect, useState } from 'preact/hooks';
 import Chart from 'chart.js/auto';
-import ChartComponent from '../ChartComponent'
+import ChartConfig from '../ChartConfig'
 
 const SuccessRatePercentageChart = ({success_rate}) => {
   const [chart, setChart] = useState(null);
@@ -48,7 +48,7 @@ const SuccessRatePercentageChart = ({success_rate}) => {
       }
     }
 
-    const y_scale_option = {
+    const y_scale_config = {
       beginAtZero: true,
       max: 1,
       ticks: {
@@ -57,7 +57,7 @@ const SuccessRatePercentageChart = ({success_rate}) => {
         }
       }
     }
-    const successRateChart = new Chart(ctx, ChartComponent( "Success Rate", labels, data, colors, y_scale_option))
+    const successRateChart = new Chart(ctx, ChartConfig( "Success Rate", labels, data, colors, y_scale_config))
     
     setChart(successRateChart);
   }, [success_rate])

@@ -1,6 +1,6 @@
 import { h } from 'preact';
 
-function ChartComponent(title, labels, data, backgroundColor, y_scale_option) {
+function ChartConfig(title, labels, data, backgroundColor, y_scale_config) {
   return {
     type: "bar",
     data: {
@@ -37,7 +37,7 @@ function ChartComponent(title, labels, data, backgroundColor, y_scale_option) {
         },
       },
       scales: {
-        y: y_scale_option,
+        y: y_scale_config,
         x: {
           display: false
         },
@@ -46,4 +46,4 @@ function ChartComponent(title, labels, data, backgroundColor, y_scale_option) {
   };
 }
 
-export default ChartComponent;
+export default ChartConfig;
