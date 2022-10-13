@@ -15,8 +15,8 @@ import AlertComponent from '../../components/alertComponent';
 import axios from 'axios';
 import BASE_URL from '../../config/api/constant.js';
 import ROUTE from '../../config/api/route.js';
-import SuccessRatePercentageChart from '../../components/success_rate_percentage_chart';
-import ResponseTimeChart from '../../components/response_time_chart';
+import SuccessRatePercentageChart from '../../components/chart/success_rate_percentage_chart';
+import ResponseTimeChart from '../../components/chart/response_time_chart';
 import { getUserToken } from '../../config/api/auth';
 
 const ViewAPIMonitorDetail = ({id}) => {
@@ -63,41 +63,6 @@ const ViewAPIMonitorDetail = ({id}) => {
     setSelectValue(e.target.value)
   }
 
-  function successRateDictToPercentageNumber(dict) {
-    if (dict.success+dict.failed === 0) {
-      return -1;
-    }
-    return dict.success/(dict.success+dict.failed)
-  }
-
-  function successRateList(success_rate) {
-    if (success_rate == undefined) {
-      return undefined
-    }
-
-    const listOfNumber = []
-    success_rate.forEach(dict => {
-      listOfNumber.push(successRateDictToPercentageNumber(dict))
-    });
-    return listOfNumber
-  }
-
-  function responseTimeList(response_time) {
-    if (response_time == undefined) {
-      return undefined
-    }
-
-    const listOfNumber = []
-    response_time.forEach(dict => {
-      if (dict.avg === 0) {
-        listOfNumber.push(-1)
-      } else {
-        listOfNumber.push(dict.avg)
-      }
-    });
-    return listOfNumber
-  }
-  
   return (
     <div class={style.home}>
       <Flex alignItems='center' gap='2'>
@@ -145,11 +110,11 @@ const ViewAPIMonitorDetail = ({id}) => {
         <div class={style['chart-container']}>
         <div class={style['chart']}>
           <SuccessRatePercentageChart 
-          data={successRateList(detail.success_rate)}/>
+          success_rate={detail.success_rate}/>
         </div>
         <div class={style['chart']}>
           <ResponseTimeChart 
-          data={responseTimeList(detail.response_time)}/>
+          response_time={detail.response_time}/>
         </div>
       </div>
       </div>
