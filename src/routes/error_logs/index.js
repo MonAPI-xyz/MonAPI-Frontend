@@ -111,7 +111,7 @@ const ErrorLogs = () => {
 				<h2>Error Logs</h2>
         <div class="input-group input-group-sm mb-3" style={{height: "auto", maxWidth: "250px"}}>
           <span class="input-group-text" id="inputGroup-sizing-default">Go to page:</span>
-          <input type="text" class="form-control" placeholder={`Max Page: ${Math.ceil(logs.count/pageSize) > 150 ? 150 : Math.ceil(logs.count/pageSize)}`} role="inputSearch" onChange={(e) => setSearchValue(Number(e.currentTarget.value))}/>
+          <input type="text" class="form-control" placeholder={`Max Page: ${Math.ceil(logs.count/pageSize)}`} role="inputSearch" onChange={(e) => setSearchValue(Number(e.currentTarget.value))}/>
           <button class="btn btn-outline-secondary" type="button" aria-label='buttonSearch' onClick={() => setPage(searchValue)}>
             <FaSearch />
           </button>
