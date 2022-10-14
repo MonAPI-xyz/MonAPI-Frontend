@@ -47,12 +47,25 @@ describe('Test Create API Monitor', () => {
 		const requestUrl = await screen.findByPlaceholderText("Request URL");
         const interval = await screen.getByTestId("interval");
         const previousStep = await screen.getByTestId('previousStep');
-        const createAPIMonitorButton = screen.getByText('Create API Monitor');
+        const createAPIMonitorButton = await screen.getByText('Create API Monitor');
 		console.log("monitorName",monitorName, requestUrl, interval, previousStep)
 		userEvent.type(monitorName, 'API Monitor 1')
         userEvent.type(requestUrl, 'www.example.com')
         userEvent.selectOptions(interval, '1 Minute');
-        userEvent.selectOptions(previousStep, '1 Minute');
+        userEvent.selectOptions(previousStep, '1 Minute');    
+        
+        userEvent.click(createAPIMonitorButton)
+		
+	})
+
+    test('test not filled create API Monitor form and click button', async () => {
+        const response = []
+		axios.get.mockImplementation(() => Promise.resolve({data: response}))
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+		render(<CreateAPIMonitor />);
+		
+        const createAPIMonitorButton = screen.getByText('Create API Monitor');
+		
         userEvent.click(createAPIMonitorButton)
 		
 	})
