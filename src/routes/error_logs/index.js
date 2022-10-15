@@ -132,7 +132,7 @@ const ErrorLogs = () => {
 						<td class={style['status']}>failed</td>
 						<td>{val.response_time} ms</td>
 						<td>
-              <div role='detail-button' onClick={() => onModal(val.id)}>
+              <div role='detail-button' class={style['cursor-pointer']} onClick={() => onModal(val.id)}>
                 <FaAngleRight />
               </div>
 						</td>
@@ -142,7 +142,7 @@ const ErrorLogs = () => {
 
       <div aria-label="pagination" class={style['pagination-number']}>
         <ul class="pagination justify-content-center">
-          <li class="page-item first-page" data-testid="page-first" onClick={() => setPage(1)}>
+          <li class={`page-item ${style['cursor-pointer']}`} data-testid="page-first" onClick={() => setPage(1)}>
             <a class="page-link">First Page</a>
           </li>
           {
@@ -150,20 +150,20 @@ const ErrorLogs = () => {
               if (val < 0) {
                 const currentVal = -1 * val
                 return (
-                  <li class="page-item active" data-testid={`page-${currentVal}`} onClick={() => setPage(currentVal)}>
+                  <li class={`page-item active ${style['cursor-pointer']}`} data-testid={`page-${currentVal}`} onClick={() => setPage(currentVal)}>
                     <a class="page-link">{currentVal}</a>
                   </li>
                 )
               } else {
                 return (
-                  <li class="page-item" data-testid={`page-${val}`} onClick={() => setPage(val)}>
+                  <li  class={`page-item ${style['cursor-pointer']}`} data-testid={`page-${val}`} onClick={() => setPage(val)}>
                     <a class="page-link">{val}</a>
                   </li>
                 )
               }
             })
           }
-          <li class="page-item last-page" data-testid="page-last" onClick={() => setPage(Math.ceil(logs.count/pageSize))}>
+          <li class={`page-item ${style['cursor-pointer']}`} data-testid="page-last" onClick={() => setPage(Math.ceil(logs.count/pageSize))}>
             <a class="page-link">Last Page</a>
           </li>
         </ul>

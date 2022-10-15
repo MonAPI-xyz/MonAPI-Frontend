@@ -31,3 +31,7 @@ th, td {
 .pagination-number {
 	margin-top: 10px;
 }
+
+.cursor-pointer {
+	cursor: pointer;
+}
