@@ -1,9 +1,8 @@
 import { h } from 'preact';
 import TextInput from '../../components/forms/textinput/index.js';
 import PasswordInput from '../../components/forms/passwordinput/index.js';
-import { Button, Spinner, Text  } from '@chakra-ui/react';
+import { Button, Spinner, Text,Box, Flex, Grid, GridItem  } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import {Box, Flex, Grid, GridItem } from '@chakra-ui/layout';
 import { connect } from 'unistore/preact';
 import { actions } from '../../config/store/store.js';
 import axios from 'axios';
