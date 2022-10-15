@@ -7,9 +7,13 @@ import axios from 'axios';
 import SuccessRate from '../../components/success_rate';
 import { getUserToken } from '../../config/api/auth';
 import { FaAngleRight } from 'react-icons/fa';
+import SuccessRatePercentageChart from '../../components/chart/success_rate_percentage_chart';
+import ResponseTimeChart from '../../components/chart/response_time_chart';
+import style_detail from '../view_api_monitor_detail/style.css' ;
 
 const ViewListMonitor = () => {
 	const [monitor,setMonitor]=useState([])
+	const [detail, setDetail]=useState({})
 	useEffect(()=>{
 		axios.get(`${BASE_URL}/monitor/`, {
 			headers: {
@@ -19,10 +23,35 @@ const ViewListMonitor = () => {
 			setMonitor(response.data)
 		})
 	},[])
+
+	useEffect(() => {
+		axios.get(`${BASE_URL}/monitor/stats/`, {
+		  headers: {
+			Authorization: `Token ${getUserToken()}`
+		  } 
+		}).then((response) => {
+		  setDetail(response.data)
+		})
+	  }, []);
+
 	return(
 		<div class={style.home}>
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous" />
 			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+			<div class={style_detail['container-flex-column']}>
+				
+				<div class={style_detail['chart-container']}>
+					<div class={style_detail['chart']}>
+						<SuccessRatePercentageChart 
+						success_rate = {detail.success_rate !== undefined ? detail.success_rate:null}/>
+					</div>
+					<div class={style_detail['chart']}>
+						<ResponseTimeChart 
+						response_time={detail.response_time !== undefined ? detail.response_time:null}/>
+					</div>				
+				</div>
+			</div>
 
 			<div class="d-flex justify-content-between">
 				<h2>API Monitors</h2>
