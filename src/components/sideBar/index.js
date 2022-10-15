@@ -39,8 +39,7 @@ import ROUTE from '../../config/api/route.js';
 import 'react-pro-sidebar/dist/css/styles.css';
 import style from './style.css';
 
-const SideBar = () => {
-  const [menuCollapse, setMenuCollapse] = useState(false)
+const SideBar = ({menuCollapse, setMenuCollapse}) => {
   const [logoutPopup, setLogoutPopup] = useState(false) 
   const [isLoadingLogout, setIsLoadingLogout] = useState(false)
 

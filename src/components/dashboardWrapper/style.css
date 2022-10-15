@@ -2,17 +2,27 @@
     width: 100%;
     display: flex;
     flex-direction: row;
+    background-color: white;
 }
 
 .dashboard-content {
     flex: 1;
-    background-color: white;
     width: calc(100% - 270px);
+    transition: width 0.3s;
+}
+
+.dashboard-content-sidebar-collapse {
+    width: calc(100% - 80px);
 }
 
 .dashboard-sidebar{
     width: 270px;
     flex: 0 0 auto;
+    transition: width 0.3s;
+}
+
+.dashboard-sidebar-collapse {
+    width: 80px;
 }
 
 .dashboard-inner-sidebar{
