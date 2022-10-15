@@ -162,6 +162,7 @@ describe('Test Form Login', () => {
 	})
 
 	test('successfully registered user is redirected to /login', async() => {
+		deleteUserToken()
 		render(<App/>);
 		route('/login?isRegistered=true')
 
