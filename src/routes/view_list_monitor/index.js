@@ -44,11 +44,11 @@ const ViewListMonitor = () => {
 				<div class={style_detail['chart-container']}>
 					<div class={style_detail['chart']}>
 						<SuccessRatePercentageChart 
-						success_rate = {detail.success_rate !== undefined ? detail.success_rate:null}/>
+						success_rate = {detail.success_rate}/>
 					</div>
 					<div class={style_detail['chart']}>
 						<ResponseTimeChart 
-						response_time={detail.response_time !== undefined ? detail.response_time:null}/>
+						response_time={detail.response_time}/>
 					</div>				
 				</div>
 			</div>
