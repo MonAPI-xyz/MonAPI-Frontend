@@ -70,15 +70,15 @@ const SideBar = () => {
 
       <SidebarContent>
         <Menu>
-          <Link class={style['menu-button']} activeClassName={style['active']} href="/">
-            <MenuItem
-              icon={<FaTachometerAlt />}>
-              Dashboard
-            </MenuItem>
-          </Link>        
+          <MenuItem
+            icon={<FaTachometerAlt />}>
+            Dashboard
+            <Link class={style['menu-button']} activeClassName={style['active']} href="/" />
+          </MenuItem>   
           <MenuItem
             icon={<FaExclamationCircle />}>
             Error Logs
+            <Link class={style['menu-button']} activeClassName={style['active']} href="/error-logs/" /> 
           </MenuItem>
           <MenuItem
             icon={<FaPlay />}>

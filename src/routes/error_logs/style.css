@@ -27,3 +27,11 @@ th, td {
 .status, .content-Status {
 	color: red;
 }
+
+.pagination-number {
+	margin-top: 10px;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
