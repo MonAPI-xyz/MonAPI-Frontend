@@ -55,7 +55,9 @@ const ViewListMonitor = () => {
 
 			<div class="d-flex justify-content-between">
 				<h2>API Monitors</h2>
-				<button type="button" class="btn btn-success">Create New</button>
+				<Link href="/create">
+					<button type="button" class="btn btn-success">Create New</button>
+				</Link>
 			</div>
 			
 			<table style="width:100%">

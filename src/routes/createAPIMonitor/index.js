@@ -1,45 +1,65 @@
 import { h } from 'preact';
-import TextInput from '../../components/forms/textinput/index.js';
-import { Button, Spinner, Text,Box, Flex, Grid, GridItem, Radio, RadioGroup  } from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
+import { Button, Spinner, Text, Box, Flex, Grid, GridItem, Radio, RadioGroup, Textarea, FormErrorMessage, FormControl } from '@chakra-ui/react';
+import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'preact/hooks';
+import axios from 'axios';
+import { route } from 'preact-router';
+
 import Dropdown from '../../components/forms/dropdown/index.js';
-import style from './style.css';
-import KeyValueInput from '../../components/forms/keyValueInput/index.js';
+import TextInput from '../../components/forms/textinput/index.js';
 import KeyValueForm from '../../components/createAPIMonitor/keyValueForm/index.js';
-import Assertions from '../../components/createAPIMonitor/assertions/index.js';
+import BASE_URL from '../../config/api/constant.js';
+import { getUserToken } from '../../config/api/auth.js';
+import style from './style.css';
 
-const CreateAPIMonitor = () =>{
-    
+const CreateAPIMonitor = () => {
+    const [bodyType, setBodyType] = useState("EMPTY");
+    const [selectedTab, setSelectedTab] = useState(0);
     const [isLoading, setIsLoading] = useState(false)
-    const {
-      handleSubmit,
-      register,
-      formState: { errors },
-    } = useForm();
+    const [responseMessage, setResponseMessage] = useState('');
 
-    const [responseMessage, setResponseMessage] = useState('')
-    const [selectedTab, setSelectedTab] = useState(0)
+    const {
+        handleSubmit,
+        register,
+        control,
+        formState: { errors },
+    } = useForm({
+        defaultValues: {
+            name: "",
+            method: "GET",
+            url: "",
+            schedule: "1MIN",
+            body_type: "EMPTY",
+            query_params: [],
+            headers: [],
+            body_form: [],
+            raw_body: "",
+        }
+    });
 
     const methodOption = [
         {
-            key: "get",
+            key: "GET",
             value: "GET",
         },
         {
-            key: "post",
+            key: "POST",
             value: "POST",
         },
         {
-            key: "put",
+            key: "PUT",
             value: "PUT",
         },
         {
-            key: "patch",
+            key: "PATCH",
             value: "PATCH",
         },
+        {
+            key: "DELETE",
+            value: "DELETE",
+        },
     ]
-    
+
     const intervalOption = [
         {
             key: "1MIN",
@@ -56,89 +76,121 @@ const CreateAPIMonitor = () =>{
         {
             key: "5MIN",
             value: "5 Minutes",
-        }
-        
+        },
+        {
+            key: "10MIN",
+            value: "10 Minutes",
+        },
+        {
+            key: "15MIN",
+            value: "15 Minutes",
+        },
+        {
+            key: "30MIN",
+            value: "30 Minutes",
+        },
+        {
+            key: "60MIN",
+            value: "60 Minutes",
+        },
     ]
 
-    function RadioButtonBody() {
-        const [value, setValue] = useState('0')
-        return (
-            <Box>
-                <RadioGroup onChange={setValue} value={value}>
-                    <Flex direction='row' gap="25px">
-                    <Radio color="gray.300" value='0'>No Body</Radio>
-                    <Radio value='1'>Form</Radio>
-                    <Radio value='2'>Raw Body</Radio>
-                    </Flex>
-                </RadioGroup>
-
-                <Box mb="20px" />
-                {value == '1' &&
-                          <KeyValueForm 
-                          errors={errors}
-                          register={register}
-                           />  }
-            </Box>
-        )
-      }
-
-
-    const onSubmit = async () => {
-        setIsLoading(true);
-        try {
-            
-        } catch(error) {
-            
+    const onSubmit = (data) => {
+        if (!isLoading) {
+            setIsLoading(true);
+            axios.post(`${BASE_URL}/monitor/`, data, {
+                headers: {
+                    Authorization:`Token ${getUserToken()}`
+                }
+            }).then(()=>{
+                route('/');
+                setIsLoading(false);
+            }).catch((error)=> {
+                setResponseMessage(error.response.data.error);
+                setIsLoading(false);
+            })
         }
     };
 
     return (
-        <Flex
-            h="full"
-            backgroundRepeat='no-repeat'
-            justify='center'
-            align='center'
-        >   
-            <Grid w='60vw' h='full' justify='center' templateColumns='repeat(6, 1fr)'  
+        <div class={style['new-api-monitor']}>
+            {console.log(errors)}
+            <Flex
+                h="full"
+                backgroundRepeat='no-repeat'
+                justify='center'
+                align='center'
             >
-                <GridItem colSpan={6}
-                >
-                    <Box verticalAlign='center'>
-                    
-                        <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
-                            Create new API Monitor
-                        </Text>
-                        <Box as='form' onSubmit={handleSubmit(onSubmit)} id="form-create-api-monitor">
-                            <Box w='40vw'>
-                                <TextInput 
-                                    id="monitor-name"
-                                    title='Monitor Name' 
-                                    placeholder='Monitor Name' 
-                                    errors={errors}
-                                    rules={{
-                                        required: 'Required',
-                                        minLength: { value: 1, message: 'Required' },
-                                    }}
-                                    register={register}
-                                />
-                            </Box>
-                            <Box mb='20px' />
-                            
-                            <Flex 
-                                w='full'
-                                h='full' 
-                                templateColumns='repeat(6, 1fr)'
-                                gap='1.6vw'
-                                flexWrap='wrap'
-                            >
-                                <Box w='8vw'
+                <Grid w='60vw' h='full' justify='center' templateColumns='repeat(6, 1fr)'>
+                    <GridItem colSpan={6}>
+                        <Box verticalAlign='center'>
+                            <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
+                                Create new API Monitor
+                            </Text>
+                            <Box as='form' onSubmit={handleSubmit(onSubmit)} id="form-create-api-monitor">
+                                <Box w='40vw'>
+                                    <TextInput
+                                        id="name"
+                                        title='Monitor Name'
+                                        placeholder='Monitor Name'
+                                        errors={errors}
+                                        rules={{
+                                            required: 'Required',
+                                            minLength: { value: 1, message: 'Required' },
+                                        }}
+                                        register={register}
+                                    />
+                                </Box>
+                                <Box mb='20px' />
+
+                                <Flex
+                                    w='full'
+                                    h='full'
+                                    templateColumns='repeat(6, 1fr)'
+                                    gap='1.6vw'
+                                    flexWrap='wrap'
                                 >
-                                    <Dropdown 
-                                        id="method"
-                                        title='Method' 
-                                        placeholder='Method' 
+                                    <Box w='8vw'
+                                    >
+                                        <Dropdown
+                                            id="method"
+                                            title='Method'
+                                            placeholder='Method'
+                                            dataTestId='dropdownMethod'
+                                            errors={errors}
+                                            options={methodOption}
+                                            rules={{
+                                                required: 'Required',
+                                                minLength: { value: 1, message: 'Required' },
+                                            }}
+                                            register={register}
+                                        />
+                                    </Box>
+                                    <Box w='50vw'>
+                                        <TextInput
+                                            id="url"
+                                            title='Request URL'
+                                            placeholder='Request URL'
+                                            errors={errors}
+                                            rules={{
+                                                required: 'Required',
+                                                minLength: { value: 1, message: 'Required' },
+                                            }}
+                                            register={register}
+                                        />
+                                    </Box>
+                                </Flex>
+
+                                <Box mb='20px' />
+
+                                <Box w='20vw'>
+                                    <Dropdown
+                                        id="schedule"
+                                        title='Check Interval'
+                                        dataTestId='dropdownInterval'
+                                        placeholder=''
                                         errors={errors}
-                                        options={methodOption}
+                                        options={intervalOption}
                                         rules={{
                                             required: 'Required',
                                             minLength: { value: 1, message: 'Required' },
@@ -146,169 +198,114 @@ const CreateAPIMonitor = () =>{
                                         register={register}
                                     />
                                 </Box>
-                                <Box w='50vw'>
-                                    <TextInput 
-                                        id="request-url"
-                                        title='Request URL' 
-                                        placeholder='Request URL' 
-                                        errors={errors}
-                                        rules={{
-                                            required: 'Required',
-                                            minLength: { value: 1, message: 'Required' },
-                                        }}
-                                        register={register}
-                                    />
+
+                                <Box mb='20px' />
+
+                                <Box mb="40px" />
+                                <Box>
+                                    <Grid justify="start" w='50vw' h='full' templateColumns='repeat(4, 1fr)' gap="20px" >
+                                        <GridItem colSpan={1}>
+                                            <Text onClick={() => setSelectedTab(0)} textAlign="center" fontWeight={selectedTab == 0 ? "700" : "500"} className={style['noselect']}>
+                                                Query Params
+                                            </Text>
+                                        </GridItem>
+
+                                        <GridItem colSpan={1}>
+                                            <Text onClick={() => setSelectedTab(1)} textAlign="center" fontWeight={selectedTab == 1 ? "700" : "500"} className={style['noselect']}>
+                                                Headers
+                                            </Text>
+                                        </GridItem>
+
+                                        <GridItem colSpan={1}>
+                                            <Text onClick={() => setSelectedTab(2)} textAlign="center" fontWeight={selectedTab == 2 ? "700" : "500"} className={style['noselect']}>
+                                                Body
+                                            </Text>
+                                        </GridItem>
+                                    </Grid>
                                 </Box>
-                            </Flex>
+                                <Box mb='20px' />
 
-                            <Box mb='20px' />
-                            
-                            <Box w='20vw'>
-                                <Dropdown 
-                                    id="interval"
-                                    title='Check Interval' 
-                                    dataTestId='interval'
-                                    placeholder='' 
-                                    errors={errors}
-                                    options={intervalOption}
-                                    rules={{
-                                        required: 'Required',
-                                        minLength: { value: 1, message: 'Required' },
-                                    }}
-                                    register={register}
-                                />
+                                {selectedTab == 0 &&
+                                    <KeyValueForm
+                                        errors={errors}
+                                        register={register}
+                                        keyName={'query_params'}
+                                        control={control}
+                                        buttonAddText={'Add Query Params'}
+                                    />
+                                }
+
+                                {selectedTab == 1 &&
+                                    <KeyValueForm
+                                        errors={errors}
+                                        register={register}
+                                        keyName={'headers'}
+                                        control={control}
+                                        buttonAddText={'Add Headers'}
+                                    />
+                                }
+
+                                {selectedTab == 2 &&
+                                    <Box>
+                                        <Controller name="body_type" control={control} render={({ field: { onChange, value } }) => (
+                                            <RadioGroup onChange={(e)=>{onChange(e); setBodyType(e);}} value={value}>
+                                            <Flex direction='row' gap="25px">
+                                                <Radio id='body_type_emptyempty' color="gray.300" value='EMPTY'>No Body</Radio>
+                                                <Radio id='body_type_form' value='FORM' name="body_type">Form</Radio>
+                                                <Radio id='body_type_raw' value='RAW' name="body_type">Raw Body</Radio>
+                                            </Flex>
+                                            </RadioGroup>
+                                        )}
+                                        />
+
+                                        <Box mb="20px" />
+                                        {bodyType == 'FORM' &&
+                                            <KeyValueForm
+                                                errors={errors}
+                                                register={register}
+                                                keyName={'body_form'}
+                                                control={control}
+                                                buttonAddText={'Add Form'}
+                                            />
+                                        }
+
+                                        {bodyType == 'RAW' && <div>
+                                            <FormControl isInvalid={errors['raw_body']}>
+                                                <Textarea 
+                                                    name={'raw_body'} 
+                                                    {...register('raw_body', {
+                                                        required: 'Required',
+                                                        minLength: { value: 1, message: 'Required' },
+                                                    })} 
+                                                    bgColor="#F1F1F1"
+                                                    placeholder={'Type request raw body here'}
+                                                />
+                                                <FormErrorMessage>{errors['raw_body'] && errors['raw_body'].message}</FormErrorMessage>
+                                            </FormControl>
+                                        </div>}
+                                    </Box>
+                                }
+
+                                <Box mb='10px' />
+                                {responseMessage != '' && <Text fontSize='14px' color='red.500'>{responseMessage}</Text>}
+                                <Box mb={responseMessage ? '10px' : '20px'} />
+
                             </Box>
-
-                            <Box mb='20px' />
-                            
-                            <Box w='40vw'>
-                                <Dropdown 
-                                    id="previousStepAPI"
-                                    title='Previous Step API Monitor' 
-                                    dataTestId='previousStep'
-                                    placeholder='' 
-                                    errors={errors}
-                                    options={intervalOption}
-                                    rules={{
-                                        required: 'Required',
-                                        minLength: { value: 1, message: 'Required' },
-                                    }}
-                                    register={register}
-                                />
-                            </Box>
-                            
-                            <Box mb='10px' />
-
-                            <Text>
-                                Please select "none" if you want to create single-step API Monitor
-                            </Text>
-                            <Text>
-                            Sample format to use previous API response &#123;&#123;data.result[0].name&#125;&#125;. More documentation link
-                            </Text>
-
-                            <Box mb="40px" />
-                            <Box>
-                                <Grid justify="start" w='50vw' h='full' templateColumns='repeat(4, 1fr)' gap="20px" >
-                                    <GridItem colSpan={1}>
-                                        <Text onClick={() => setSelectedTab(0)} textAlign="center" fontWeight={selectedTab == 0 ? "700" : "500"} className={style['noselect']}>
-                                            Query Params
-                                        </Text>
-                                    </GridItem>
-
-                                    <GridItem colSpan={1}>
-                                        <Text onClick={() => setSelectedTab(1)} textAlign="center" fontWeight={selectedTab == 1 ? "700" : "500"} className={style['noselect']}>
-                                            Headers
-                                        </Text>
-                                    </GridItem>
-
-                                    <GridItem colSpan={1}>
-                                        <Text onClick={() => setSelectedTab(2)} textAlign="center" fontWeight={selectedTab == 2 ? "700" : "500"} className={style['noselect']}>
-                                            Body
-                                        </Text>
-                                    </GridItem>
-
-                                    <GridItem colSpan={1}>
-                                        <Text onClick={() => setSelectedTab(3)} textAlign="center" fontWeight={selectedTab == 3 ? "700" : "500"} className={style['noselect']}>
-                                            Assertions
-                                        </Text>
-                                    </GridItem>
-                                </Grid>
-                            </Box>
-                            <Box mb='20px' />
-
-                            {selectedTab == 0 &&
-                            <KeyValueForm 
-                            errors={errors}
-                            register={register}
-                             />}
-
-                            {selectedTab == 1 &&
-                            <Box>
-                                <Grid w='full' h='full' templateColumns='repeat(8, 1fr)' gap="20px">
-                                    <GridItem colSpan={3}>
-                                        <Text>
-                                            Query Params
-                                        </Text>
-                                    </GridItem>
-
-                                    <GridItem colSpan={5}>
-                                        <Text>
-                                            Headers
-                                        </Text>
-                                    </GridItem>
-                                </Grid>
-
-                                <Box mb='6px' />
-                                
-                                <KeyValueInput
-                                    id="request-url"
-                                    title='Request URL' 
-                                    placeholder='' 
-                                    errors={errors}
-                                    rules={{
-                                        required: 'Required',
-                                        minLength: { value: 1, message: 'Required' },
-                                    }}
-                                    register={register}
-                                />
-                                <Box mb='16px' />
-                                <Button form="add" colorScheme='teal' type='submit' width='4em' borderRadius={10}>
-                                    Add
+                            <Box mb='49px' />
+                            <Box align="end">
+                                <Button form="form-create-api-monitor" id='signInButton' colorScheme='teal' type='submit' width='14em' borderRadius={10}>
+                                    {isLoading ? <Spinner /> : "Create API Monitor"}
                                 </Button>
-                            </Box>}
+                            </Box>
 
-                            {selectedTab == 2 &&
-                            <Box>
-                                <RadioButtonBody />
-                                
-                            </Box>}
-
-                            {selectedTab == 3 &&
-                            <Assertions 
-                                errors={errors}
-                                register={register}
-                            /> 
-                            }
-
-                            <Box mb='10px' />
-                            {responseMessage != '' && <Text fontSize='14px' color='red.500'>{responseMessage}</Text>}
-                            <Box mb={responseMessage ? '10px' : '20px'} />
-
-                        </Box>                        
-                        <Box mb='49px' />
-                        <Box align="end">
-                            <Button form="form-create-api-monitor" id='signInButton' colorScheme='teal' type='submit' width='14em' borderRadius={10}>
-                                {isLoading ? <Spinner /> : "Create API Monitor"}
-                            </Button>
                         </Box>
-                        
-                    </Box>
-                                        
-                </GridItem>
-            </Grid>
-        </Flex>
-            );
-        
+
+                    </GridItem>
+                </Grid>
+            </Flex>
+        </div>
+    );
+
 }
 
 

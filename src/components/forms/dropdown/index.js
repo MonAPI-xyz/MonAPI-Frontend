@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/form-control';
+import { FormControl, FormLabel } from '@chakra-ui/form-control';
 import Asterisk from '../asterisk/index.js';
 import { Select } from '@chakra-ui/react';
 
@@ -15,15 +15,15 @@ const Dropdown = (props) => {
         <Select 
             bgColor='#F1F1F1'
             data-testid={dataTestId}
+            name={id}
+            {...register(id)}
         >
             {options.map(({ key, value }) => (
-                <option key={key} value={value}>
-                {value}
+                <option key={key} value={key}>
+                  {value}
                 </option>
             ))}
         </Select>
-
-        <FormErrorMessage>{errors[id] && errors[id].message}</FormErrorMessage>
       
     </FormControl>
   );

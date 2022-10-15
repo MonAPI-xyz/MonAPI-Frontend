@@ -8,3 +8,7 @@
                                     supported by Chrome, Edge, Opera and Firefox */
     cursor: pointer;
   }
+
+.new-api-monitor {
+  padding: 40px 20px;
+}

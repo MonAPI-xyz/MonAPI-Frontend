@@ -1,0 +1,10 @@
+.key-value-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.key-value-close-icon {
+    margin: 0px 10px;
+    cursor: pointer;
+}

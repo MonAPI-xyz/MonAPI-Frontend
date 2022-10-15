@@ -6,4 +6,15 @@
 
 .dashboard-content {
     flex: 1;
+    background-color: white;
+    width: calc(100% - 270px);
+}
+
+.dashboard-sidebar{
+    width: 270px;
+    flex: 0 0 auto;
+}
+
+.dashboard-inner-sidebar{
+    position:fixed;
 }

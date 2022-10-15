@@ -33,7 +33,6 @@ const App = () => {
 					
 					<Login path={ROUTE.LOGIN} />
 					<Register path={ROUTE.REGISTER} />
-					{/* <CreateAPIMonitor path={ROUTE.CREATE_API_MONITOR} />			 */}
 				</Router>
 			</ChakraProvider>
 		</Provider>
