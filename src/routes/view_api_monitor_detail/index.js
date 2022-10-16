@@ -67,7 +67,7 @@ const ViewAPIMonitorDetail = ({id}) => {
     <div class={style.home}>
       <Flex alignItems='center' gap='2'>
         <Box p='2'>
-          <Heading size='md'>Testing API Name</Heading>
+          <Heading size='md'>{detail.name}</Heading>
         </Box>
         <Spacer />
         <ButtonGroup gap='2'>
