@@ -12,6 +12,7 @@ describe('Test view api monitor detail', () => {
 
   test('When render, then success', async () => {
     const response = {
+      "name":"Test API Name",
 			"url": "https://pacil.com",
 			"schedule": "mySchedule",
 			"success_rate": [
@@ -47,7 +48,7 @@ describe('Test view api monitor detail', () => {
     render(<ViewAPIMonitorDetail id={1} />);
     await waitFor(() => {
       expect(screen.queryAllByRole('button').length).toBe(2)
-      expect(screen.getByText("Schedule")).toBeDefined()
+      expect(screen.getByText("Test API Name")).toBeDefined()
       expect(screen.getByTestId('select')).toBeDefined()
     })
 
@@ -59,6 +60,7 @@ describe('Test view api monitor detail', () => {
 
   test('When select time, then change value and chart', async () => {
     const response = {
+      "name":"Test",
 			"url": "https://pacil.com",
 			"schedule": "Before select change",
 			"success_rate": [
@@ -90,6 +92,7 @@ describe('Test view api monitor detail', () => {
 		}
 
     const responseSelect = {
+      "name":"Test",
 			"url": "https://pacil.com",
 			"schedule": "After select change",
 			"success_rate": [
@@ -150,6 +153,7 @@ describe('Integration test detail page', () => {
     
     const responseDashboard = [{"id":1,"name":"Test","method":"GET","url":"url","schedule":"5MIN","body_type":"FORM","query_params":[],"headers":[],"body_form":[],"raw_body":[],"success_rate":100.0,"avg_response_time":0,"success_rate_history":[{"date":"2022-09-30","hour":17,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":18,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":19,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":20,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":21,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":22,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":23,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":0,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":1,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":2,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":3,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":4,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":5,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":6,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":7,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":8,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":9,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":10,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":11,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":12,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":13,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":14,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":15,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":16,"minute":0,"success":0,"failed":0}]}]
     const responseDetail = {
+      "name":"Test",
 			"url": "https://pacil.com",
 			"schedule": "mySchedule",
 			"success_rate": [
