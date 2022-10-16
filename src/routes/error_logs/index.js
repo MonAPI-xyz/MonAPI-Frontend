@@ -45,7 +45,7 @@ const ErrorLogs = () => {
         <p><b>{header}</b><br/>
         <span class={style[`content-${header}`]}>
           <Box bg='gray.100' w='90%' color='black' p={3.5} mt={1.5} borderRadius='lg' class={style[`content-${header}`]}>
-            {content}
+            {content ? content : "-"}
           </Box>
         </span></p>
       </div>
@@ -179,7 +179,7 @@ const ErrorLogs = () => {
                   <div>{headerAndContent('API Monitor Name', detail.monitor.name)}</div>
                   <div>{headerAndContent('Path', detail.monitor.url)}</div>
                   <div>{headerAndContent('Status', 'failed')}</div>
-                  <div>{headerAndContent('Execution Time', detail.response_time)}</div>
+                  <div>{headerAndContent('Execution Time', `${detail.response_time} ms`)}</div>
                   <div>{headerAndContent('Status Code', detail.status_code)}</div>
                   <div>{headerAndBox('Response', detail.log_response)}</div>
                   <div>{headerAndBox('Error', detail.log_error)}</div>

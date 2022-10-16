@@ -66,7 +66,6 @@ describe('Test view error logs in unique case', () => {
     const responsePage3 = {count: 40, next: "http://testserver/error-logs/?page=4", previous: "http://testserver/error-logs/?page=2", results: resultsList3}
     const responsePage4 = {count: 40, next: null, previous: "http://testserver/error-logs/?page=3", results: resultsList4}
     axios.get.mockImplementation((url, data) => {
-      console.log(url, data)
       if (url.includes('error-logs/')) {
         if (data.params.page == 1) return Promise.resolve({ data: responsePage1 }) 
         else if ((data.params.page == 2)) return Promise.resolve({ data: responsePage2 }) 
@@ -99,7 +98,7 @@ describe('Test view error logs in unique case', () => {
 
 describe('Functional test all feature of view error logs', () => {
 
-  jest.setTimeout(30000);
+  jest.setTimeout(40000);
 
   test('When provide with exist data error, then success render list error logs, open modal for the detail, and close the modal', async () => {
     const response = {count: 2, next: null, previous: null, 
@@ -123,7 +122,7 @@ describe('Functional test all feature of view error logs', () => {
         success: false,
         status_code: 400,
         log_response: "response1",
-        log_error: "error1"
+        log_error: null
       },
       {
           id: 2,
@@ -147,7 +146,7 @@ describe('Functional test all feature of view error logs', () => {
         success: false,
         status_code: 400,
         log_response: "response2",
-        log_error: "error2"
+        log_error: ""
       }
     ]}
 
@@ -186,6 +185,7 @@ describe('Functional test all feature of view error logs', () => {
     fireEvent.click(detailButton[1])
     await waitFor(() => {
       expect(screen.getByText("response2")).toBeDefined()
+      expect(screen.getByText("-")).toBeDefined()
     })
 
     //back to list of error logs (button close in bottom modal)
