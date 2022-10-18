@@ -15,7 +15,7 @@ const PasswordInput = (props) => {
 
   return (
     <FormControl {...rest} isInvalid={errors[id]}>
-      <FormLabel htmlFor={id}>
+      <FormLabel htmlFor={id} fontWeight='semibold'>
         {title} <Asterisk isRequired={rules?.['required']} />
       </FormLabel>
     

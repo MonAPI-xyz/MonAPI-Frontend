@@ -29,6 +29,7 @@ import {
 } from 'react-icons/fa';
 import { getUserToken, deleteUserToken } from '../../config/api/auth.js';
 import { route } from 'preact-router';
+import { Link } from 'preact-router/match';
 import { useState } from 'preact/hooks';
 import AlertComponent from '../alertComponent/index.js';
 import axios from 'axios';
@@ -36,9 +37,9 @@ import BASE_URL from '../../config/api/constant.js';
 import logo from '../../assets/icons/logo-monapi.svg';
 import ROUTE from '../../config/api/route.js';
 import 'react-pro-sidebar/dist/css/styles.css';
+import style from './style.css';
 
-const SideBar = () => {
-  const [menuCollapse, setMenuCollapse] = useState(false)
+const SideBar = ({menuCollapse, setMenuCollapse}) => {
   const [logoutPopup, setLogoutPopup] = useState(false) 
   const [isLoadingLogout, setIsLoadingLogout] = useState(false)
 
@@ -58,9 +59,9 @@ const SideBar = () => {
   return (
     <ProSidebar collapsed={menuCollapse}>
       <SidebarHeader style={{ textAlign: 'center', padding: '10px' }}>
-        <div>
-        {menuCollapse ? <img src={logo} alt="MonAPI" style={{width:'75%'}} /> : (<img src={logo} alt="MonAPI" />)}
-        </div>
+        <Link href="/">
+          {menuCollapse ? <img src={logo} alt="MonAPI" style={{width:'75%'}} /> : (<img src={logo} alt="MonAPI" />)}
+        </Link>
         <div id="navArrow-header" role='iconarrow' onClick={menuIconClick}>
           {menuCollapse ? (<FaRegArrowAltCircleRight role='' />) : (<FaRegArrowAltCircleLeft />)}
         </div>
@@ -71,10 +72,12 @@ const SideBar = () => {
           <MenuItem
             icon={<FaTachometerAlt />}>
             Dashboard
-          </MenuItem>
+            <Link class={style['menu-button']} activeClassName={style['active']} href="/" />
+          </MenuItem>   
           <MenuItem
             icon={<FaExclamationCircle />}>
             Error Logs
+            <Link class={style['menu-button']} activeClassName={style['active']} href="/error-logs/" /> 
           </MenuItem>
           <MenuItem
             icon={<FaPlay />}>

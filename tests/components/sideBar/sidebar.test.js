@@ -5,6 +5,7 @@ import * as axios from 'axios';
 import App from '../../../src/components/app.js';
 import { route } from 'preact-router'
 import { setUserToken } from '../../../src/config/api/auth'
+import DashboardWrapper from '../../../src/components/dashboardWrapper';
 
 jest.mock('axios');
 
@@ -70,7 +71,7 @@ describe('Test sideBar', () => {
   })
 
   test('When click arrow icon, then the collapsed status to be true', async () => {
-    render(<SideBar/>);
+    render(<DashboardWrapper/>);
 
     fireEvent.click(screen.getByRole('iconarrow'))
     await waitFor(() => {
@@ -80,7 +81,7 @@ describe('Test sideBar', () => {
   })
 
   test('When the collapsed was true and click the arrow icon, then the collapsed status to be false', async () => {
-    render(<SideBar/>);
+    render(<DashboardWrapper/>);
 
     fireEvent.click(screen.getByRole('iconarrow'))
     fireEvent.click(screen.getByRole('iconarrow'))
