@@ -11,3 +11,10 @@ Version: v0.1.0<br>
 Date: 25th September 2022
 1. Add feature for login and register
 2. Add feature for view list API Monitor
+
+### Release 2
+Version: v0.2.0<br>
+Date: 17th October 2022
+1. Implement create new api monitor
+2. Implement api monitor details
+3. Run cron for api monitor
