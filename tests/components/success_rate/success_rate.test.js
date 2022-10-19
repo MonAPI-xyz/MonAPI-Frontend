@@ -12,23 +12,39 @@ jest.mock('axios');
 describe('Test success rate', () => {
 
   test('When render, then succes', async () => {
-    const {container} = render(<SuccessRate success={1} failed={0}/>);
+    const {container} = render(<SuccessRate success={2} failed={0}/>);
 
     await waitFor(() => {
       expect(container.getElementsByClassName("green-bar").length).toBe(1)
     })
   });
 
-  test('When render, then succes, but both values are the same and non zero', async () => {
+  test('When render, then there are success and failed', async () => {
     const {container} = render(<SuccessRate success={2} failed={2}/>);
 
     await waitFor(() => {
-      expect(container.getElementsByClassName("green-bar").length).toBe(1)
+      expect(container.getElementsByClassName("yellow-bar").length).toBe(1)
+    })
+  });
+
+  test('When render, then there are success and failed pt.2,', async () => {
+    const {container} = render(<SuccessRate success={2} failed={1}/>);
+
+    await waitFor(() => {
+      expect(container.getElementsByClassName("yellow-bar").length).toBe(1)
+    })
+  });
+
+  test('When render, then there are success and failed pt.3', async () => {
+    const {container} = render(<SuccessRate success={1} failed={2}/>);
+
+    await waitFor(() => {
+      expect(container.getElementsByClassName("yellow-bar").length).toBe(1)
     })
   });
 
   test('When render, then failed', async () => {
-    const {container} = render(<SuccessRate success={0} failed={1}/>);
+    const {container} = render(<SuccessRate success={0} failed={2}/>);
 
     await waitFor(() => {
       expect(container.getElementsByClassName("red-bar").length).toBe(1)
