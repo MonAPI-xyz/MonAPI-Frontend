@@ -10,14 +10,22 @@ const SuccessRate = ({success,failed})=> {
                 </div>
                 :
                 <>
-                    {(success >= failed)?
+                    {(failed == 0)?
                         <div class={style['green-bar']}>
                             
                         </div>
                         :
-                        <div class={style['red-bar']}>
+                        <>
+                            {(success == 0)?
+                                <div class={style['red-bar']}>
+                                    
+                                </div>
+                                :
+                                <div class={style['yellow-bar']}>
 
-                        </div>
+                                </div>
+                            }
+                        </>     
                     }
                 </>     
             }
