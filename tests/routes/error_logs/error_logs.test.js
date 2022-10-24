@@ -37,7 +37,11 @@ describe('Test view error logs in unique case', () => {
             query_params: [],
             headers: [],
             body_form: [],
-            raw_body: null
+            raw_body: null,
+            assertion_type: "DISABLED",
+            assertion_value: "",
+            is_assert_json_schema_only: false,
+            exclude_keys: [],
           },
         execution_time: "2022-10-07T21:27:20+07:00",
         response_time: idx,
@@ -94,6 +98,110 @@ describe('Test view error logs in unique case', () => {
       expect(screen.getByTestId("page-1").classList).toContain("active")
     })
   })
+
+  test('When provide Text assertion, then success render detail with text compare', async () => {
+    const response = {count: 1, next: null, previous: null, 
+      results: [
+        {
+            id: 1,
+            monitor: {
+                id: 1,
+                name: "Test",
+                method: "GET",
+              url: "www.pacil.ac.id",
+              schedule: "2MIN",
+              body_type: "EMPTY",
+              query_params: [],
+              headers: [],
+              body_form: [],
+              raw_body: null,
+              assertion_type: "TEXT",
+              assertion_value: "test text assert",
+              is_assert_json_schema_only: false,
+              exclude_keys: [],
+            },
+          execution_time: "2022-10-08T22:27:20+07:00",
+          date: "2022-10-08",
+          hour: 2,
+          minute: 2,
+          response_time: 30,
+          success: false,
+          status_code: 400,
+          log_response: "test text",
+          log_error: "Assertion text failed"
+        }
+      ]
+    }
+
+    axios.get.mockImplementation((url) => {
+      if (url.includes('error-logs/1')) {
+        return Promise.resolve({ data: response.results[0] })
+      } else if (url.includes('error-logs/')) {
+        return Promise.resolve({ data: response }) 
+      }
+    });
+
+    render(<ErrorLogs />);
+
+    const detailButton = await screen.findByRole('detail-button')
+    fireEvent.click(detailButton)
+
+    await waitFor(() => {
+      expect(screen.getByText("Text Compare")).toBeDefined()
+    })
+  })
+
+  test('When provide JSON assertion, then success render detail with JSON compare', async () => {
+    const response = {count: 1, next: null, previous: null, 
+      results: [
+        {
+            id: 1,
+            monitor: {
+                id: 1,
+                name: "Test",
+                method: "GET",
+              url: "www.pacil.ac.id",
+              schedule: "2MIN",
+              body_type: "EMPTY",
+              query_params: [],
+              headers: [],
+              body_form: [],
+              raw_body: null,
+              assertion_type: "JSON",
+              assertion_value: '{"key":"value2"}',
+              is_assert_json_schema_only: false,
+              exclude_keys: [],
+            },
+          execution_time: "2022-10-08T22:27:20+07:00",
+          date: "2022-10-08",
+          hour: 2,
+          minute: 2,
+          response_time: 30,
+          success: false,
+          status_code: 400,
+          log_response: '{"key":"value"}',
+          log_error: 'Different value detected on root[\'key\'], expected "value2" but found "value"'
+        }
+      ]
+    }
+
+    axios.get.mockImplementation((url) => {
+      if (url.includes('error-logs/1')) {
+        return Promise.resolve({ data: response.results[0] })
+      } else if (url.includes('error-logs/')) {
+        return Promise.resolve({ data: response }) 
+      }
+    });
+
+    render(<ErrorLogs />);
+
+    const detailButton = await screen.findByRole('detail-button')
+    fireEvent.click(detailButton)
+
+    await waitFor(() => {
+      expect(screen.getByText("JSON Compare")).toBeDefined()
+    })
+  })
 })
 
 describe('Functional test all feature of view error logs', () => {
@@ -115,7 +223,11 @@ describe('Functional test all feature of view error logs', () => {
             query_params: [],
             headers: [],
             body_form: [],
-            raw_body: null
+            raw_body: null,
+            assertion_type: "DISABLED",
+            assertion_value: "",
+            is_assert_json_schema_only: false,
+            exclude_keys: [],
           },
         execution_time: "2022-10-07T21:27:20+07:00",
         response_time: 40,
@@ -136,7 +248,11 @@ describe('Functional test all feature of view error logs', () => {
             query_params: [],
             headers: [],
             body_form: [],
-            raw_body: null
+            raw_body: null,
+            assertion_type: "DISABLED",
+            assertion_value: "",
+            is_assert_json_schema_only: false,
+            exclude_keys: [],
           },
         execution_time: "2022-10-08T22:27:20+07:00",
         date: "2022-10-08",
@@ -176,22 +292,9 @@ describe('Functional test all feature of view error logs', () => {
     })
 
     //back to list of error logs (close modal in x button)
-    fireEvent.click(screen.getAllByRole('button', {name:'Close'})[0]);
+    fireEvent.click(screen.getByRole('button', {name:'Close'}));
     await waitFor(() => {
       expect(screen.queryByText("response1")).toBeNull()
-    })
-
-    // detail of api monitor Test2 on modal
-    fireEvent.click(detailButton[1])
-    await waitFor(() => {
-      expect(screen.getByText("response2")).toBeDefined()
-      expect(screen.getByText("-")).toBeDefined()
-    })
-
-    //back to list of error logs (button close in bottom modal)
-    fireEvent.click(screen.getAllByRole('button', {name:'Close'})[1])
-    await waitFor(() => {
-      expect(screen.queryByText("response2")).toBeNull()
     })
   });
   
@@ -209,7 +312,11 @@ describe('Functional test all feature of view error logs', () => {
             query_params: [],
             headers: [],
             body_form: [],
-            raw_body: null
+            raw_body: null,
+            assertion_type: "DISABLED",
+            assertion_value: "",
+            is_assert_json_schema_only: false,
+            exclude_keys: [],
           },
         execution_time: "2022-10-07T21:27:20+07:00",
         response_time: idx,
