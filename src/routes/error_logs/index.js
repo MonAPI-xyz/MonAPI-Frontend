@@ -1,14 +1,12 @@
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks'
 import {
-  Button,
   Box,
   Icon,
   Link,
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Tooltip,
