@@ -36,3 +36,14 @@
 	background-color:grey;
 	border-radius: 2px;
 }
+
+.yellow-bar {
+	margin-top: 1px;
+	margin-bottom: 2px;
+	margin-left: 3px;
+	margin-right: 4px;
+	height:25px;
+	width:7px;
+	background-color:yellow;
+	border-radius: 2px;
+}
