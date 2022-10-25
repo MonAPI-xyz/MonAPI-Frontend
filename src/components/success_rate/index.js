@@ -15,9 +15,7 @@ const SuccessRate = ({success,failed})=> {
                         :
                         <>
                             {(success == 0)?
-                                <div class={style['red-bar']}>
-                                    
-                                </div>
+                                <div class={style['red-bar']} />
                                 :
                                 <div class={style['yellow-bar']}>
 
