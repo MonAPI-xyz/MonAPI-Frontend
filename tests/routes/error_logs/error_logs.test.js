@@ -99,7 +99,7 @@ describe('Test view error logs in unique case', () => {
     })
   })
 
-  test('When provide Text assertion, then success render detail with text compare', async () => {
+  test('When provide Text assertion, then success render detail without compare', async () => {
     const response = {count: 1, next: null, previous: null, 
       results: [
         {
@@ -147,7 +147,7 @@ describe('Test view error logs in unique case', () => {
     fireEvent.click(detailButton)
 
     await waitFor(() => {
-      expect(screen.getByText("Text Compare")).toBeDefined()
+      expect(screen.getByText("test text")).toBeDefined()
     })
   })
 
