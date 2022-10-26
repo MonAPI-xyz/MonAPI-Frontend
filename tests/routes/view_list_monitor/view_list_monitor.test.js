@@ -47,23 +47,6 @@ describe('Test API Monitors sites', () => {
 		setUserToken("token")
 		render(<App/>);
 		route('/')
-		var today = new Date();
-		var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-		var dateTime = date+' '+time;
-
-		await waitFor(() => {
-			expect(screen.getByText('Last checked: '+dateTime))
-			expect(getCurrentUrl()).toBe('/');
-		})
-	})
-
-	test('try to match model and view list', async () => {
-		const response = []
-		axios.get.mockImplementation(() => Promise.resolve({data: response}))
-		setUserToken("token")
-		render(<App/>);
-		route('/')
 
 		await waitFor(() => {
 			expect(screen.getByText('There is no monitor. You can click green button "Create New" in the middle right side'))
@@ -354,8 +337,13 @@ describe('Test API Monitors sites', () => {
 		setUserToken("token")
 		render(<App/>);
 		route('/')
+		var today = new Date();
+		var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+		var dateTime = date+' '+time;
 
 		await waitFor(() => {
+			expect(screen.getByText('Last checked: '+dateTime))
 			expect(screen.getByText('Ferdi'))
 			expect(screen.getByText('url'))
 			expect(screen.getByText('100%'))
