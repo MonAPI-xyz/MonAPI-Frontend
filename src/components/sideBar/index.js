@@ -94,6 +94,7 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
           <MenuItem
             icon={<FaCog />}>
             Configuration
+            <Link class={style['menu-button']} activeClassName={style['active']} href="/configuration/" /> 
           </MenuItem>
         </Menu>
       </SidebarContent>
