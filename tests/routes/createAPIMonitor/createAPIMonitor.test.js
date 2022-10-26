@@ -347,7 +347,218 @@ describe('Test Create API Monitor', () => {
             expect(screen.queryAllByText('Required')).toHaveLength(3)
         })
 	})
+});
 
 
+describe('Test Create API Monitor with Assertion', () => {
+    test('when create with Disabled assertion type then success', async () => {
+        const response = []
+        axios.post.mockImplementation(() => Promise.resolve({data: response}))
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+        render(<CreateAPIMonitor />);
+        
+        const monitorName = await screen.findByPlaceholderText("Monitor Name");
+        const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const interval = screen.getByTestId("dropdownInterval");
+        const method = screen.getByTestId('dropdownMethod');
+        const createAPIMonitorButton = screen.getByText('Create API Monitor');
+        
+        userEvent.type(monitorName, 'API Monitor 1')
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(interval, '1 Minute');
+        userEvent.selectOptions(method, 'GET');    
+
+        const assertionButton = screen.getByText('Assertions')
+        userEvent.click(assertionButton)
+
+        const disabledButton = screen.getByText('Disabled')
+        userEvent.click(disabledButton)
+
+        userEvent.click(createAPIMonitorButton)
+        await waitFor(() => {
+            expect(getCurrentUrl()).toBe('/create');
+        })
+    })
+
+    test('when create with Text assertion type then success', async () => {
+        const response = []
+        axios.post.mockImplementation(() => Promise.resolve({data: response}))
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+        render(<CreateAPIMonitor />);
+        
+        const monitorName = await screen.findByPlaceholderText("Monitor Name");
+        const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const interval = screen.getByTestId("dropdownInterval");
+        const method = screen.getByTestId('dropdownMethod');
+        const createAPIMonitorButton = screen.getByText('Create API Monitor');
+        
+        userEvent.type(monitorName, 'API Monitor 1')
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(interval, '1 Minute');
+        userEvent.selectOptions(method, 'GET');    
+
+        const assertionButton = screen.getByText('Assertions')
+        userEvent.click(assertionButton)
+
+        const textButton = screen.getByText('Text')
+        userEvent.click(textButton)
+
+        const textArea = screen.getByPlaceholderText('Type assertion here')
+        userEvent.type(textArea, 'test assertion')
+
+        userEvent.click(createAPIMonitorButton)
+        await waitFor(() => {
+            expect(getCurrentUrl()).toBe('/create');
+        })
+    })
+
+    test('when create with JSON assertion type and exclude key (+try delete exclude key) then success', async () => {
+        const response = []
+        axios.post.mockImplementation(() => Promise.resolve({data: response}))
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+        render(<CreateAPIMonitor />);
+        
+        const monitorName = await screen.findByPlaceholderText("Monitor Name");
+        const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const interval = screen.getByTestId("dropdownInterval");
+        const method = screen.getByTestId('dropdownMethod');
+        const createAPIMonitorButton = screen.getByText('Create API Monitor');
+        
+        userEvent.type(monitorName, 'API Monitor 1')
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(interval, '1 Minute');
+        userEvent.selectOptions(method, 'GET');    
+
+        const assertionButton = screen.getByText('Assertions')
+        userEvent.click(assertionButton)
+
+        const textButton = screen.getByText('JSON')
+        userEvent.click(textButton)
+
+        const textArea = screen.getByPlaceholderText('Type assertion here')
+        userEvent.type(textArea, '{"key1":"assertion value"}'.replace(/[{[]/g, '$&$&'))
+
+        const addKeyButton = await screen.getByText('Add Key');
+        userEvent.click(addKeyButton)
+        userEvent.click(addKeyButton)
+
+        const addKeys = await screen.findAllByPlaceholderText('Key')
+        userEvent.type(addKeys[0], 'Key1')
+        userEvent.type(addKeys[1], 'Key2')
+
+        const removeButton = await screen.findAllByTestId('keyValueRemoveButton')
+        userEvent.click(removeButton[0])
+
+        userEvent.click(createAPIMonitorButton)
+        await waitFor(() => {
+            expect(getCurrentUrl()).toBe('/create');
+        })
+    })
+
+    test('when create with JSON assertion type and key only then success', async () => {
+        const response = []
+        axios.post.mockImplementation(() => Promise.resolve({data: response}))
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+        render(<CreateAPIMonitor />);
+        
+        const monitorName = await screen.findByPlaceholderText("Monitor Name");
+        const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const interval = screen.getByTestId("dropdownInterval");
+        const method = screen.getByTestId('dropdownMethod');
+        const createAPIMonitorButton = screen.getByText('Create API Monitor');
+        
+        userEvent.type(monitorName, 'API Monitor 1')
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(interval, '1 Minute');
+        userEvent.selectOptions(method, 'GET');    
+
+        const assertionButton = screen.getByText('Assertions')
+        userEvent.click(assertionButton)
+
+        const textButton = screen.getByText('JSON')
+        userEvent.click(textButton)
+
+        const textArea = screen.getByPlaceholderText('Type assertion here')
+        userEvent.type(textArea, '{"key1":"assertion value"}'.replace(/[{[]/g, '$&$&'))
+
+        const keyOnlyCheckbox = screen.getByText('Assert JSON schema (key) only')
+        userEvent.click(keyOnlyCheckbox)
+        
+        userEvent.click(createAPIMonitorButton)
+        await waitFor(() => {
+            expect(getCurrentUrl()).toBe('/create');
+        })
+    })
+
+    test('when create with JSON assertion type, key only, and exclude key then success', async () => {
+        const response = []
+        axios.post.mockImplementation(() => Promise.resolve({data: response}))
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+        render(<CreateAPIMonitor />);
+        
+        const monitorName = await screen.findByPlaceholderText("Monitor Name");
+        const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const interval = screen.getByTestId("dropdownInterval");
+        const method = screen.getByTestId('dropdownMethod');
+        const createAPIMonitorButton = screen.getByText('Create API Monitor');
+        
+        userEvent.type(monitorName, 'API Monitor 1')
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(interval, '1 Minute');
+        userEvent.selectOptions(method, 'GET');    
+
+        const assertionButton = screen.getByText('Assertions')
+        userEvent.click(assertionButton)
+
+        const textButton = screen.getByText('JSON')
+        userEvent.click(textButton)
+
+        const textArea = screen.getByPlaceholderText('Type assertion here')
+        userEvent.type(textArea, '{"key1":"assertion value"}'.replace(/[{[]/g, '$&$&'))
+
+        const keyOnlyCheckbox = screen.getByText('Assert JSON schema (key) only')
+        userEvent.click(keyOnlyCheckbox)
+
+        const addKeyButton = screen.getByText('Add Key');
+        userEvent.click(addKeyButton)
+
+        const addKey1 = screen.getByPlaceholderText('Key')
+        userEvent.type(addKey1, 'Key1')
+        
+        userEvent.click(createAPIMonitorButton)
+        await waitFor(() => {
+            expect(getCurrentUrl()).toBe('/create');
+        })
+    })
+
+    test('when doesnt fill assertion textarea and click submit then get notify for error', async () => {
+        const response = []
+		axios.get.mockImplementation(() => Promise.resolve({data: response}))
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+		render(<CreateAPIMonitor />);
+		
+        const createAPIMonitorButton = screen.getByText('Create API Monitor');
+
+        const bodyButton = screen.getByText('Assertions')
+        userEvent.click(bodyButton)
+
+        // Text
+        const textButton = screen.getByText('Text')
+        userEvent.click(textButton)
+		
+        userEvent.click(createAPIMonitorButton)
+		await waitFor(() => {
+            expect(screen.queryAllByText('Required')).toHaveLength(3)
+        })
+
+        // JSON
+        const jsonButton = screen.getByText('JSON')
+        userEvent.click(jsonButton)
+		
+        userEvent.click(createAPIMonitorButton)
+		await waitFor(() => {
+            expect(screen.queryAllByText('Required')).toHaveLength(3)
+        })
+	})
 });
 
