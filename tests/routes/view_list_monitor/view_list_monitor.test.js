@@ -49,10 +49,10 @@ describe('Test API Monitors sites', () => {
 		render(<App/>);
 		route('/')
 
-		var today = new Date();
-		var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-		var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-		var dateTime = date+' '+time;
+		let today = new Date();
+		let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+		let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+		let dateTime = date+' '+time;
 
 		await waitFor(() => {
 			expect(screen.getByText('Last checked: '+dateTime));

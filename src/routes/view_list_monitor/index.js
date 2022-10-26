@@ -14,10 +14,10 @@ import style_bar from '../../components/success_rate/style.css' ;
 
 const ViewListMonitor = () => {	
 
-	var today = new Date();
-	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-	var dateTime = date+' '+time;
+	let today = new Date();
+	let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	let dateTime = date+' '+time;
 
 	const [monitor,setMonitor]=useState([])
 	const [detail, setDetail]=useState({})
