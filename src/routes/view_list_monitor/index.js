@@ -9,9 +9,16 @@ import { getUserToken } from '../../config/api/auth';
 import { FaAngleRight } from 'react-icons/fa';
 import SuccessRatePercentageChart from '../../components/chart/success_rate_percentage_chart';
 import ResponseTimeChart from '../../components/chart/response_time_chart';
-import style_detail from '../view_api_monitor_detail/style.css' ;
+import style_detail from '../view_api_monitor_detail/style.css' ;	
+import style_bar from '../../components/success_rate/style.css' ;
 
-const ViewListMonitor = () => {
+const ViewListMonitor = () => {	
+
+	var today = new Date();
+	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	var dateTime = date+' '+time;
+
 	const [monitor,setMonitor]=useState([])
 	const [detail, setDetail]=useState({})
 	useEffect(()=>{
@@ -55,11 +62,12 @@ const ViewListMonitor = () => {
 
 			<div class="d-flex justify-content-between">
 				<h2>API Monitors</h2>
+				<p>Last checked: {dateTime}</p>
 				<Link href="/create">
 					<button type="button" class="btn btn-success">Create New</button>
 				</Link>
 			</div>
-			
+
 			<table style="width:100%">
 				{(monitor.length != 0)?
 					<tr>
