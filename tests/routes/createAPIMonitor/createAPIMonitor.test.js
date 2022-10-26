@@ -46,6 +46,95 @@ describe('Test Create API Monitor', () => {
         const monitorName = await screen.findByPlaceholderText("Monitor Name");
 		const requestUrl = await screen.findByPlaceholderText("Request URL");
         const interval = await screen.getByTestId("dropdownInterval");
+        await waitFor(() => {
+            const multiStep = screen.getByTestId("dropdownMultiStep");
+            userEvent.selectOptions(multiStep, '-');
+        })
+        const method = await screen.getByTestId('dropdownMethod');
+        const createAPIMonitorButton = await screen.getByText('Create API Monitor');
+        
+		userEvent.type(monitorName, 'API Monitor 1')
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(interval, '1 Minute');
+        userEvent.selectOptions(method, 'POST');    
+
+        const queryParamsButton = await screen.getByText('Query Params');
+        userEvent.click(queryParamsButton)
+
+        const addQueryParamsButton = await screen.getByText('Add Query Params');
+        userEvent.click(addQueryParamsButton)
+
+        const queryParamsKey = await screen.findByPlaceholderText('Key')
+        const queryParamsValue = await screen.findByPlaceholderText('Value')
+
+        userEvent.type(queryParamsKey, 'Query key')
+        userEvent.type(queryParamsValue, 'Query value')
+
+        const headersTabButton = await screen.getByText('Headers')
+        userEvent.click(headersTabButton)
+
+        const addHeadersButton = await screen.getByText('Add Headers')
+        userEvent.click(addHeadersButton)
+
+        const headersKey = await screen.findByPlaceholderText('Key')
+        const headersValue = await screen.findByPlaceholderText('Value')
+
+        userEvent.type(headersKey, 'Header key')
+        userEvent.type(headersValue, 'Header value')
+
+        const bodyButton = await screen.getByText('Body')
+        userEvent.click(bodyButton)
+
+        const formButton = await screen.getByText('Form')
+        userEvent.click(formButton)
+
+        const addFormButton = await screen.getByText('Add Form')
+        userEvent.click(addFormButton)
+
+        const formKey = await screen.findByPlaceholderText('Key')
+        const formValue = await screen.findByPlaceholderText('Value')
+
+        userEvent.type(formKey, 'Form key')
+        userEvent.type(formValue, 'Form value')
+
+        userEvent.click(createAPIMonitorButton)
+        await waitFor(() => {
+            expect(getCurrentUrl()).toBe('/create');
+        })
+	})
+
+    test('fill the create API Monitor with previous step id then success', async () => {
+        const response = [
+            {
+                id: 2,
+                name: "Test Monitor",
+                method: "GET",
+                url: "Test Path",
+                schedule: "10MIN",
+                body_type: "EMPTY",
+                query_params: [],
+                headers: [],
+                body_form: [],
+                raw_body: null,
+                previous_step_id: 1,
+                assertion_type: "DISABLED",
+                assertion_value: "",
+                is_assert_json_schema_only: false,
+                exclude_keys: []
+            }
+        ]
+        axios.get.mockImplementation(() => Promise.resolve({data: response}))
+		axios.post.mockImplementation(() => Promise.resolve({data: response}))
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+		render(<CreateAPIMonitor />);
+		
+        const monitorName = await screen.findByPlaceholderText("Monitor Name");
+		const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const interval = await screen.getByTestId("dropdownInterval");
+        await waitFor(() => {
+            const multiStep = screen.getByTestId("dropdownMultiStep");
+            userEvent.selectOptions(multiStep, 'Test Monitor - Test Path');
+        })
         const method = await screen.getByTestId('dropdownMethod');
         const createAPIMonitorButton = await screen.getByText('Create API Monitor');
         
@@ -114,6 +203,10 @@ describe('Test Create API Monitor', () => {
 		const requestUrl = await screen.findByPlaceholderText("Request URL");
         const interval = await screen.getByTestId("dropdownInterval");
         const method = await screen.getByTestId('dropdownMethod');
+        await waitFor(() => {
+            const multiStep = screen.getByTestId("dropdownMultiStep");
+            userEvent.selectOptions(multiStep, '-');
+        })
         const createAPIMonitorButton = await screen.getByText('Create API Monitor');
         
 		userEvent.type(monitorName, 'API Monitor 1')
@@ -175,6 +268,10 @@ describe('Test Create API Monitor', () => {
         const monitorName = await screen.findByPlaceholderText("Monitor Name");
 		const requestUrl = await screen.findByPlaceholderText("Request URL");
         const interval = await screen.getByTestId("dropdownInterval");
+        await waitFor(() => {
+            const multiStep = screen.getByTestId("dropdownMultiStep");
+            userEvent.selectOptions(multiStep, '-');
+        })
         const method = await screen.getByTestId('dropdownMethod');
         const createAPIMonitorButton = await screen.getByText('Create API Monitor');
         
@@ -231,12 +328,17 @@ describe('Test Create API Monitor', () => {
         const monitorName = await screen.findByPlaceholderText("Monitor Name");
 		const requestUrl = await screen.findByPlaceholderText("Request URL");
         const interval = await screen.getByTestId("dropdownInterval");
+        await waitFor(() => {
+            const multiStep = screen.getByTestId("dropdownMultiStep");
+            userEvent.selectOptions(multiStep, '-');
+        })
         const method = await screen.getByTestId('dropdownMethod');
         const createAPIMonitorButton = await screen.getByText('Create API Monitor');
         
 		userEvent.type(monitorName, 'API Monitor 1')
         userEvent.type(requestUrl, 'www.example.com')
         userEvent.selectOptions(interval, '1 Minute');
+        
         userEvent.selectOptions(method, 'POST');    
 
         const queryParamsButton = await screen.getByText('Query Params');
@@ -277,12 +379,18 @@ describe('Test Create API Monitor', () => {
         const monitorName = await screen.findByPlaceholderText("Monitor Name");
 		const requestUrl = await screen.findByPlaceholderText("Request URL");
         const interval = await screen.getByTestId("dropdownInterval");
+        
+        await waitFor(() => {
+            const multiStep = screen.getByTestId("dropdownMultiStep");
+            userEvent.selectOptions(multiStep, '-');
+        })
         const method = await screen.getByTestId('dropdownMethod');
         const createAPIMonitorButton = await screen.getByText('Create API Monitor');
         
 		userEvent.type(monitorName, 'API Monitor 1')
         userEvent.type(requestUrl, 'www.example.com')
         userEvent.selectOptions(interval, '1 Minute');
+        
         userEvent.selectOptions(method, 'POST');    
 
         userEvent.click(createAPIMonitorButton)
