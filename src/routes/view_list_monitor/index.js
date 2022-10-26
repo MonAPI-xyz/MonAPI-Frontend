@@ -62,24 +62,31 @@ const ViewListMonitor = () => {
 
 			<div class="d-flex justify-content-between">
 				<h2>API Monitors</h2>
-				<p>Last checked: {dateTime}</p>
 				<Link href="/create">
 					<button type="button" class="btn btn-success">Create New</button>
 				</Link>
 			</div>
-
+			<br/>
+			{(monitor.length != 0)?
+				<div>
+					<p>Last checked: {dateTime}</p>
+				</div>				
+				:
+				<div/>
+			}
 			<table style="width:100%">
 				{(monitor.length != 0)?
 					<tr>
-					<th>API Name</th>
-					<th>Path URL</th>
-					<th>Success Rate</th>
-					<th>Average Response Time</th>
-					<th>Success Rate History (24h)</th>
+						<th>API Name</th>
+						<th>Path URL</th>
+						<th>Success Rate</th>
+						<th>Average Response Time</th>
+						<th>Success Rate History (24h)</th>
 					</tr>
 					:
 					<p style="text-align: center">There is no monitor. You can click green button "Create New" in the middle right side</p>
 				}
+				
 				{monitor.map((val)=>(
 					<tr key={val.id}>
 						<td>{val.name}</td>
