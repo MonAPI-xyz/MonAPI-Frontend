@@ -1,21 +1,22 @@
 import { h } from 'preact';
 import { useEffect, useState } from 'preact/hooks'
 import {
-  Button,
   Box,
+  Icon,
+  Link,
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
+  Tooltip,
   useDisclosure,
 } from '@chakra-ui/react'
 import BASE_URL from '../../config/api/constant';
 import style from './style.css';
 import axios from 'axios';
 import { getUserToken } from '../../config/api/auth';
-import { FaAngleRight, FaSearch } from 'react-icons/fa';
+import { FaAngleRight, FaSearch, FaExternalLinkAlt } from 'react-icons/fa';
 
 
 const ErrorLogs = () => {
@@ -34,7 +35,7 @@ const ErrorLogs = () => {
     return (
       <div>
         <p><b>{header}</b><br/>
-        <span class={style[`content-${header}`]}>{content}</span></p>
+        <span class={style[`content-${header.replace(" ","-")}`]}>{content}</span></p>
       </div>
     )
   }
@@ -43,7 +44,7 @@ const ErrorLogs = () => {
     return (
       <div>
         <p><b>{header}</b><br/>
-        <span class={style[`content-${header}`]}>
+        <span class={style[`content-${header.replace(" ","-")}`]}>
           <Box bg='gray.100' w='90%' color='black' p={3.5} mt={1.5} borderRadius='lg' class={style[`content-${header}`]}>
             {content ? content : "-"}
           </Box>
@@ -171,7 +172,7 @@ const ErrorLogs = () => {
 
       <Modal onClose={onClose} isOpen={isOpen} size={'4xl'} scrollBehavior={'inside'}>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent pb="20px">
             <ModalCloseButton mr={'10px'} />
             <ModalBody>
               <div class={style['body-modal']}>
@@ -183,11 +184,21 @@ const ErrorLogs = () => {
                   <div>{headerAndContent('Status Code', detail.status_code)}</div>
                   <div>{headerAndBox('Response', detail.log_response)}</div>
                   <div>{headerAndBox('Error', detail.log_error)}</div>
+                  { detail.monitor.assertion_type == 'JSON' ?
+                    (<div>
+                      <div><b>JSON Compare</b>
+                        <Tooltip label='Compare response: actual (left) to expected (right)' placement='right-end' hasArrow>
+                          <Link role='json-compare' href={`https://www.jsondiff.com/?left=${detail.log_response}&right=${detail.monitor.assertion_value}`} isExternal>
+                              <Icon as={FaExternalLinkAlt} pl='5px'/>
+                          </Link>
+                        </Tooltip>
+                      </div>
+                    </div>)
+                    :
+                    (<div></div>)
+                  }
               </div>
             </ModalBody>
-            <ModalFooter>
-              <Button onClick={onClose}>Close</Button>
-            </ModalFooter>
           </ModalContent>
         </Modal>
 		</div>    
