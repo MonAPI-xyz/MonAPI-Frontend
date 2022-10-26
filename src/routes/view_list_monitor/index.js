@@ -70,6 +70,24 @@ const ViewListMonitor = () => {
 			{(monitor.length != 0)?
 				<div>
 					<p>Last checked: {dateTime}</p>
+					<div class="d-flex justify-content-between">
+						<div class="d-flex justify-content-between">
+							<div class={style_bar['green-bar']}></div> 
+							<p>: 100% Success rate</p>
+						</div>
+						<div class="d-flex justify-content-between"> 
+							<div class={style_bar['yellow-bar']}></div>
+							<p>: 1-99% Success rate</p>
+						</div>
+						<div class="d-flex justify-content-between"> 
+							<div class={style_bar['red-bar']}></div>
+							<p>: 0% Success rate</p>
+						</div>
+						<div class="d-flex justify-content-between"> 
+							<div class={style_bar['grey-bar']}></div>
+							<p>: No data</p>
+						</div>
+					</div>
 				</div>				
 				:
 				<div/>
