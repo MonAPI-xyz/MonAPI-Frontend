@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import { Button, Checkbox, Spinner, Text, Box, Flex, Grid, GridItem, Radio, RadioGroup, Textarea, FormErrorMessage, FormControl } from '@chakra-ui/react';
 import { Controller, useForm } from 'react-hook-form';
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import axios from 'axios';
 import { route } from 'preact-router';
 
@@ -17,7 +17,9 @@ const CreateAPIMonitor = () => {
     const [bodyType, setBodyType] = useState("EMPTY");
     const [assertionType, setAssertionType] = useState("DISABLED");
     const [selectedTab, setSelectedTab] = useState(0);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingCreate, setLoadingCreate] = useState(false)
+    const [isLoadingPreviousStep, setLoadingPreviousStep] = useState(true)
+    const [previousStep, setPreviousStep] = useState([])
     const [responseMessage, setResponseMessage] = useState('');
 
     const {
@@ -44,21 +46,49 @@ const CreateAPIMonitor = () => {
     });
 
     const onSubmit = (data) => {
-        if (!isLoading) {
-            setIsLoading(true);
+        if (!isLoadingCreate) {
+            setLoadingCreate(true);
             axios.post(`${BASE_URL}/monitor/`, data, {
                 headers: {
                     Authorization:`Token ${getUserToken()}`
                 }
             }).then(()=>{
                 route('/');
-                setIsLoading(false);
+                setLoadingCreate(false);
             }).catch((error)=> {
                 setResponseMessage(error.response.data.error);
-                setIsLoading(false);
+                setLoadingCreate(false);
             })
         }
     };
+
+    const transformPreviousStepResponse = async (responseData) =>  {
+        let outputArray = [
+            {
+                key: null,
+                value: "-"
+            }
+        ]
+        await responseData.forEach((item)=> {
+            outputArray.push({
+                key: item.id,
+                value: `${item.name} - ${item.url}`
+            })
+        })
+        return outputArray
+    }
+
+    useEffect(() => {
+        axios.get(`${BASE_URL}/monitor/`, {
+            headers: {
+                Authorization: `Token ${getUserToken()}`
+            }
+        }).then( async (response)=> {
+            setPreviousStep(await transformPreviousStepResponse(response.data))
+            setLoadingPreviousStep(false)
+
+        })
+    }, [])
 
     return (
         <div class={style['new-api-monitor']}>
@@ -147,6 +177,33 @@ const CreateAPIMonitor = () => {
                                 </Box>
 
                                 <Box mb='20px' />
+                            
+                            <Box w='40vw'>
+                                {isLoadingPreviousStep ? <Spinner ml="20px" /> :
+                                <Dropdown 
+                                    id="previous_step_id"
+                                    title='Previous Step API Monitor' 
+                                    dataTestId='dropdownMultiStep'
+                                    placeholder='' 
+                                    errors={errors}
+                                    options={previousStep}
+                                    rules={{
+                                        required: 'Required',
+                                        minLength: { value: 1, message: 'Required' },
+                                    }}
+                                    register={register}
+                                />
+                                }
+                            </Box>
+                            
+                            <Box mb='10px' />
+
+                            <Text>
+                                Please select "none" if you want to create single-step API Monitor
+                            </Text>
+                            <Text>
+                                Sample format to use previous API response &#123;&#123;data.result[0].name&#125;&#125;. More documentation link.
+                            </Text>
 
                                 <Box mb="40px" />
                                 <Box>
@@ -300,7 +357,7 @@ const CreateAPIMonitor = () => {
                             <Box mb='49px' />
                             <Box align="end">
                                 <Button form="form-create-api-monitor" id='signInButton' colorScheme='teal' type='submit' width='14em' borderRadius={10}>
-                                    {isLoading ? <Spinner /> : "Create API Monitor"}
+                                    {isLoadingCreate ? <Spinner /> : "Create API Monitor"}
                                 </Button>
                             </Box>
 
