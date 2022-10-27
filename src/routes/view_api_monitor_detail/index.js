@@ -71,7 +71,7 @@ const ViewAPIMonitorDetail = ({id}) => {
         </Box>
         <Spacer />
         <ButtonGroup gap='2'>
-          <Button colorScheme='blueChill'>Edit</Button>
+          <Button colorScheme='blueChill' onClick={() => route('/'+`${id}`+'/edit/')}>Edit</Button>
           <div onClick={() => {setDeletePopup(true)}}>
             <AlertComponent
                 isButton={true}
