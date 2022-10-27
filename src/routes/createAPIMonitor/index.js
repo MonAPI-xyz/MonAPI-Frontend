@@ -1,7 +1,7 @@
 import { h } from 'preact';
-import { Button, Spinner, Text, Box, Flex, Grid, GridItem, Radio, RadioGroup, Textarea, FormErrorMessage, FormControl } from '@chakra-ui/react';
+import { Button, Checkbox, Spinner, Text, Box, Flex, Grid, GridItem, Radio, RadioGroup, Textarea, FormErrorMessage, FormControl } from '@chakra-ui/react';
 import { Controller, useForm } from 'react-hook-form';
-import { useState } from 'preact/hooks';
+import { useEffect, useState } from 'preact/hooks';
 import axios from 'axios';
 import { route } from 'preact-router';
 
@@ -10,12 +10,16 @@ import TextInput from '../../components/forms/textinput/index.js';
 import KeyValueForm from '../../components/createAPIMonitor/keyValueForm/index.js';
 import BASE_URL from '../../config/api/constant.js';
 import { getUserToken } from '../../config/api/auth.js';
+import { methodOption, intervalOption } from './optionHelper.js'
 import style from './style.css';
 
 const CreateAPIMonitor = () => {
     const [bodyType, setBodyType] = useState("EMPTY");
+    const [assertionType, setAssertionType] = useState("DISABLED");
     const [selectedTab, setSelectedTab] = useState(0);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingCreate, setLoadingCreate] = useState(false)
+    const [isLoadingPreviousStep, setLoadingPreviousStep] = useState(true)
+    const [previousStep, setPreviousStep] = useState([])
     const [responseMessage, setResponseMessage] = useState('');
 
     const {
@@ -34,87 +38,60 @@ const CreateAPIMonitor = () => {
             headers: [],
             body_form: [],
             raw_body: "",
+            assertion_type: "DISABLED",
+            assertion_value: "",
+            is_assert_json_schema_only: false,
+            exclude_keys: [],
         }
     });
 
-    const methodOption = [
-        {
-            key: "GET",
-            value: "GET",
-        },
-        {
-            key: "POST",
-            value: "POST",
-        },
-        {
-            key: "PUT",
-            value: "PUT",
-        },
-        {
-            key: "PATCH",
-            value: "PATCH",
-        },
-        {
-            key: "DELETE",
-            value: "DELETE",
-        },
-    ]
-
-    const intervalOption = [
-        {
-            key: "1MIN",
-            value: "1 Minute",
-        },
-        {
-            key: "2MIN",
-            value: "2 Minutes",
-        },
-        {
-            key: "3MIN",
-            value: "3 Minutes",
-        },
-        {
-            key: "5MIN",
-            value: "5 Minutes",
-        },
-        {
-            key: "10MIN",
-            value: "10 Minutes",
-        },
-        {
-            key: "15MIN",
-            value: "15 Minutes",
-        },
-        {
-            key: "30MIN",
-            value: "30 Minutes",
-        },
-        {
-            key: "60MIN",
-            value: "60 Minutes",
-        },
-    ]
-
     const onSubmit = (data) => {
-        if (!isLoading) {
-            setIsLoading(true);
+        if (!isLoadingCreate) {
+            setLoadingCreate(true);
             axios.post(`${BASE_URL}/monitor/`, data, {
                 headers: {
                     Authorization:`Token ${getUserToken()}`
                 }
             }).then(()=>{
                 route('/');
-                setIsLoading(false);
+                setLoadingCreate(false);
             }).catch((error)=> {
                 setResponseMessage(error.response.data.error);
-                setIsLoading(false);
+                setLoadingCreate(false);
             })
         }
     };
 
+    const transformPreviousStepResponse = async (responseData) =>  {
+        let outputArray = [
+            {
+                key: null,
+                value: "-"
+            }
+        ]
+        await responseData.forEach((item)=> {
+            outputArray.push({
+                key: item.id,
+                value: `${item.name} - ${item.url}`
+            })
+        })
+        return outputArray
+    }
+
+    useEffect(() => {
+        axios.get(`${BASE_URL}/monitor/`, {
+            headers: {
+                Authorization: `Token ${getUserToken()}`
+            }
+        }).then( async (response)=> {
+            setPreviousStep(await transformPreviousStepResponse(response.data))
+            setLoadingPreviousStep(false)
+
+        })
+    }, [])
+
     return (
         <div class={style['new-api-monitor']}>
-            {console.log(errors)}
             <Flex
                 h="full"
                 backgroundRepeat='no-repeat'
@@ -200,6 +177,33 @@ const CreateAPIMonitor = () => {
                                 </Box>
 
                                 <Box mb='20px' />
+                            
+                            <Box w='40vw'>
+                                {isLoadingPreviousStep ? <Spinner ml="20px" /> :
+                                <Dropdown 
+                                    id="previous_step_id"
+                                    title='Previous Step API Monitor' 
+                                    dataTestId='dropdownMultiStep'
+                                    placeholder='' 
+                                    errors={errors}
+                                    options={previousStep}
+                                    rules={{
+                                        required: 'Required',
+                                        minLength: { value: 1, message: 'Required' },
+                                    }}
+                                    register={register}
+                                />
+                                }
+                            </Box>
+                            
+                            <Box mb='10px' />
+
+                            <Text>
+                                Please select "none" if you want to create single-step API Monitor
+                            </Text>
+                            <Text>
+                                Sample format to use previous API response &#123;&#123;data.result[0].name&#125;&#125;. More documentation link.
+                            </Text>
 
                                 <Box mb="40px" />
                                 <Box>
@@ -221,6 +225,12 @@ const CreateAPIMonitor = () => {
                                                 Body
                                             </Text>
                                         </GridItem>
+
+                                        <GridItem colSpan={1}>
+                                            <Text onClick={() => setSelectedTab(3)} textAlign="center" fontWeight={selectedTab == 3 ? "700" : "500"} className={style['noselect']}>
+                                                Assertions
+                                            </Text>
+                                        </GridItem>
                                     </Grid>
                                 </Box>
                                 <Box mb='20px' />
@@ -232,6 +242,7 @@ const CreateAPIMonitor = () => {
                                         keyName={'query_params'}
                                         control={control}
                                         buttonAddText={'Add Query Params'}
+                                        isValueExists={true}
                                     />
                                 }
 
@@ -242,13 +253,14 @@ const CreateAPIMonitor = () => {
                                         keyName={'headers'}
                                         control={control}
                                         buttonAddText={'Add Headers'}
+                                        isValueExists={true}
                                     />
                                 }
 
                                 {selectedTab == 2 &&
                                     <Box>
                                         <Controller name="body_type" control={control} render={({ field: { onChange, value } }) => (
-                                            <RadioGroup onChange={(e)=>{onChange(e); setBodyType(e);}} value={value}>
+                                            <RadioGroup onChange={(e)=>{onChange(e); setBodyType(e);}} value={value} colorScheme='blueChill'>
                                             <Flex direction='row' gap="25px">
                                                 <Radio id='body_type_emptyempty' color="gray.300" value='EMPTY'>No Body</Radio>
                                                 <Radio id='body_type_form' value='FORM' name="body_type">Form</Radio>
@@ -266,6 +278,7 @@ const CreateAPIMonitor = () => {
                                                 keyName={'body_form'}
                                                 control={control}
                                                 buttonAddText={'Add Form'}
+                                                isValueExists={true}
                                             />
                                         }
 
@@ -286,6 +299,56 @@ const CreateAPIMonitor = () => {
                                     </Box>
                                 }
 
+                                {selectedTab == 3 &&
+                                    <Box>
+                                        <Controller name="assertion_type" control={control} render={({ field: { onChange, value } }) => (
+                                            <RadioGroup onChange={(e)=>{onChange(e); setAssertionType(e);}} value={value} colorScheme='blueChill'>
+                                            <Flex direction='row' gap="25px">
+                                                <Radio id='assertion_type_disabled' color="gray.300" value='DISABLED'>Disabled</Radio>
+                                                <Radio id='assertion_type_text' value='TEXT' name="assertion_type">Text</Radio>
+                                                <Radio id='assertion_type_json' value='JSON' name="assertion_type">JSON</Radio>
+                                            </Flex>
+                                            </RadioGroup>
+                                        )}
+                                        />
+
+                                        <Box mb="20px" />
+                                        {assertionType != 'DISABLED' && <div>
+                                            <FormControl isInvalid={errors['assertion_value']}>
+                                                <Textarea
+                                                    name={'assertion_value'} 
+                                                    {...register('assertion_value', {
+                                                        required: 'Required',
+                                                        minLength: { value: 1, message: 'Required' },
+                                                    })} 
+                                                    bgColor="#F1F1F1"
+                                                    placeholder={'Type assertion here'}
+                                                />
+                                                <FormErrorMessage>{errors['assertion_value'] && errors['assertion_value'].message}</FormErrorMessage>
+                                            </FormControl>
+                                        </div>}
+
+                                        {assertionType == 'JSON' && <Box mt='20px'>
+                                            <Controller name="is_assert_json_schema_only" control={control} render={({ field: { onChange, value } }) => (
+                                                <Checkbox onChange={(e) => onChange(e)} isChecked={value} colorScheme='blueChill'>Assert JSON schema (key) only</Checkbox>
+                                            )}
+                                            />
+                                            
+                                            <Box py={5}>
+                                                <Text fontSize='xl' as='b'>Exclude keys</Text>
+                                                <KeyValueForm
+                                                    errors={errors}
+                                                    register={register}
+                                                    keyName={'exclude_keys'}
+                                                    control={control}
+                                                    buttonAddText={'Add Key'}
+                                                    isValueExists={false}
+                                                />
+                                            </Box>
+                                        </Box>}
+                                    </Box>
+                                }
+
                                 <Box mb='10px' />
                                 {responseMessage != '' && <Text fontSize='14px' color='red.500'>{responseMessage}</Text>}
                                 <Box mb={responseMessage ? '10px' : '20px'} />
@@ -294,7 +357,7 @@ const CreateAPIMonitor = () => {
                             <Box mb='49px' />
                             <Box align="end">
                                 <Button form="form-create-api-monitor" id='signInButton' colorScheme='teal' type='submit' width='14em' borderRadius={10}>
-                                    {isLoading ? <Spinner /> : "Create API Monitor"}
+                                    {isLoadingCreate ? <Spinner /> : "Create API Monitor"}
                                 </Button>
                             </Box>
 
