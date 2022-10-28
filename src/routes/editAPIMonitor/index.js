@@ -1,12 +1,12 @@
 import { h } from 'preact';
 import APIMonitorEditor from '../../components/APIMonitorEditor/index.js';
 
-const EditAPIMonitor = ({passed_id}) => {
+const EditAPIMonitor = ({id}) => {
     return <APIMonitorEditor
     headerMessage="Edit Your API Monitor"
     buttonMessage="Save Edit"
     mode="EDIT"
-    id={passed_id}
+    id={id}
     />
 }
 
