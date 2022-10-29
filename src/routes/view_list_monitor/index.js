@@ -14,11 +14,6 @@ import style_bar from '../../components/success_rate/style.css' ;
 
 const ViewListMonitor = () => {	
 
-	let today = new Date();
-	let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-	let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-	let dateTime = date+' '+time;
-
 	const [monitor,setMonitor]=useState([])
 	const [detail, setDetail]=useState({})
 	useEffect(()=>{
