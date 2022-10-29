@@ -18,8 +18,6 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     // buttonMessage: String
     // mode: choose one --> "CREATE" or "EDIT"
     // id: path to send the data, ignored if mode is "CREATE"
-
-
     const [bodyType, setBodyType] = useState("EMPTY");
     const [assertionType, setAssertionType] = useState("DISABLED");
     const [selectedTab, setSelectedTab] = useState(0);
@@ -28,11 +26,14 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     const [previousStep, setPreviousStep] = useState([])
     const [responseMessage, setResponseMessage] = useState('');
 
+    const [valuesDict, setValuesDict] = useState({});
+
     const {
         handleSubmit,
         register,
         control,
         formState: { errors },
+        setValue
     } = useForm({
         defaultValues: {
             name: "",
@@ -40,6 +41,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
             url: "",
             schedule: "1MIN",
             body_type: "EMPTY",
+            previous_step_id: null,
             query_params: [],
             headers: [],
             body_form: [],
@@ -50,6 +52,25 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
             exclude_keys: [],
         }
     });
+
+    useEffect( () => {
+            if (mode == 'EDIT') {
+            axios.get(`${BASE_URL}/monitor/${id}`, {
+                headers: {
+                    Authorization: `Token ${getUserToken()}`
+                }
+            }).then( async (response) => {
+                const fields = ["name", "method", "url", "schedule", "body_type", "query_params",
+                "headers", "body_form", "previous_step_id", "assertion_type", "assertion_value",
+                "is_assert_json_schema_only", "exclude_keys"]
+                fields.forEach(field => setValue(field, response.data[field]));
+                if (response.data["raw_body"]) {
+                    setValue("raw_body", response.data["raw_body"]["body"])
+                }
+                setBodyType(response.data['body_type'])
+                setAssertionType(response.data['assertion_type'])
+            })
+    }}, [id, previousStep])
 
     const onSubmit = (data) => {
         if (!isLoadingCreate) {
@@ -67,7 +88,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                     setLoadingCreate(false);
                 })
             } else if (mode == "EDIT") {
-                axios.post(`${BASE_URL}/monitor/${id}/edit`, data, {
+                axios.put(`${BASE_URL}/monitor/${id}/`, data, {
                     headers: {
                         Authorization:`Token ${getUserToken()}`
                     }
@@ -90,10 +111,12 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
             }
         ]
         await responseData.forEach((item)=> {
-            outputArray.push({
-                key: item.id,
-                value: `${item.name} - ${item.url}`
-            })
+            if (item.id != id) {
+                outputArray.push({
+                    key: item.id,
+                    value: `${item.name} - ${item.url}`
+                })
+            }
         })
         return outputArray
     }
@@ -106,7 +129,6 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
         }).then( async (response)=> {
             setPreviousStep(await transformPreviousStepResponse(response.data))
             setLoadingPreviousStep(false)
-
         })
     }, [])
 
