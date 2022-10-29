@@ -1,10 +1,5 @@
 import { h } from 'preact';
-import { Accordion,
-	AccordionItem,
-	AccordionButton,
-	AccordionPanel,
-	AccordionIcon,
-	Button, Checkbox, Spinner, Text, Box, Flex, Grid, GridItem} from '@chakra-ui/react';
+import { Accordion,	AccordionItem, AccordionButton,	AccordionPanel,	AccordionIcon, Button, Checkbox, Spinner, Text, Box, Flex, Grid, GridItem} from '@chakra-ui/react';
 import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'preact/hooks';
 import axios from 'axios';
