@@ -69,7 +69,6 @@ const ViewListMonitor = () => {
 			<br/>
 			{(monitor.length != 0)?
 				<div>
-					<p>Last checked: {dateTime}</p>
 					<div class="d-flex justify-content-between">
 						<div class="d-flex justify-content-between">
 							<div class={style_bar['green-bar']}></div> 
@@ -116,7 +115,8 @@ const ViewListMonitor = () => {
 							{val.success_rate_history.map((history, idx)=>(
 								<SuccessRate success={history.success} failed={history.failed} key={idx} /> 						
 							))}	
-							</div>											
+							</div>
+							<p>Last checked: {val.last_result?.execution_time}</p>													
 						</td>
 						<td>
 							<Link aria-label="view-api-monitor-detail" href={`/${val.id}/detail/`}>
