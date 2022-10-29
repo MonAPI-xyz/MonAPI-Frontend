@@ -26,8 +26,6 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     const [previousStep, setPreviousStep] = useState([])
     const [responseMessage, setResponseMessage] = useState('');
 
-    const [valuesDict, setValuesDict] = useState({});
-
     const {
         handleSubmit,
         register,
