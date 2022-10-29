@@ -4,7 +4,7 @@ import { Accordion,
 	AccordionButton,
 	AccordionPanel,
 	AccordionIcon,
-	Button, Checkbox, Spinner, Text, Box, Flex, Grid, GridItem, Radio, RadioGroup, Textarea, FormErrorMessage, FormControl } from '@chakra-ui/react';
+	Button, Checkbox, Spinner, Text, Box, Flex, Grid, GridItem} from '@chakra-ui/react';
 import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'preact/hooks';
 import axios from 'axios';
