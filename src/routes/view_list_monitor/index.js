@@ -11,6 +11,7 @@ import SuccessRatePercentageChart from '../../components/chart/success_rate_perc
 import ResponseTimeChart from '../../components/chart/response_time_chart';
 import style_detail from '../view_api_monitor_detail/style.css' ;	
 import style_bar from '../../components/success_rate/style.css' ;
+import moment from "moment"
 
 const ViewListMonitor = () => {	
 
@@ -111,7 +112,7 @@ const ViewListMonitor = () => {
 								<SuccessRate success={history.success} failed={history.failed} key={idx} /> 						
 							))}	
 							</div>
-							<p>Last checked: {val.last_result?.execution_time}</p>													
+							<p>Last checked: {val.last_result ? moment(val.last_result.execution_time).fromNow() : "-"}</p>													
 						</td>
 						<td>
 							<Link aria-label="view-api-monitor-detail" href={`/${val.id}/detail/`}>
