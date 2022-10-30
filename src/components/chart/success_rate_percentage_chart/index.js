@@ -37,14 +37,17 @@ const SuccessRatePercentageChart = ({success_rate}) => {
 
     const colors=[];
     for (let i=0; i < data.length; i++) {
-      if (data[i] > 0.5) {
+      if (data[i] == 1) {
         colors[i] = "#36CB72";
       } else if (data[i] === -1) {
         colors[i] = "grey";
         data[i] += 1;
         labels[i] = "No Data"
-      } else {
+      } else if (data[i] == 0) {
         colors[i] = "#CB5136";
+      }
+      else {
+        colors[i] = "yellow";
       }
     }
 

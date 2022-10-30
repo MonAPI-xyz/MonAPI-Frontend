@@ -46,6 +46,7 @@
     "axios": "0.21.2",
     "chart.js": "^3.9.1",
     "framer-motion": "^7.3.5",
+    "moment": "^2.29.4",
     "preact": "^10.3.2",
     "preact-global-state": "^1.0.5",
     "preact-render-to-string": "^5.1.4",
