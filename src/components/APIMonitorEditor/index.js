@@ -52,22 +52,23 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     });
 
     useEffect( () => {
-            if (mode == 'EDIT') {
-            axios.get(`${BASE_URL}/monitor/${id}`, {
-                headers: {
-                    Authorization: `Token ${getUserToken()}`
-                }
-            }).then( async (response) => {
-                const fields = ["name", "method", "url", "schedule", "body_type", "query_params",
-                "headers", "body_form", "previous_step_id", "assertion_type", "assertion_value",
+        if (mode == 'EDIT') {
+        axios.get(`${BASE_URL}/monitor/${id}`, {
+            headers: {
+                Authorization: `Token ${getUserToken()}`
+            }
+        }).then( async (response) => {
+            const fields = ["name", "method", "url", "schedule", "body_type", "query_params",
+                "headers", "body_form", "assertion_type", "assertion_value",
                 "is_assert_json_schema_only", "exclude_keys"]
-                fields.forEach(field => setValue(field, response.data[field]));
-                if (response.data["raw_body"]) {
-                    setValue("raw_body", response.data["raw_body"]["body"])
-                }
-                setBodyType(response.data['body_type'])
-                setAssertionType(response.data['assertion_type'])
-            })
+            fields.forEach(field => setValue(field, response.data[field]));
+            if (response.data["raw_body"]) {
+                setValue("raw_body", response.data["raw_body"]["body"])
+            }
+            setValue('previous_step_id', response.data['previous_step_id'] === null ? '' : response.data['previous_step_id'])
+            setBodyType(response.data['body_type'])
+            setAssertionType(response.data['assertion_type'])
+        })
     }}, [id, previousStep])
 
     const onSubmit = (data) => {
@@ -104,7 +105,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     const transformPreviousStepResponse = async (responseData) =>  {
         let outputArray = [
             {
-                key: null,
+                key: "",
                 value: "-"
             }
         ]
@@ -238,11 +239,14 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                             
                             <Box mb='10px' />
 
-                            <Text>
-                                Please select "none" if you want to create single-step API Monitor
+                            <Text fontSize='sm' color='gray'>
+                                Multi-step API monitor can causing previous API monitor executed multiple times
                             </Text>
-                            <Text>
-                                Sample format to use previous API response &#123;&#123;data.result[0].name&#125;&#125;. More documentation link.
+                            <Text fontSize='sm' color='gray'>
+                                Please select "-" if you want to create single-step API Monitor
+                            </Text>
+                            <Text fontSize='sm' color='gray'>
+                                Sample format to use parameter from previous API response &#123;&#123;data.result[0].name&#125;&#125;
                             </Text>
 
                                 <Box mb="40px" />
