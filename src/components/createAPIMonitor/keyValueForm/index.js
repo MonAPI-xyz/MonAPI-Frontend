@@ -7,7 +7,7 @@ import KeyValueInput from '../../forms/keyValueInput';
 import style from './style.css';
 
 
-const KeyValueForm = ({ errors, register, keyName, control, buttonAddText }) => {
+const KeyValueForm = ({ errors, register, keyName, control, buttonAddText, isValueExists }) => {
     const {fields, append, remove} = useFieldArray({ control, name: keyName });
 
     return (
@@ -24,6 +24,7 @@ const KeyValueForm = ({ errors, register, keyName, control, buttonAddText }) => 
                             minLength: { value: 1, message: 'Required' },
                         }}
                         register={register}
+                        isValueExists={isValueExists}
                     />
                     <div class={style['key-value-close-icon']} onClick={()=>{remove(index)}} data-testid={'keyValueRemoveButton'}>
                         <CloseIcon  />

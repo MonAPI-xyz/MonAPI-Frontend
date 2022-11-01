@@ -5,19 +5,19 @@ const SuccessRate = ({success,failed})=> {
     return (
         <>
             {(success == 0 && failed == 0)?
-                <div class={style['grey-bar']}>
-                    
-                </div>
+                <div class={style['grey-bar']}/>
                 :
                 <>
-                    {(success >= failed)?
-                        <div class={style['green-bar']}>
-                            
-                        </div>
+                    {(failed == 0)?
+                        <div class={style['green-bar']} />
                         :
-                        <div class={style['red-bar']}>
-
-                        </div>
+                        <>
+                            {(success == 0)?
+                                <div class={style['red-bar']} />
+                                :
+                                <div class={style['yellow-bar']}/>
+                            }
+                        </>     
                     }
                 </>     
             }

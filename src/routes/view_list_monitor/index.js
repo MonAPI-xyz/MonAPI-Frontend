@@ -9,9 +9,12 @@ import { getUserToken } from '../../config/api/auth';
 import { FaAngleRight } from 'react-icons/fa';
 import SuccessRatePercentageChart from '../../components/chart/success_rate_percentage_chart';
 import ResponseTimeChart from '../../components/chart/response_time_chart';
-import style_detail from '../view_api_monitor_detail/style.css' ;
+import style_detail from '../view_api_monitor_detail/style.css' ;	
+import style_bar from '../../components/success_rate/style.css' ;
+import moment from "moment"
 
-const ViewListMonitor = () => {
+const ViewListMonitor = () => {	
+
 	const [monitor,setMonitor]=useState([])
 	const [detail, setDetail]=useState({})
 	useEffect(()=>{
@@ -59,15 +62,44 @@ const ViewListMonitor = () => {
 					<button type="button" class="btn btn-success">Create New</button>
 				</Link>
 			</div>
-			
+			<br/>
+			{(monitor.length != 0)?
+				<div>
+					<div class="d-flex justify-content-between">
+						<div class="d-flex justify-content-between">
+							<div class={style_bar['green-bar']}></div> 
+							<p>: 100% Success rate</p>
+						</div>
+						<div class="d-flex justify-content-between"> 
+							<div class={style_bar['yellow-bar']}></div>
+							<p>: 1-99% Success rate</p>
+						</div>
+						<div class="d-flex justify-content-between"> 
+							<div class={style_bar['red-bar']}></div>
+							<p>: 0% Success rate</p>
+						</div>
+						<div class="d-flex justify-content-between"> 
+							<div class={style_bar['grey-bar']}></div>
+							<p>: No data</p>
+						</div>
+					</div>
+				</div>				
+				:
+				<div/>
+			}
 			<table style="width:100%">
-				<tr>
-					<th>API Name</th>
-					<th>Path URL</th>
-					<th>Success Rate</th>
-					<th>Average Response Time</th>
-					<th>Success Rate History (24h)</th>
-				</tr>
+				{(monitor.length != 0)?
+					<tr>
+						<th>API Name</th>
+						<th>Path URL</th>
+						<th>Success Rate</th>
+						<th>Average Response Time</th>
+						<th>Success Rate History (24h)</th>
+					</tr>
+					:
+					<p style="text-align: center">There is no monitor. You can click green button "Create New" in the middle right side</p>
+				}
+				
 				{monitor.map((val)=>(
 					<tr key={val.id}>
 						<td>{val.name}</td>
@@ -79,7 +111,8 @@ const ViewListMonitor = () => {
 							{val.success_rate_history.map((history, idx)=>(
 								<SuccessRate success={history.success} failed={history.failed} key={idx} /> 						
 							))}	
-							</div>											
+							</div>
+							<p>Last checked: {val.last_result ? moment(val.last_result.execution_time).fromNow() : "-"}</p>													
 						</td>
 						<td>
 							<Link aria-label="view-api-monitor-detail" href={`/${val.id}/detail/`}>
