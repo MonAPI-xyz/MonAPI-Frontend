@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useState } from 'preact/hooks';
 import axios from 'axios';
 import { route } from 'preact-router';
+import Dropdown from '../../components/forms/dropdown/index.js';
 import TextInput from '../../components/forms/textinput/index.js';
 import BASE_URL from '../../config/api/constant.js';
 import { getUserToken } from '../../config/api/auth.js';
@@ -13,7 +14,16 @@ import { useEffect } from 'react';
 const Configuration = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [responseMessage, setResponseMessage] = useState('')
-	const [successMessage, setSuccessMessage] = useState('');
+		const [successMessage, setSuccessMessage] = useState('');
+
+		const timeWindowOption = [
+			{ key: "1H", value: "1 Hour",},
+			{ key: "2H", value: "2 Hours",},
+			{ key: "3H", value: "3 Hours",},
+			{ key: "6H", value: "6 Hours",},
+			{ key: "12H", value: "12 Hours",},
+			{ key: "24H", value: "24 Hours",},
+		]
 
     const {
         handleSubmit,
@@ -33,13 +43,16 @@ const Configuration = () => {
             is_pagerduty_active:false,
             pagerduty_api_key:'',
             pagerduty_default_from_email:'',
+						pagerduty_service_id:'',
             is_email_active:false,
             email_host:'',
             email_port:0,
             email_username:'',
             email_password:'',
-			email_use_tls:false,
-    		email_use_ssl:false,
+						email_use_tls:false,
+						email_use_ssl:false,
+						threshold_pct:100,
+            time_window:'1H',
         }
     });
 
@@ -53,7 +66,7 @@ const Configuration = () => {
             }).then(()=>{
                 route('/configuration/');
                 setIsLoading(false);
-				setSuccessMessage("successful save configuration");
+								setSuccessMessage("Successful save configuration");
             }).catch((error)=> {
                 setResponseMessage(error.response.data.error);
                 setIsLoading(false);
@@ -78,6 +91,7 @@ const Configuration = () => {
 				'is_pagerduty_active',
 				'pagerduty_api_key',
 				'pagerduty_default_from_email',
+				'pagerduty_service_id',
 				'is_email_active',
 				'email_host',
 				'email_port',
@@ -85,6 +99,8 @@ const Configuration = () => {
 				'email_password',
 				'email_use_tls',
 				'email_use_ssl',
+				'threshold_pct',
+        'time_window',
 			]
 			fields.forEach((value)=>{
 				setValue(value, response.data[value])
@@ -105,6 +121,64 @@ const Configuration = () => {
                         <Box verticalAlign='center'>
                         
                             <Box as='form' onSubmit={handleSubmit(onSubmit)} id="form-configuration">
+
+								<Box style={{ padding: '10px', textAlign: 'center' }}>
+									<Accordion allowToggle>
+										<AccordionItem>
+										<h2>
+											<AccordionButton>
+											<Box flex='1' textAlign='left'>
+												<Text fontSize='20px' fontWeight='semibold' color='black'>
+													Threshold
+												</Text>												
+											</Box>
+											
+											<AccordionIcon />
+											</AccordionButton>
+										</h2>
+										<AccordionPanel pb={4}>
+											<Box mb='20px' />
+											<Box w='40vw'>
+												<TextInput
+													id='threshold_pct'
+													title='Threshold Value'
+													placeholder='Insert the integer value from 1 to 100'
+													errors={errors}
+													rules={{
+														required: 'Required',
+														minLength: { value: 1, message: 'Required' },
+														min: { value: 1, message: 'Minimum value is 1' },
+														max: { value: 100, message: 'Maximum value is 100' },
+														validate: v => Number.isInteger(v) || 'Value must be integer',
+														valueAsNumber: true,
+													}}
+													register={register}
+												/>
+
+											</Box>
+											<Box mb='20px' />
+											<Box>
+												<Box w='40vw'>
+														<Dropdown
+																id="time_window"
+																title='Time Window'
+																dataTestId='dropdownTimeWindow'
+																placeholder=''
+																errors={errors}
+																options={timeWindowOption}
+																rules={{
+																		required: 'Required',
+																		minLength: { value: 1, message: 'Required' },
+																}}
+																register={register}
+														/>
+												</Box>
+												<p style={{ textAlign: 'left' }}>Time window is how we calculate your average success rate for last X hours</p>
+											</Box>
+										</AccordionPanel>
+										</AccordionItem>
+									</Accordion>
+								</Box>
 
 								<Box style={{ padding: '10px', textAlign: 'center' }}>
 									<Accordion allowToggle>
@@ -247,6 +321,16 @@ const Configuration = () => {
 													register={register}
 												/>
 											</Box>
+											<Box mb='20px' />
+											<Box w='40vw'>
+												<TextInput
+													id='pagerduty_service_id'
+													title='Service ID'
+													placeholder='Insert your pagerduty service ID'
+													errors={errors}
+													register={register}
+												/>
+											</Box>
 										</AccordionPanel>
 										</AccordionItem>
 									</Accordion>
@@ -329,7 +413,7 @@ const Configuration = () => {
 										</AccordionItem>
 									</Accordion>
 								</Box>
-								{successMessage != '' && <Text fontSize='14px' color='black.500'>{successMessage}</Text>}
+								{successMessage != '' && <Text fontSize='14px' color='green'>{successMessage}</Text>}
                                 {responseMessage != '' && <Text fontSize='14px' color='red.500'>{responseMessage}</Text>}
                                 <Box mb={responseMessage ? '10px' : '20px'} />
 								
