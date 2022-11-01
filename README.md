@@ -67,11 +67,12 @@ For detailed explanation on how things work, checkout the [CLI Readme](https://g
 - [Docker Container](https://github.com/MonAPI-xyz/MonAPI-Frontend/blob/staging/docs/docker.md)
 
 ## Latest Release Notes
-Version: v0.2.0<br>
-Date: 17th October 2022
-1. Implement create new api monitor
-2. Implement api monitor details
-3. Run cron for api monitor
+Version: v0.3.0<br>
+Date: 31th October 2022
+1. Edit API Monitor
+2. API Monitor Assertions
+3. Multi step API monitor
+4. Alerts configuration
 
 Full release notes can be found in [Release Notes](https://github.com/MonAPI-xyz/MonAPI-Frontend/blob/staging/docs/release_notes.md)
 
