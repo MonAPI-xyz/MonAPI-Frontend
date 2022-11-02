@@ -43,6 +43,8 @@ const Configuration = () => {
             pagerduty_default_from_email:'',
 						pagerduty_service_id:'',
             is_email_active:false,
+            email_name:'',
+            email_address:'',
             email_host:'',
             email_port:0,
             email_username:'',
@@ -89,6 +91,8 @@ const Configuration = () => {
 				'pagerduty_default_from_email',
 				'pagerduty_service_id',
 				'is_email_active',
+				'email_name',
+				'email_address',
 				'email_host',
 				'email_port',
 				'email_username',
@@ -335,6 +339,26 @@ const Configuration = () => {
 											<Box mb='20px' />
 											<Box w='40vw'>
 												<TextInput
+													id='email_name'
+													title='Email Name'
+													placeholder='Insert your email name'
+													errors={errors}
+													register={register}
+												/>
+											</Box>
+											<Box mb='20px' />
+											<Box w='40vw'>
+												<TextInput
+													id='email_address'
+													title='Email Address'
+													placeholder='Insert your email address'
+													errors={errors}
+													register={register}
+												/>
+											</Box>
+											<Box mb='20px' />
+											<Box w='40vw'>
+												<TextInput
 													id='email_host'
 													title='SMTP Host'
 													placeholder='Insert your email SMTP host'
@@ -372,6 +396,7 @@ const Configuration = () => {
 													register={register}
 												/>
 											</Box>
+											<Box mb='20px' />
 											<Box w='40vw'textAlign='left'> 
 												<Controller name='email_use_tls' control={control} render={({ field: { onChange, value } }) => (
 													<Checkbox onChange={(e) => onChange(e)} isChecked={value} colorScheme='blueChill'>Use TLS</Checkbox>
