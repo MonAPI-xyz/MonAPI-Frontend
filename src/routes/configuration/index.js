@@ -37,9 +37,6 @@ const Configuration = () => {
             slack_token:'',
             slack_channel_id:'',
             is_discord_active:false,
-            discord_bot_token:'',
-            discord_guild_id:'',
-            discord_channel_id:'',
             discord_webhook_url:'',
             is_pagerduty_active:false,
             pagerduty_api_key:'',
@@ -86,9 +83,6 @@ const Configuration = () => {
 				'slack_token',
 				'slack_channel_id',
 				'is_discord_active',
-				'discord_bot_token',
-				'discord_guild_id',
-				'discord_channel_id',
 				'discord_webhook_url',
 				'is_pagerduty_active',
 				'pagerduty_api_key',
@@ -246,36 +240,6 @@ const Configuration = () => {
 												<Controller name='is_discord_active' control={control} render={({ field: { onChange, value } }) => (
 													<Checkbox onChange={(e) => onChange(e)} isChecked={value} colorScheme='blueChill'>Activate Discord Notification</Checkbox>
 												)}
-												/>
-											</Box>
-											<Box mb='20px' />
-											<Box w='40vw'>
-												<TextInput
-													id='discord_bot_token'
-													title='Bot Token'
-													placeholder='Insert your discord bot token'
-													errors={errors}
-													register={register}
-												/>
-											</Box>
-											<Box mb='20px' />
-											<Box w='40vw'>
-												<TextInput
-													id='discord_guild_id'
-													title='Guild ID / Server ID'
-													placeholder='Insert your discord guild ID / server ID'
-													errors={errors}
-													register={register}
-												/>
-											</Box>
-											<Box mb='20px' />
-											<Box w='40vw'>
-												<TextInput
-													id='discord_channel_id'
-													title='Channel ID'
-													placeholder='Insert your discord channel ID'
-													errors={errors}
-													register={register}
 												/>
 											</Box>
 											<Box mb='20px' />
