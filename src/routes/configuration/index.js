@@ -40,6 +40,7 @@ const Configuration = () => {
             discord_bot_token:'',
             discord_guild_id:'',
             discord_channel_id:'',
+            discord_webhook_url:'',
             is_pagerduty_active:false,
             pagerduty_api_key:'',
             pagerduty_default_from_email:'',
@@ -88,6 +89,7 @@ const Configuration = () => {
 				'discord_bot_token',
 				'discord_guild_id',
 				'discord_channel_id',
+				'discord_webhook_url',
 				'is_pagerduty_active',
 				'pagerduty_api_key',
 				'pagerduty_default_from_email',
@@ -272,6 +274,16 @@ const Configuration = () => {
 													id='discord_channel_id'
 													title='Channel ID'
 													placeholder='Insert your discord channel ID'
+													errors={errors}
+													register={register}
+												/>
+											</Box>
+											<Box mb='20px' />
+											<Box w='40vw'>
+												<TextInput
+													id='discord_webhook_url'
+													title='Webhook URL'
+													placeholder='Insert your discord webhook URL'
 													errors={errors}
 													register={register}
 												/>
