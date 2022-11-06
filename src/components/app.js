@@ -2,6 +2,8 @@ import { h } from 'preact';
 import { Router } from 'preact-router';
 import { ChakraProvider } from '@chakra-ui/react';
 import { Provider } from 'unistore/preact';
+import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/tracing";
 import { store } from '../config/store/store.js';
 import theme from '../config/theme';
 import ROUTE from '../config/api/route';
@@ -18,6 +20,19 @@ import EditAPIMonitor from '../routes/editAPIMonitor';
 import Configuration from '../routes/configuration/index.js';
 
 const App = () => {
+	const sentryDSN = process.env.PREACT_APP_SENTRY_DSN;
+	if (sentryDSN !== "") {
+		Sentry.init({
+			dsn: sentryDSN,
+			integrations: [new BrowserTracing()],
+		  
+			// Set tracesSampleRate to 1.0 to capture 100%
+			// of transactions for performance monitoring.
+			// We recommend adjusting this value in production
+			tracesSampleRate: 1.0,
+		});	  
+	}
+	
 	return (<div id="app">
 		<Provider store={store}>
 			<ChakraProvider theme={theme}>

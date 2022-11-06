@@ -41,6 +41,8 @@
     "@chakra-ui/react": "^2.3.4",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "@sentry/react": "^7.17.3",
+    "@sentry/tracing": "^7.17.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/user-event": "^13.5.0",
     "axios": "0.21.2",
