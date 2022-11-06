@@ -82,6 +82,7 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
           <MenuItem
             icon={<FaPlay />}>
             API Test
+            <Link class={style['menu-button']} activeClassName={style['active']} href="/test-api/" /> 
           </MenuItem>
           <MenuItem
             icon={<FaUserPlus />}>
