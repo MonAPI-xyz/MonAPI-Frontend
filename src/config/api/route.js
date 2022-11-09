@@ -8,6 +8,8 @@ const ROUTE = {
     CREATE_API_MONITOR: '/create',
     EDIT: '/:id/edit',
     CONFIGURATION: '/configuration',
+    FORGET_PASSWORD: '/forget',
+    FORGET_PASSWORD_TOKEN: '/forget_password'
   };
   
 export default ROUTE;
