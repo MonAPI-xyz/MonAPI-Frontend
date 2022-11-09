@@ -34,6 +34,7 @@ describe('Test Change Password', () => {
 			expect(getCurrentUrl()).toBe("/login?isChangePassword=true")
 		})
 	})
+
 	test('try to change password failed', async () => {
 		deleteUserToken()
 		axios.post.mockImplementation(() => Promise.reject({
@@ -58,21 +59,44 @@ describe('Test Change Password', () => {
 		userEvent.click(submit)
 
 		await waitFor(() => {
-			expect(getCurrentUrl()).toBe("/forget_password?key=abcdef")
+			expect(screen.getByText('Error: Please choose password that different from your current password'))
 		})
 	})
-	test('try to render forget password page but user has already login', async () => {
-		const response = []
-		axios.get.mockImplementation(() => Promise.resolve({data: response}))
-		setUserToken("token")
-	
-		render(<App/>);
+
+	test('try to change password loading when processing', async () => {
+		deleteUserToken()
+		
+		axios.post.mockImplementation(() => {
+			return new Promise((_, reject)=> {
+				setTimeout(() =>  reject({ 
+					response: {
+						data: {
+							error : "Please choose password that different from your current password"
+						}
+					}
+				}), 3000)
+			})
+		});
+
+		render(<App />);
 		route('/forget_password?key=abcdef')
 
 		await waitFor(() => {
-			expect(getCurrentUrl()).toBe("/")
+			expect(screen.getByText('Forget Password'))
+		})
+
+		const newPasswordField = await screen.findByPlaceholderText('New Password');
+		const submit = screen.getByText('Change Password');
+		
+
+		userEvent.type(newPasswordField, 'newpass')
+		userEvent.click(submit)
+
+		await waitFor(() => {
+			expect(screen.getByText('Loading...')).toBeDefined()
 		})
 	})
+	
 	test('test key changes on token user', async () => {
 		deleteUserToken()
 		let response = {

@@ -5,20 +5,16 @@ import { Button, Text, Spinner,Box, Flex, Grid, GridItem } from '@chakra-ui/reac
 import { useForm } from 'react-hook-form';
 import { route } from 'preact-router';
 import ROUTE from '../../config/api/route.js';
-import { isAuthenticate } from '../../config/middleware/middleware.js';
 import BASE_URL from '../../config/api/constant.js';
 import * as axios from "axios";
-import { useEffect } from 'react';
 
 const ForgetPasswordToken = ()=>{
     const [errl, setErrl] = useState([])
     const [isLoading, setIsLoading] = useState(false);
     const [key, setKey] = useState("")
     
-    useEffect(()=>{
-        const param = new URLSearchParams(window.location.search).get('key')
-        setKey(param)
-    },[])
+    const param = new URLSearchParams(window.location.search).get('key')
+    setKey(param)
 
     const {
     handleSubmit,
@@ -26,21 +22,16 @@ const ForgetPasswordToken = ()=>{
     formState: { errors },
     } = useForm();
 
-    if (isAuthenticate()) {
-        route(ROUTE.DASHBOARD)
-        return;
-    }
-
     const onSubmit = (res) => {
         setIsLoading(true)
         const data = {
-            key: key,
+            key,
             password: res.password
         }
 
         axios.post(`${BASE_URL}/forget-password/change/`, data)
         .then(() => {
-            route(ROUTE.LOGIN + "?isChangePassword=true")
+            route(`${ROUTE.LOGIN}?isChangePassword=true`)
             setIsLoading(false)
         }) 
         .catch((error) => {
