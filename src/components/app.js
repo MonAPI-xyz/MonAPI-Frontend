@@ -16,6 +16,7 @@ import ErrorLogs from '../routes/error_logs/index.js';
 import CreateAPIMonitor from '../routes/createAPIMonitor';
 import EditAPIMonitor from '../routes/editAPIMonitor';
 import Configuration from '../routes/configuration/index.js';
+import ForgetPassword from '../routes/forget_password/index.js';
 
 const App = () => {
 	return (<div id="app">
@@ -37,6 +38,7 @@ const App = () => {
 					
 					<Login path={ROUTE.LOGIN} />
 					<Register path={ROUTE.REGISTER} />
+					<ForgetPassword path={ROUTE.FORGET_PASSWORD} />
 				</Router>
 			</ChakraProvider>
 		</Provider>
