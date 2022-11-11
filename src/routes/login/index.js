@@ -16,13 +16,19 @@ import ROUTE from '../../config/api/route.js';
 const Login = connect('user', actions)( 
     ({ setUser }) =>{
     
-    const param = new URLSearchParams(window.location.search).get('isRegistered')
+    const paramIsRegistered = new URLSearchParams(window.location.search).get('isRegistered')
+    const paramIsChangePassword = new URLSearchParams(window.location.search).get('isChangePassword')
     const [isRegistered, setIsRegistered] = useState(null)
+    const [isChangePassword, setIsChangePassword] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
 
-    if (param) {
+    if (paramIsRegistered) {
         setIsRegistered(true)
     }
+    if (paramIsChangePassword) {
+        setIsChangePassword(true)
+    }
+
     if (!isAuthenticate()) {
     const {
       handleSubmit,
@@ -63,6 +69,11 @@ const Login = connect('user', actions)(
                     {isRegistered && (
                     <Text color='green'>
                         User Created Successfully!
+                    </Text>
+                    )}
+                    {isChangePassword && (
+                    <Text color='green'>
+                        Password changed successfully. Please login with your new password.
                     </Text>
                     )}
                         <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
@@ -109,6 +120,10 @@ const Login = connect('user', actions)(
                         <Text as='span'>or </Text>
                         <Text as='span' fontWeight='600'>    
                             <Text as='span' onClick={()=>route(ROUTE.REGISTER)} color='#4B8F8C' style={{cursor:'pointer', textDecoration: 'underline'}}>sign up</Text> to create new account
+                        </Text>
+                        <Box mb='20px' />
+                        <Text as='span' fontWeight='600'>    
+                            <Text as='span' onClick={()=>route(ROUTE.FORGET_PASSWORD)} color='#4B8F8C' style={{cursor:'pointer', textDecoration: 'underline'}}>Forget your password? </Text>
                         </Text>
                     </Box>
                                         

@@ -151,6 +151,7 @@ describe('Test Form Login', () => {
 	});
 
 	test('click sign up text span', async () => {
+		deleteUserToken();
 		render(<App/>);
 		route('/login')
 		
@@ -161,6 +162,22 @@ describe('Test Form Login', () => {
 		})
 	})
 
+	test('click forget password text span', async () => {
+		deleteUserToken();
+		render(<App/>);
+		route('/login')
+
+		await waitFor(() => {
+			expect(screen.getByText('Forget your password?')).toBeDefined()
+		});
+		
+		userEvent.click(screen.getByText('Forget your password?'));
+
+		await waitFor(() => {
+			expect(getCurrentUrl()).toBe('/forget');
+		})
+	})
+
 	test('successfully registered user is redirected to /login', async() => {
 		deleteUserToken()
 		render(<App/>);
@@ -168,6 +185,16 @@ describe('Test Form Login', () => {
 
 		await waitFor(async () => {
             expect(screen.getByText('User Created Successfully!'))
+		})
+	})
+
+	test('successfully change password user is redirected to /login', async() => {
+		deleteUserToken()
+		render(<App/>);
+		route('/login?isChangePassword=true')
+
+		await waitFor(async () => {
+            expect(screen.getByText('Password changed successfully. Please login with your new password.'))
 		})
 	})
 });
