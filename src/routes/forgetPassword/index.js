@@ -72,8 +72,10 @@ const ForgetPassword = ()=>{
                             
                             {responseMessage != '' && <Text fontSize='14px' color={'green.500'}>{responseMessage}</Text>}
 
-                            {errorMessage.length != 0 && (
-                                <Text color='red'>Error: {errorMessage}</Text>                                
+                            {errorMessage.length != 0 && (<>
+                                    <Box mb='20px' />
+                                    <Text color='red'>Error : {errorMessage}</Text>                                
+                                </>
                             )}
                             <Box mb='20px' />
 

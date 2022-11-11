@@ -72,7 +72,8 @@ const ForgetPasswordToken = ()=>{
 
                             {errl.length != 0 && (
                                 <div>
-                                <Text color='red'>Error: {errl}</Text>                                
+                                    <Box mb='20px' />
+                                    <Text color='red'>Error: {errl}</Text>                                
                                 </div>
                             )}
                             <Box mb='20px' />
