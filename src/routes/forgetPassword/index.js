@@ -5,9 +5,10 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import BASE_URL from '../../config/api/constant.js';
 import { useState } from 'preact/hooks';
+import { route } from 'preact-router';
+import ROUTE from '../../config/api/route.js';
 
 const ForgetPassword = ()=>{
-    
     const [isLoading, setIsLoading] = useState(false)
 
     const {
@@ -17,17 +18,26 @@ const ForgetPassword = ()=>{
     } = useForm();
 
     const [responseMessage, setResponseMessage] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
 
     const onSubmit = async (data) => {
         setIsLoading(true);
+        setErrorMessage('');
+        setResponseMessage('');
         try {
             await axios.post(`${BASE_URL}/forget-password/token/`, data)
-            .then((response) => {
-                setResponseMessage('please check your email for reset password link')
+            .then(() => {
+                setResponseMessage('Please check your email and follow instruction on the email')
                 setIsLoading(false)
             })
         } catch(error) {
-            setResponseMessage(error['response']['data']['error'])
+            if (error.response.data.error) {
+                setErrorMessage(error['response']['data']['error'])
+            } else if (error.response.data.email) {
+                setErrorMessage(error['response']['data']['email'][0])
+            } else {
+                setErrorMessage('We have encountered an error. Please contact our team and try again')
+            }
             setIsLoading(false)
         }
     };
@@ -60,13 +70,22 @@ const ForgetPassword = ()=>{
                             />
                             <Box mb='20px' />
                             
-                            {responseMessage != '' && <Text fontSize='14px' color={responseMessage ? 'green.500' : 'red.500'}>{responseMessage}</Text>}
-                            <Box mb={responseMessage ? '10px' : '20px'} />
+                            {responseMessage != '' && <Text fontSize='14px' color={'green.500'}>{responseMessage}</Text>}
+
+                            {errorMessage.length != 0 && (<div>
+                                    <Box mb='20px' />
+                                    <Text color='red'>Error: {errorMessage}</Text>                                
+                                </div>
+                            )}
+                            <Box mb='20px' />
 
                             <Button form="form-forget-password" id='sendEmailButton' colorScheme='teal' type='submit' width='12em' borderRadius={10}>
                                 {isLoading ? <Spinner /> : "Submit"}
                             </Button>
-                            
+                            <Box mb='20px' />
+                            <Text as='span' fontWeight='600'>    
+                                <Text as='span' onClick={()=>route(ROUTE.LOGIN)} color='#4B8F8C' style={{cursor:'pointer', textDecoration: 'underline'}}>Login with your account</Text>
+                            </Text>
                         </Box>
                         
                     </Box>

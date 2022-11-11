@@ -18,8 +18,9 @@ import ErrorLogs from '../routes/error_logs/index.js';
 import CreateAPIMonitor from '../routes/createAPIMonitor';
 import EditAPIMonitor from '../routes/editAPIMonitor';
 import Configuration from '../routes/configuration/index.js';
-import ForgetPassword from '../routes/forget_password/index.js';
+import ForgetPassword from '../routes/forgetPassword/index.js';
 import ForgetPasswordToken from '../routes/forgetPasswordToken/index.js';
+import Redirect from './redirect/index.js';
 
 const App = () => {
 	const sentryDSN = process.env.PREACT_APP_SENTRY_DSN;
@@ -39,6 +40,11 @@ const App = () => {
 		<Provider store={store}>
 			<ChakraProvider theme={theme}>
 				<Router>
+					<Login path={ROUTE.LOGIN} />
+					<Register path={ROUTE.REGISTER} />
+					<ForgetPassword path={ROUTE.FORGET_PASSWORD} />
+					<ForgetPasswordToken path={ROUTE.FORGET_PASSWORD_TOKEN} />
+
 					<AuthenticationChecker path="/:*?">
 						<DashboardWrapper path="/:*?">
 							<Router>
@@ -48,14 +54,10 @@ const App = () => {
 								<CreateAPIMonitor path={ROUTE.CREATE_API_MONITOR} />
 								<EditAPIMonitor path={ROUTE.EDIT} />
 								<Configuration path={ROUTE.CONFIGURATION} />			
+								<Redirect path="/:*?" to="/" />
 							</Router>							
 						</DashboardWrapper>
 					</AuthenticationChecker>
-					
-					<Login path={ROUTE.LOGIN} />
-					<Register path={ROUTE.REGISTER} />
-					<ForgetPassword path={ROUTE.FORGET_PASSWORD} />
-					<ForgetPasswordToken path={ROUTE.FORGET_PASSWORD_TOKEN} />
 				</Router>
 			</ChakraProvider>
 		</Provider>
