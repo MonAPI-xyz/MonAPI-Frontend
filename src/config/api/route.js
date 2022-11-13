@@ -9,7 +9,8 @@ const ROUTE = {
     EDIT: '/:id/edit',
     CONFIGURATION: '/configuration',
     FORGET_PASSWORD: '/forget',
-    FORGET_PASSWORD_TOKEN: '/forget_password'
+    FORGET_PASSWORD_TOKEN: '/forget_password',
+    TEST_API: '/test-api',
   };
   
 export default ROUTE;
