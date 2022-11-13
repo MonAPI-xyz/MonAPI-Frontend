@@ -1,9 +1,9 @@
 import { h } from 'preact';
 import style from './style.css';
 import {methodOption} from './optionHelper.js'
-import { Button, Checkbox, Spinner, Text, Box, Flex, Grid, GridItem, Radio, RadioGroup, Textarea, FormErrorMessage, FormControl } from '@chakra-ui/react';
+import { Button, Text, Box, Flex, Grid, GridItem, Radio, RadioGroup, Textarea, FormErrorMessage, FormControl } from '@chakra-ui/react';
 import KeyValueForm from '../../components/createAPIMonitor/keyValueForm';
-import { useEffect, useState } from 'preact/hooks';
+import { useState } from 'preact/hooks';
 import Dropdown from '../../components/forms/dropdown';
 import TextInput from '../../components/forms/textinput';
 import { Controller, useForm } from 'react-hook-form';

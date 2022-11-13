@@ -3,7 +3,6 @@ import { screen, waitFor, render } from '@testing-library/preact';
 import * as axios from 'axios';
 import userEvent from '@testing-library/user-event'
 import { getCurrentUrl, route } from 'preact-router';
-import App from '../../../src/components/app.js';
 import { setUserToken } from '../../../src/config/api/auth.js';
 import TestAPI from '../../../src/routes/a_test_api/index.js';
 
