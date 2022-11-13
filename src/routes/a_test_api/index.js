@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import style from './style.css';
 import {methodOption} from './optionHelper.js'
-import { Button, Text, Box, Flex, Grid, GridItem, Radio, RadioGroup, Textarea, FormErrorMessage, FormControl } from '@chakra-ui/react';
+import { Button, Text, Box, Flex, Grid, GridItem, Radio, RadioGroup, Textarea, FormControl } from '@chakra-ui/react';
 import KeyValueForm from '../../components/createAPIMonitor/keyValueForm';
 import { useState } from 'preact/hooks';
 import Dropdown from '../../components/forms/dropdown';
@@ -25,7 +25,6 @@ const TestAPI = () => {
         register,
         control,
         formState: { errors },
-        setValue
     } = useForm({
         defaultValues: {
             method: "GET",
@@ -54,19 +53,6 @@ const TestAPI = () => {
             })            
         }
     };
-
-    function headerAndBox(header, content) {
-        return (
-          <div>
-            <p><b>{header}</b><br/>
-            <span class={style[`content-${header.replace(" ","-")}`]}>
-              <Box bg='gray.100' w='90%' color='black' p={3.5} mt={1.5} borderRadius='lg' class={style[`content-${header}`]}>
-                {content ? content : "-"}
-              </Box>
-            </span></p>
-          </div>
-        )
-      };
 
 	return(
         <div class={style['test-api']}>
@@ -218,8 +204,13 @@ const TestAPI = () => {
                                     submit
                                 </Button>
                             </Box>
-                            <Box>
-                                <div>{headerAndBox('Response', responseMessage)}</div>
+                            <Box>     
+                                <p><b>Response</b><br/>
+                                <span>
+                                <Box bg='gray.100' w='90%' color='black' p={3.5} mt={1.5} borderRadius='lg' class={style[`content-Response`]}>
+                                    {responseMessage}
+                                </Box>
+                                </span></p>
                             </Box>
 
                         </Box>
