@@ -21,6 +21,7 @@ import Configuration from '../routes/configuration/index.js';
 import ForgetPassword from '../routes/forgetPassword/index.js';
 import ForgetPasswordToken from '../routes/forgetPasswordToken/index.js';
 import Redirect from './redirect/index.js';
+import TestAPI from '../routes/a_test_api/index.js';
 
 const App = () => {
 	const sentryDSN = process.env.PREACT_APP_SENTRY_DSN;
@@ -53,6 +54,7 @@ const App = () => {
 								<ErrorLogs path={ROUTE.ERROR_LOGS} />
 								<CreateAPIMonitor path={ROUTE.CREATE_API_MONITOR} />
 								<EditAPIMonitor path={ROUTE.EDIT} />
+								<TestAPI path={ROUTE.TEST_API} />
 								<Configuration path={ROUTE.CONFIGURATION} />			
 								<Redirect path="/:*?" to="/" />
 							</Router>							
