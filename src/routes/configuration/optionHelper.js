@@ -1,0 +1,40 @@
+const timeWindowOption = [
+  { key: "1H", value: "1 Hour",},
+  { key: "2H", value: "2 Hours",},
+  { key: "3H", value: "3 Hours",},
+  { key: "6H", value: "6 Hours",},
+  { key: "12H", value: "12 Hours",},
+  { key: "24H", value: "24 Hours",},
+]
+
+const timezoneOption = [
+  { key: -12, value: "Coordinated Universal Time-12 (UTC-12)",},
+  { key: -11, value: "Niue, Samoa Standard Time (UTC-11)",},
+  { key: -10, value: "Hawaii-Aleutian Standard Time (UTC-10)",},
+  { key: -9, value: "Alaska Standard Time (UTC-9)",},
+  { key: -8, value:"Pacific Standard Time (UTC-8)",},
+  { key: -7, value: "Mountain Standard Time (UTC-7)",},
+  { key: -6, value: "Central Standard Time (UTC-6)",},
+  { key: -5, value: "Eastern Standard Time (UTC-5)",},
+  { key: -4, value: "Atlantic Standard Time (UTC-4)",},
+  { key: -3, value: "Brasilia, Argentine Time (UTC-3)",},
+  { key: -2, value: "Fernando de Noronha, South Georgia Standard Time (UTC-2)",},
+  { key: -1, value: "Azores, Cape Verde, Eastern Greenland Time (UTC-1)",},
+  { key: 0, value: "Western European, Greenwich Mean Time (UTC-0)",},
+  { key: 1, value: "Central European, Western African Time (UTC+1)",},
+  { key: 2, value: "Central African, Eastern European Time (UTC+2)",},
+  { key: 3, value: "Eastern African, Arabia Standard Time (UTC+3)",},
+  { key: 4, value: "Azerbaijan, Georgia, Moscow Standard Time (UTC+4)",},
+  { key: 5, value: "Turkmenistan, Pakistan, Uzbekistan Time (UTC+5)",},
+  { key: 6, value: "Bangladesh, Vostok, Bhutan Time (UTC+6)",},
+  { key: 7, value: "Indochina, West Indonesia, Christmas Island Time (UTC+7)",},
+  { key: 8, value: "Hong Kong, Central Indonesia, Malaysia Time (UTC+8)",},
+  { key: 9, value: "Korea-Japan Standard, East Indonesia Time (UTC+9)",},
+  { key: 10, value: "Queensland, Victoria, Papua New Guinea Time (UTC+10)",},
+  { key: 11, value: "Vladivostok, Pohnpei, Solomon Is. Time (UTC+11)",},
+  { key: 12, value: "Nauru, New Zealand Standard Time (UTC+12)",},
+  { key: 13, value: "West Samoa, Tonga, Phoenix Is. Time (UTC+12)",},
+  { key: 14, value: "Line Is. Time (UTC+12)",},
+]
+
+export { timeWindowOption, timezoneOption }
