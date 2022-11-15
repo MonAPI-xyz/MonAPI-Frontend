@@ -208,7 +208,7 @@ const TestAPI = () => {
                                 <p><b>Response</b><br/>
                                 <span>
                                 <Box bg='gray.100' w='90%' color='black' p={3.5} mt={1.5} borderRadius='lg' class={style[`content-Response`]}>
-                                    {responseMessage}
+                                    <div style={{whiteSpace: "pre-wrap"}}>{responseMessage}</div>                                    
                                 </Box>
                                 </span></p>
                             </Box>
