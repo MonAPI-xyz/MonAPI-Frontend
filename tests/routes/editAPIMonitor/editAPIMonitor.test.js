@@ -1,11 +1,9 @@
 import { h } from "preact";
 import { screen, waitFor, render } from "@testing-library/preact";
-import { getCurrentUrl, route } from "preact-router";
-import App from "../../../src/components/app.js";
 import * as axios from "axios";
 import EditAPIMonitor from "../../../src/routes/editAPIMonitor/index.js";
 import userEvent from "@testing-library/user-event";
-import { deleteUserToken, setUserToken } from "../../../src/config/api/auth.js";
+import { setUserToken } from "../../../src/config/api/auth.js";
 import BASE_URL from '../../../src/config/api/constant.js';
 
 jest.mock("axios");
