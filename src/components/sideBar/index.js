@@ -48,7 +48,7 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
   }
   const onSubmit = () => {
     setIsLoadingLogout(true)
-    axios.post(`${BASE_URL}/logout/`, {}, { headers: {Authorization : `Token ${getUserToken()}`} })
+    axios.post(`${BASE_URL}/auth/logout/`, {}, { headers: {Authorization : `Token ${getUserToken()}`} })
     .then(() => {
       deleteUserToken()
       route(ROUTE.LOGIN)

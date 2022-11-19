@@ -41,7 +41,7 @@ const Login = connect('user', actions)(
     const onSubmit = async (data) => {
         setIsLoading(true);
         try {
-            await axios.post(`${BASE_URL}/login/`, data)
+            await axios.post(`${BASE_URL}/auth/login/`, data)
             .then((response) => {
                 setResponseMessage('')
                 setUserToken(response['data']['token'])
