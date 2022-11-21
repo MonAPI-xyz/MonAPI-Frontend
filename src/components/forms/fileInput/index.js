@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { FormControl, FormLabel, FormErrorMessage, Box, InputGroup, InputLeftElement, Icon, Flex } from '@chakra-ui/react';
+import { FormControl, FormLabel, Box, InputGroup, InputLeftElement, Icon, Flex } from '@chakra-ui/react';
 import { useController } from "react-hook-form";
 import { FiFile } from 'react-icons/fi'
 import { Input } from '@chakra-ui/input';
