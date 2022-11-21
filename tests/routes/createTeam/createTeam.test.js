@@ -52,13 +52,15 @@ describe('Test input', () => {
     userEvent.type(descField, 'myDesc')
 
     global.URL.createObjectURL = jest.fn();
-    const imageFile = new File([new ArrayBuffer(1)], 'hello.jpg', { type: "image/png" });
+    const imageFile = new File([new ArrayBuffer(1)], 'hello.png', { type: "image/png" });
     
     const fileField = await screen.findByPlaceholderText('Select Image');
 
-    await waitFor(() => {
-      userEvent.upload(fileField, imageFile);
-    });
+    // test file input is optional
+    userEvent.upload(fileField, null)
+
+    // test file input can upload image file
+    userEvent.upload(fileField, imageFile)
 
     const response = {
       name: "myteam",

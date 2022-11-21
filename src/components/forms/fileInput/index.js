@@ -39,7 +39,7 @@ const FileInput = (props) => {
             <Flex direction='column' gap='15px'>
               <p><b>Selected:</b><br/>{value && value.name || '-'}</p>
               <Box minW={w}>
-                <InputGroup>
+                <InputGroup data-testid='input-group-file-input'>
                   <InputLeftElement pointerEvents="pointer">
                     <Icon as={FiFile} />
                   </InputLeftElement>
@@ -69,9 +69,6 @@ const FileInput = (props) => {
               </Box>
             </Flex>
           </Flex>
-          
-          <Box mb='10px' />
-          <FormErrorMessage>{errors[id] && errors[id].message}</FormErrorMessage>
         </FormControl>
       </Box>
   );

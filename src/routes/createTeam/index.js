@@ -42,7 +42,7 @@ const CreateTeam = () => {
                 'Authorization':`Token ${getUserToken()}`
             }
         }).then(()=>{
-            route(ROUTE.TEAM_MANAGEMENT);
+            route(ROUTE.TEAM_MANAGEMENT + '/current');
             setLoadingCreate(false);
         })
     };
@@ -87,7 +87,7 @@ const CreateTeam = () => {
                                     />
                                 </Box>
                                 <Box mb='20px' />
-
+                                
                                 <FileInput
                                     w='10vw'
                                     id="logo"
@@ -96,9 +96,9 @@ const CreateTeam = () => {
                                     control={control}
                                     accept={'image/*'}
                                     placeholder='Select Image'
+                                    textChange='Change Image'
                                     register={register}
-                                >
-                                </FileInput>                       
+                                />               
                         
                             <Box mb='10px' />
                             </Box>
