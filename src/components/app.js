@@ -22,6 +22,7 @@ import ForgetPassword from '../routes/forgetPassword/index.js';
 import ForgetPasswordToken from '../routes/forgetPasswordToken/index.js';
 import Redirect from './redirect/index.js';
 import TestAPI from '../routes/a_test_api/index.js';
+import CreateNewTeam from '../routes/createTeam/index.js';
 
 const App = () => {
 	const sentryDSN = process.env.PREACT_APP_SENTRY_DSN;
@@ -56,6 +57,7 @@ const App = () => {
 								<EditAPIMonitor path={ROUTE.EDIT} />
 								<TestAPI path={ROUTE.TEST_API} />
 								<Configuration path={ROUTE.CONFIGURATION} />			
+								<CreateNewTeam path={ROUTE.TEAM_MANAGEMENT} />			
 								<Redirect path="/:*?" to="/" />
 							</Router>							
 						</DashboardWrapper>

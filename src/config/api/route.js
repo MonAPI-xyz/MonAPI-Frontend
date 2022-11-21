@@ -11,6 +11,7 @@ const ROUTE = {
     FORGET_PASSWORD: '/forget',
     FORGET_PASSWORD_TOKEN: '/forget_password',
     TEST_API: '/test-api',
+    TEAM_MANAGEMENT: '/team-management',
   };
   
 export default ROUTE;
