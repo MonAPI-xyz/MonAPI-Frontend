@@ -1,7 +1,6 @@
 import { h } from 'preact';
-import { render, waitFor, screen, fireEvent } from '@testing-library/preact';
+import { render, waitFor, screen} from '@testing-library/preact';
 import ViewCurrentTeam from '../../../src/routes/view_current_team';
-import userEvent from '@testing-library/user-event'
 import * as axios from 'axios';
 import { setUserToken } from '../../../src/config/api/auth.js';
 
