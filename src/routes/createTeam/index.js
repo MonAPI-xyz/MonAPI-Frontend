@@ -22,7 +22,7 @@ const CreateTeam = () => {
     } = useForm({
         defaultValues: {
             name: "",
-            description: "",
+            description: null,
             logo: null,
         }
     });
