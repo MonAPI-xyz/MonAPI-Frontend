@@ -81,6 +81,30 @@ describe('Test input', () => {
 		});		
 	});
 
+  test('When user upload image file size more than 10MB, then failed', async () => {
+		render(<CreateTeam />);
+
+    const nameField = await screen.findByPlaceholderText('Insert Team Name');
+    userEvent.type(nameField, 'myteam')
+
+    global.URL.createObjectURL = jest.fn();
+
+    // create new file that have size more than 10MB, specificly 10MB + 1b
+    const imageFile = new File([new ArrayBuffer(1024 * 1024 * 10 + 1)], 'hello.png', { type: "image/png" });
+    
+    const fileField = await screen.findByPlaceholderText('Select Image');
+
+    // test file input can upload image file
+    userEvent.upload(fileField, imageFile)
+    
+		const Create = screen.getByText('Create');
+		userEvent.click(Create);
+
+		await waitFor(() => {
+      expect(screen.getByText("Please choose image that the file size below or equal 10MB"))
+		});		
+	});
+
   test('When user click Create button, then show spinner to loading', async () => {
 		let response = {
 			name: "myteam"
