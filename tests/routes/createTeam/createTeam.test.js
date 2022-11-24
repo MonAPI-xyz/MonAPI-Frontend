@@ -101,7 +101,7 @@ describe('Test input', () => {
 		userEvent.click(Create);
 
 		await waitFor(() => {
-      expect(screen.getByText("Please choose image that the file size below or equal 10MB"))
+      expect(screen.getByText("Please choose image that the file size less than or equal to 10MB"))
 		});		
 	});
 
