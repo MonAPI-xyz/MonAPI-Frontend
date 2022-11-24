@@ -102,7 +102,7 @@ const CreateTeam = () => {
                                     rules={{ 
                                         validate: (file) => {
                                             if (file && ((file.size/(1024 * 1024)) > 10)) {
-                                                return 'Please choose image that the file size below or equal 10MB'
+                                                return 'Please choose image that the file size less than or equal to 10MB'
                                             }
                                             return true
                                         }
