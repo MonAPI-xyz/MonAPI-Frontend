@@ -98,6 +98,15 @@ const CreateTeam = () => {
                                     placeholder='Select Image'
                                     textChange='Change Image'
                                     register={register}
+                                    description='Maximum file size is 10MB'
+                                    rules={{ 
+                                        validate: (file) => {
+                                            if (file && ((file.size/(1024 * 1024)) > 10)) {
+                                                return 'Please choose image that the file size below or equal 10MB'
+                                            }
+                                            return true
+                                        }
+                                    }}
                                 />               
                         
                             <Box mb='10px' />
