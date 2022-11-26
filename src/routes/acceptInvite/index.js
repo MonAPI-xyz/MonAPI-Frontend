@@ -28,7 +28,7 @@ const AcceptInvite = () => {
                 setResponse(error.response.data)
             })
         }
-
+        
     }, [inviteToken])
 
     if (paramInviteToken){
@@ -69,7 +69,7 @@ const AcceptInvite = () => {
         )
     }
 
-    if (response.success == true) {
+    if (response.success) {
         return (
             <Box textAlign="center" py={10} px={6}>
             <CheckCircleIcon boxSize={'50px'} color={'green.500'} />
@@ -80,13 +80,13 @@ const AcceptInvite = () => {
                 You are now a part of a new team!
                 Login to work with everyone else now.
             </Text>
-            </Box>   
+            </Box>
         )
     }
 
     if (response.error != null) {
         return (
-            <Box textAlign="center" py={10} px={6}>
+        <Box textAlign="center" py={10} px={6}>
             <Box display="inline-block">
             <Flex
                 flexDirection="column"

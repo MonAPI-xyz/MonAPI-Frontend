@@ -12,7 +12,7 @@ function TeamMemberComponent({email=null, verified=null, cancelUserId=null, head
             false --> give grey color and "pending"
         cancelUserId = user_id that is not yet verified, only used when verified=false
     */
-    if (header == true){
+    if (header){
         return(
             <Flex>
                 <Box w='180px' h='10'>
