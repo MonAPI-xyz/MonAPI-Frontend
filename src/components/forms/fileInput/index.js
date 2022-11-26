@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { FormControl, FormLabel, Box, InputGroup, InputLeftElement, Icon, Flex } from '@chakra-ui/react';
+import { FormControl, FormLabel, FormErrorMessage, Box, InputGroup, InputLeftElement, Icon, Flex } from '@chakra-ui/react';
 import { useController } from "react-hook-form";
 import { FiFile } from 'react-icons/fi'
 import { Input } from '@chakra-ui/input';
@@ -9,7 +9,7 @@ import logo from '../../../assets/icons/logo-monapi.svg';
 
 const FileInput = (props) => {
   const { id, errors, rules, accept, w, multiple, title, control,
-          placeholder, textChange, hasLabel = true } = props;
+          placeholder, textChange, hasLabel = true, description } = props;
 
   const [img, setImg] = useState(logo)
 
@@ -66,9 +66,11 @@ const FileInput = (props) => {
                     id={id}
                   ></Input>
                 </InputGroup>
+                <p style={{paddingTop:'10px'}}>{description}</p>
               </Box>
             </Flex>
           </Flex>
+          <FormErrorMessage>{errors[id] && errors[id].message}</FormErrorMessage>
         </FormControl>
       </Box>
   );
