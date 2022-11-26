@@ -1,15 +1,10 @@
 import { h, Fragment } from 'preact';
-import Login from '../../../src/routes/login/index.js';
-import { Provider } from 'unistore/preact';
-import { store } from '../../../src/config/store/store';
 import { screen, waitFor, render } from '@testing-library/preact';
 import * as axios from 'axios';
 import { getCurrentUrl, route } from 'preact-router';
 import App from '../../../src/components/app.js';
-import userEvent from '@testing-library/user-event'
-import { deleteUserToken, setUserToken } from '../../../src/config/api/auth.js';
-import ViewListMonitor from '../../../src/routes/view_list_monitor/index.js';
 import moment from "moment"
+import { setUserToken } from '../../../src/config/api/auth.js';
 
 jest.mock("axios");
 
@@ -35,7 +30,7 @@ describe('Test API Monitors sites', () => {
 		route('/')
 
 		await waitFor(() => {
-			expect(screen.getByText('Ferdi'))
+			expect(screen.getAllByText('Ferdi'))
 			expect(screen.getByText('url'))
 			expect(screen.getByText('100%'))
 			expect(screen.getByText('0 ms'))
@@ -52,7 +47,7 @@ describe('Test API Monitors sites', () => {
 		let last_checked = moment(response[0]["last_result"]["execution_time"]).fromNow()
 
 		await waitFor(() => {
-			expect(screen.getByText('Test API Monitor'))
+			expect(screen.getAllByText('Test API Monitor'))
 			expect(screen.getByText('https://api-staging.monapi.xyz'))
 			expect(screen.getByText('0.0%'))
 			expect(screen.getByText('20 ms'))
@@ -374,7 +369,7 @@ describe('Test API Monitors sites', () => {
 		route('/')
 
 		await waitFor(() => {
-			expect(screen.getByText('Ferdi'))
+			expect(screen.getAllByText('Ferdi'))
 			expect(screen.getByText('url'))
 			expect(screen.getByText('100%'))
 			expect(screen.getByText('0 ms'))
