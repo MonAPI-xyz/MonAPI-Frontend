@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { useEffect, useState } from 'preact/hooks'
+import { useEffect, useState, useContext } from 'preact/hooks'
 import { Link } from 'preact-router/match'
 import BASE_URL from '../../config/api/constant';
 import style from './style.css';
@@ -11,12 +11,16 @@ import SuccessRatePercentageChart from '../../components/chart/success_rate_perc
 import ResponseTimeChart from '../../components/chart/response_time_chart';
 import style_detail from '../view_api_monitor_detail/style.css' ;	
 import style_bar from '../../components/success_rate/style.css' ;
-import moment from "moment"
+import moment from "moment";
+import { UserContext } from '../../config/context';
 
 const ViewListMonitor = () => {	
 
 	const [monitor,setMonitor]=useState([])
 	const [detail, setDetail]=useState({})
+	const {currentTeam} = useContext(UserContext);
+  	const [currentTeamId] = currentTeam;
+	  
 	useEffect(()=>{
 		axios.get(`${BASE_URL}/monitor/`, {
 			headers: {
@@ -25,7 +29,7 @@ const ViewListMonitor = () => {
 		}).then((response)=>{
 			setMonitor(response.data)
 		})
-	},[])
+	},[currentTeamId])
 
 	useEffect(() => {
 		axios.get(`${BASE_URL}/monitor/stats/`, {
@@ -35,7 +39,7 @@ const ViewListMonitor = () => {
 		}).then((response) => {
 		  setDetail(response.data)
 		})
-	  }, []);
+	  }, [currentTeamId]);
 
 	return(
 		<div class={style.home}>
@@ -115,7 +119,7 @@ const ViewListMonitor = () => {
 							<p>Last checked: {val.last_result ? moment(val.last_result.execution_time).fromNow() : "-"}</p>													
 						</td>
 						<td>
-							<Link aria-label="view-api-monitor-detail" href={`/${val.id}/detail/`}>
+							<Link data-testid={"linkViewApiMonitorDetail"} aria-label="view-api-monitor-detail" href={`/${val.id}/detail/`}>
 								<FaAngleRight />
 							</Link>
 						</td>

@@ -1,10 +1,8 @@
 import { h } from 'preact';
 import { Router } from 'preact-router';
 import { ChakraProvider } from '@chakra-ui/react';
-import { Provider } from 'unistore/preact';
 import * as Sentry from "@sentry/react";
 import { BrowserTracing } from "@sentry/tracing";
-import { store } from '../config/store/store.js';
 import theme from '../config/theme';
 import ROUTE from '../config/api/route';
 import { AuthenticationChecker } from '../config/middleware/middleware';
@@ -23,9 +21,12 @@ import ForgetPasswordToken from '../routes/forgetPasswordToken/index.js';
 import Redirect from './redirect/index.js';
 import TestAPI from '../routes/a_test_api/index.js';
 import CreateNewTeam from '../routes/createTeam/index.js';
+import { UserContext } from '../config/context';
+import { useState } from 'preact/hooks';
 
 const App = () => {
 	const sentryDSN = process.env.PREACT_APP_SENTRY_DSN;
+	const [currentTeamId, setCurrentTeamId] = useState()
 	if (sentryDSN !== "") {
 		Sentry.init({
 			dsn: sentryDSN,
@@ -39,7 +40,7 @@ const App = () => {
 	}
 	
 	return (<div id="app">
-		<Provider store={store}>
+		<UserContext.Provider value={{currentTeam: [currentTeamId, setCurrentTeamId]}}>
 			<ChakraProvider theme={theme}>
 				<Router>
 					<Login path={ROUTE.LOGIN} />
@@ -64,7 +65,7 @@ const App = () => {
 					</AuthenticationChecker>
 				</Router>
 			</ChakraProvider>
-		</Provider>
+		</UserContext.Provider>
 		
 	</div>);
 }
