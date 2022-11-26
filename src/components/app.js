@@ -23,6 +23,7 @@ import ForgetPasswordToken from '../routes/forgetPasswordToken/index.js';
 import Redirect from './redirect/index.js';
 import TestAPI from '../routes/a_test_api/index.js';
 import CreateNewTeam from '../routes/createTeam/index.js';
+import AcceptInvite from '../routes/acceptInvite/index.js';
 
 const App = () => {
 	const sentryDSN = process.env.PREACT_APP_SENTRY_DSN;
@@ -46,6 +47,7 @@ const App = () => {
 					<Register path={ROUTE.REGISTER} />
 					<ForgetPassword path={ROUTE.FORGET_PASSWORD} />
 					<ForgetPasswordToken path={ROUTE.FORGET_PASSWORD_TOKEN} />
+					<AcceptInvite path={ROUTE.ACCEPT_INVITE} />
 
 					<AuthenticationChecker path="/:*?">
 						<DashboardWrapper path="/:*?">
