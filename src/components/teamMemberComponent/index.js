@@ -29,7 +29,7 @@ function TeamMemberComponent({email=null, verified=null, cancelUserId=null, head
     } else if (verified) {
         return(
             <Flex>
-                <Box w='180px' h='10'>
+                <Box w='250px' h='10'>
                     {email}
                 </Box>
                 <Spacer />
@@ -56,7 +56,7 @@ function TeamMemberComponent({email=null, verified=null, cancelUserId=null, head
 
         return(
             <Flex>
-                <Box w='180px' h='10'>
+                <Box w='250px' h='10'>
                     {email}
                 </Box>
                 <Spacer />
