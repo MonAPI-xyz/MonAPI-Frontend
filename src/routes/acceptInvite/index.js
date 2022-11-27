@@ -22,7 +22,6 @@ const AcceptInvite = () => {
             axios.post(`${BASE_URL}/invite-member/accept/`, data)
             .then((backend_response) => {
                 setIsLoading(false)
-                console.log("It succeed", backend_response)
                 setResponse({
                     success: true,
                     error: false
@@ -30,7 +29,6 @@ const AcceptInvite = () => {
             })
             .catch((error) => {
                 setIsLoading(false)
-                console.log("It failed", error)
                 setResponse({
                     success: false,
                     error: true
