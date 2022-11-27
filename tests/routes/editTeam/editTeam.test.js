@@ -49,7 +49,7 @@ describe('Test input', () => {
     const descField = await screen.findByPlaceholderText('Insert Team Description');
     userEvent.type(descField, 'teamdesc')
 
-		const edit = screen.getByText('Edit');
+		const edit = screen.getByText('Save');
 		userEvent.click(edit);
 		await waitFor(() => {
       expect(getCurrentUrl()).toBe('/')
@@ -86,7 +86,7 @@ describe('Test input', () => {
       return Promise.resolve({data: response})
     })
     
-		const edit = screen.getByText('Edit');
+		const edit = screen.getByText('Save');
 		userEvent.click(edit);
 
 		await waitFor(() => {
@@ -107,7 +107,7 @@ describe('Test input', () => {
     // test file input can upload image file
     userEvent.upload(fileField, imageFile)
     
-		const edit = screen.getByText('Edit');
+		const edit = screen.getByText('Save');
 		userEvent.click(edit);
 
 		await waitFor(() => {
@@ -134,7 +134,7 @@ describe('Test input', () => {
     const descField = await screen.findByPlaceholderText('Insert Team Description');
     userEvent.type(descField, 'teamdesc')
 
-		const edit = screen.getByText('Edit');
+		const edit = screen.getByText('Save');
 		userEvent.click(edit);
 
 		await waitFor(() => {
