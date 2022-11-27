@@ -75,7 +75,7 @@ const EditTeam = ({id}) => {
                                 <FormLabel fontWeight='semibold'>
                                     Team Name
                                 </FormLabel>
-                                {currentTeam.name}
+                                {currentTeam?.name}
                                 </Box>
                                 <Box mb='20px' />                       
 
@@ -83,8 +83,8 @@ const EditTeam = ({id}) => {
                                      errors={errors}
                                      register={register}
                                      control={control}
-                                     description={currentTeam.description}
-                                     logo={`${BASE_URL}${currentTeam.logo}`}
+                                     description={currentTeam?.description}
+                                     logo={`${BASE_URL}${currentTeam?.logo}`}
                                 />   
                         
                                 <Box mb='10px' />
