@@ -95,7 +95,7 @@ const EditTeam = ({id}) => {
                             <Box mb='30px' />
                             <Box align="start">
                                 <Button form="form-edit-team" id='signInButton' colorScheme='teal' type='submit' width='10em' borderRadius={10}>
-                                    {isLoadingEdit ? <Spinner /> : 'Edit' }
+                                    {isLoadingEdit ? <Spinner /> : 'Save' }
                                 </Button>
                             </Box>
                         </Box>
