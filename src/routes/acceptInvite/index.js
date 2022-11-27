@@ -14,7 +14,6 @@ const AcceptInvite = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(async () => {
-        console.log("Enter use effect")
         if (inviteToken != null) {
             const data = {
                 'key': inviteToken
