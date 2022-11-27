@@ -43,13 +43,44 @@ describe('Test View Current Team', () => {
 		render(<ViewCurrentTeam/>);
 
 		await waitFor(() => {
-      expect(screen.getByText('Team Management'))
-      expect(screen.getByText('Admin2'))
-      expect(screen.getByText('Test desc'))
-      expect(screen.getByText('admin2@admin.com'))
-      expect(screen.getByText('Member'));
-      expect(screen.getByText('Pending'));
+            expect(screen.getByText('Team Management'))
+            expect(screen.getByText('Admin2'))
+            expect(screen.getByText('Test desc'))
+            expect(screen.getByText('admin2@admin.com'))
+            expect(screen.getByText('Member'));
+            expect(screen.getByText('Pending'));
 		})
 	})
+    test('try to view current team with no description', async () => {
+		const response = {
+        "id": 5,
+        "name": "Admin2",
+        "logo": null,
+        "description": "",
+        "teammember": [
+            {
+                "team": 5,
+                "user": {
+                    "id": 6,
+                    "username": "admin2@admin.com",
+                    "email": "admin2@admin.com",
+                    "first_name": "",
+                    "last_name": ""
+                },
+                "verified": true
+            },
+        ]
+    }
+		axios.get.mockImplementation(() => Promise.resolve({data: response}))
+		setUserToken("token")
+		render(<ViewCurrentTeam/>);
 
+		await waitFor(() => {
+            expect(screen.getByText('Team Management'))
+            expect(screen.getByText('Admin2'))
+            expect(screen.getByText('-'))
+            expect(screen.getByText('admin2@admin.com'))
+            expect(screen.getByText('Member'));
+            })
+    })
 })
