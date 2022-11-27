@@ -113,7 +113,7 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
           <MenuItem
             icon={<FaUserPlus />}>
             Team Management
-            <Link class={style['menu-button']} activeClassName={style['active']} href="/team-management/" /> 
+            <Link class={style['menu-button']} activeClassName={style['active']} href="/team-management/current/" /> 
           </MenuItem>
           <MenuItem
             icon={<FaInfoCircle />}>

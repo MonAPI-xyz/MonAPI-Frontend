@@ -21,6 +21,7 @@ import ForgetPasswordToken from '../routes/forgetPasswordToken/index.js';
 import Redirect from './redirect/index.js';
 import TestAPI from '../routes/a_test_api/index.js';
 import CreateNewTeam from '../routes/createTeam/index.js';
+import ViewCurrentTeam from '../routes/view_current_team/index.js';
 import { UserContext } from '../config/context';
 import { useState } from 'preact/hooks';
 import AcceptInvite from '../routes/acceptInvite/index.js';
@@ -61,6 +62,8 @@ const App = () => {
 								<EditAPIMonitor path={ROUTE.EDIT} />
 								<TestAPI path={ROUTE.TEST_API} />
 								<Configuration path={ROUTE.CONFIGURATION} />			
+								<CreateNewTeam path={ROUTE.TEAM_MANAGEMENT} />	
+								<ViewCurrentTeam path={ROUTE.VIEW_CURRENT_TEAM} />			
 								<CreateNewTeam path={ROUTE.TEAM_MANAGEMENT} />			
 								<EditTeam path={ROUTE.TEAM_MANAGEMENT_EDIT} />
 								<Redirect path="/:*?" to="/" />
