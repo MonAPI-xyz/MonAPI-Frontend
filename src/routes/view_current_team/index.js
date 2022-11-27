@@ -17,7 +17,6 @@ const ViewCurrentTeam = () => {
 			}
 		}).then((response)=>{
 			setCurrentTeam(response.data)
-            console.log(response)
 		})
 	},[])
 
@@ -73,7 +72,7 @@ const ViewCurrentTeam = () => {
                                 </div>
                             <Box mb='20px' />
                             <div class="float-right">
-                                <Link href="/">
+                                <Link href={`/${currentTeam.id}/team-management`}>
                                     <button type="button" class="btn btn-success">Edit</button>
                                 </Link>  
                             </div>                                                          
@@ -81,24 +80,21 @@ const ViewCurrentTeam = () => {
                             
                             <Box mb='20px' />
 
-                            <Box mb='20px' /> 
-
                             <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
                                 Team Members List
                             </Text> 
 
-                            <table style="width:100%">
-                                <tr>
-                                    <th>Members</th>
-                                    <th>Status</th>
-                                </tr>
-                                {currentTeam.teammember && currentTeam.teammember.map((val)=>(
-                                    <tr>
-                                        <td>{val.user.username}</td>
-                                        <td>{val.verified ? "Member" : 'Pending' }</td> 
-                                    </tr>
-                                ))}
-                            </table>
+                            <TeamMemberComponent
+                                header={true}
+                            />
+                            {currentTeam.teammember && currentTeam.teammember.map((val)=>(
+                                <TeamMemberComponent
+                                email={val.user.email}
+                                verified={val.verified} 
+                                cancelUserId= {val.user.id}
+                                header={false}
+                                />
+                            ))}
                             
                         </Box>
                     
