@@ -18,7 +18,7 @@ const TestAPI = () => {
     const [bodyType, setBodyType] = useState("EMPTY");  
     
     const [isLoading, setLoading] = useState(false) 
-    const [responseMessage, setResponseMessage] = useState('');
+    const [responseMessage, setResponseMessage] = useState('-');
 
 	const {
         handleSubmit,
@@ -43,9 +43,14 @@ const TestAPI = () => {
             headers: {
                 Authorization:`Token ${getUserToken()}`
             }
-        }).then((response)=>{   
-            setResponseMessage(response.data.response);
-            setLoading(false);
+        }).then((response)=>{  
+            try {
+                setResponseMessage(JSON.stringify(JSON.parse(response.data.response), null, 2));
+                setLoading(false);
+                } catch {
+                setResponseMessage(response.data.response);
+                setLoading(false);
+                }
         }).catch((error)=> {
             setResponseMessage(error.response.data.error);
             setLoading(false);
@@ -206,7 +211,7 @@ const TestAPI = () => {
                                 <p><b>Response</b><br/>
                                 <span>
                                 <Box bg='gray.100' w='90%' color='black' p={3.5} mt={1.5} borderRadius='lg' class={style[`content-Response`]}>
-                                    <div style={{whiteSpace: "pre-wrap"}}>{responseMessage}</div>     
+                                    <div style={{whiteSpace: "pre-wrap"}}>{responseMessage}</div>
                                 </Box>
                                 </span></p>
                             </Box>
