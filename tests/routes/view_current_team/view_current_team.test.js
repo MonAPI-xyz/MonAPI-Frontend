@@ -1,8 +1,9 @@
 import { h } from 'preact';
-import { render, waitFor, screen} from '@testing-library/preact';
+import { render, waitFor, screen, fireEvent} from '@testing-library/preact';
 import ViewCurrentTeam from '../../../src/routes/view_current_team';
 import * as axios from 'axios';
 import { setUserToken } from '../../../src/config/api/auth.js';
+import userEvent from '@testing-library/user-event';
 
 jest.mock('axios')
 
@@ -80,4 +81,59 @@ describe('Test View Current Team', () => {
             expect(screen.getByText('admin2@admin.com'))
             })
     })
+})
+
+describe('Test invite team member section', () => {
+
+    test('Successful post refresh the page', async() => {
+        setUserToken("token")
+        render(<ViewCurrentTeam/>)
+        axios.post.mockImplementation(() => Promise.resolve({
+            status: 200,
+            response: {
+                data: {
+                    success: true
+                }
+            }
+        }))
+
+        delete window.location;
+        window.location = { reload: jest.fn() };
+
+        const emailField = await screen.findByPlaceholderText("example@email.com");
+        userEvent.type(emailField, 'example@email.com')
+
+        const inviteButton = screen.getByTestId('test-inviteButton')
+        userEvent.click(inviteButton)
+
+        await waitFor(async () => {
+            expect(window.location.reload).toHaveBeenCalled()
+        })
+    })
+
+    test('Failed post shows error message', async() => {
+        setUserToken("token")
+        render(<ViewCurrentTeam/>)
+        axios.post.mockImplementation(() => Promise.reject({
+            status: 400,
+            response: {
+                data: {
+                    error: "Make sure user email exist"
+                }
+            }
+        }))
+
+        const emailField = await screen.findByPlaceholderText("example@email.com");
+        userEvent.type(emailField, 'nonexistant@email.com')
+
+        const inviteButton = screen.getByTestId('test-inviteButton')
+        userEvent.click(inviteButton) 
+
+        await waitFor(async () => {
+            expect(screen.getByText('Error: Make sure the user exist or isn\'t already in the team')).toBeDefined()
+        })
+
+    })
+
+
 })
