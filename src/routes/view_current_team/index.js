@@ -128,6 +128,7 @@ const ViewCurrentTeam = () => {
                                         }}
                                     />
                                 </Flex>
+                                <Box mb="20px"/>
                                 <Button data-testid='test-inviteButton' id='inviteButton' colorScheme='teal' type='submit' borderRadius={10}>
                                         Invite
                                 </Button>
