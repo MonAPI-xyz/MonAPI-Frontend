@@ -21,6 +21,33 @@ describe('Test test API sites', () => {
 			expect(getCurrentUrl()).toBe('/');
 		})
 	})	
+
+    test('when processing data then show loader', async() => {
+        axios.post.mockImplementation(() => 
+            new Promise((resolve) => {
+                setTimeout(()=> resolve({
+                    status: 200
+                }), 3000)
+            })   
+        )
+
+        render(<TestAPI />)
+        
+        const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const method = await screen.getByTestId('dropdownMethod');
+        const submitButton = await screen.getByText('submit');
+        
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(method, 'GET'); 
+       
+        userEvent.click(submitButton)
+
+        await waitFor(async () => {
+            expect(screen.getByText('Loading...')).toBeDefined()
+        })
+
+    })
+
 	test('fill the test API Monitor then success', async () => {
         const response = {response:"test response"}
 		axios.post.mockImplementation(() => Promise.resolve({data: response}))
