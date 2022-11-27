@@ -4,7 +4,6 @@ import ViewAPIMonitorDetail from '../../../src/routes/view_api_monitor_detail';
 import * as axios from 'axios';
 import { getCurrentUrl, route } from 'preact-router';
 import { setUserToken } from '../../../src/config/api/auth'
-import userEvent from '@testing-library/user-event';
 import App from '../../../src/components/app.js';
 
 jest.mock('axios')
@@ -70,11 +69,11 @@ describe('Edit button route correctly', () => {
     		route('/')
 
     		await waitFor(() => {
-    			expect(screen.getByText('Test')).toBeDefined()
+    			expect(screen.getAllByText('Test')).toBeDefined()
     			expect(getCurrentUrl()).toBe('/');
     		})
 
-        fireEvent.click(screen.getByRole('link', { name: "view-api-monitor-detail" }));
+        fireEvent.click(screen.getByTestId('linkViewApiMonitorDetail'));
 
         await waitFor(() => {
           expect(screen.getByText("mySchedule")).toBeDefined();
@@ -276,10 +275,27 @@ describe('Integration test detail page', () => {
         },
       ],
 		}
+    const responseTeam = [
+      {
+          "id": 1,
+          "name": "test teqam"
+      },
+      {
+          "id": 2,
+          "name": "test teqam2"
+      },
+      {
+          "id": 3,
+          "name": "test teqam3"
+      }
+    ]
 
     axios.get.mockImplementation((url) => {
+      console.log("URL ", url)
       if(url.includes('/1')) {
         return Promise.resolve({ data: responseDetail });
+      } else if (url.includes('/available_team')) {
+        return Promise.resolve({ data: responseTeam });
       } else {
         return Promise.resolve({ data: responseDashboard });
       }
@@ -294,7 +310,7 @@ describe('Integration test detail page', () => {
 			expect(getCurrentUrl()).toBe('/');
 		})
 
-    fireEvent.click(screen.getByRole('link', { name: "view-api-monitor-detail" }));
+    fireEvent.click(screen.getByTestId('linkViewApiMonitorDetail'));
 
     await waitFor(() => {
       expect(screen.getByText("mySchedule")).toBeDefined();
