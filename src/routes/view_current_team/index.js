@@ -125,6 +125,7 @@ const ViewCurrentTeam = () => {
                                         rules = {{
                                             required: "Required"
                                         }}
+                                        w={'300px'}
                                     />
                                 </Flex>
                                 <Box mb="20px"/>

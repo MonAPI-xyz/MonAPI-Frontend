@@ -46,16 +46,27 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
   const [listTeam, setListTeam] = useState([])
   const {currentTeam} = useContext(UserContext);
   const [currentTeamId, setCurrentTeamId] = currentTeam;
+  const [currentTeamInformation, setCurrentTeamInformation] = useState({});
 
   useEffect(() => {
     axios.get(`${BASE_URL}/auth/available_team/`, {
       headers: {
           Authorization:`Token ${getUserToken()}`
       }
-  }).then((response)=>{
-      setListTeam(response.data)
-  })
+    }).then((response)=>{
+        setListTeam(response.data)
+    })
   }, [])
+
+  useEffect(()=> {
+    axios.get(`${BASE_URL}/auth/current_team/`, {
+      headers: {
+          Authorization:`Token ${getUserToken()}`
+      }
+    }).then((response)=>{
+      setCurrentTeamInformation(response.data)
+    })
+  }, [currentTeamId])
 
   const changeCurrentTeam = (id) => {
       const formData = new FormData()
@@ -66,6 +77,7 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
         }
       }).then(()=>{
         setCurrentTeamId(id)
+        window.location.reload(); 
       })
   }
 
@@ -136,12 +148,12 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
               <h2>
                 <AccordionButton data-testid={'accordionButton'}>
                   <Box flex='1' textAlign='left'>
-                    Current Team
+                    Team {currentTeamInformation.name}
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
               </h2>
-              <AccordionPanel mx='12px' bg="#F1F1F1" borderRadius={10} textAlign="left">
+              <AccordionPanel mx='12px' bg="#F1F1F1" borderRadius={10} textAlign="left" className={style['team-list-accordion']}>
 
                 {listTeam !== [] &&
                   <ul style={{padding:'10px 4px 0px'}}>
