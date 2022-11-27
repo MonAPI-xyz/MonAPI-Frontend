@@ -84,7 +84,7 @@ const EditTeam = ({id}) => {
                                      register={register}
                                      control={control}
                                      description={currentTeam?.description}
-                                     logo={`${BASE_URL}${currentTeam?.logo}`}
+                                     logo={currentTeam?.logo ? `${BASE_URL}${currentTeam.logo}` : null}
                                 />   
                         
                                 <Box mb='10px' />
