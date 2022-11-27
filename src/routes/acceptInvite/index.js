@@ -22,15 +22,13 @@ const AcceptInvite = () => {
             .then((backend_response) => {
                 setIsLoading(false)
                 setResponse({
-                    success: true,
-                    error: false
+                    success: true
                 })
             })
             .catch((error) => {
                 setIsLoading(false)
                 setResponse({
-                    success: false,
-                    error: true
+                    success: false
                 })
             })
         }
@@ -88,9 +86,7 @@ const AcceptInvite = () => {
             </Text>
             </Box>
         )
-    }
-
-    if (response.error) {
+    } else {
         return (
         <Box textAlign="center" py={10} px={6}>
             <Box display="inline-block">
