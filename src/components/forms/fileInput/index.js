@@ -9,9 +9,9 @@ import logo from '../../../assets/icons/logo-monapi.svg';
 
 const FileInput = (props) => {
   const { id, errors, rules, accept, w, multiple, title, control,
-          placeholder, textChange, hasLabel = true, description } = props;
+          placeholder, textChange, hasLabel = true, description, defaultImage } = props;
 
-  const [img, setImg] = useState(logo)
+  const [img, setImg] = useState(defaultImage != undefined ? defaultImage : logo)
 
   const handleChangeImage = (e) => {
     if (e.target.files[0]) {
