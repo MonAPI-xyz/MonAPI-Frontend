@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { Text, Box, Flex, Grid, GridItem, Button, Stack, Spacer,Spinner } from '@chakra-ui/react';
+import { Text, Box, Flex, Grid, GridItem, Button } from '@chakra-ui/react';
 import TextInput from '../../components/forms/textinput/index.js'
 import { useState, useEffect } from 'preact/hooks';
 import axios from 'axios';
@@ -10,7 +10,6 @@ import logo from '../../assets/icons/logo-monapi.svg';
 import TeamMemberComponent from '../../components/teamMemberComponent/index.js';
 
 import { useForm } from 'react-hook-form';
-import { getElementError } from '@testing-library/dom';
 
 const ViewCurrentTeam = () => {        
     const [currentTeam,setCurrentTeam]=useState([])
