@@ -21,11 +21,15 @@ const AcceptInvite = () => {
             axios.post(`${BASE_URL}/invite-member/accept/`, data)
             .then((backend_response) => {
                 setIsLoading(false)
-                setResponse(backend_response.response.data)
+                setResponse({
+                    success: true
+                })
             })
             .catch((error) => {
                 setIsLoading(false)
-                setResponse({error: true})
+                setResponse({
+                    success: false
+                })
             })
         }
         
@@ -82,9 +86,7 @@ const AcceptInvite = () => {
             </Text>
             </Box>
         )
-    }
-
-    if (response.error != null) {
+    } else {
         return (
         <Box textAlign="center" py={10} px={6}>
             <Box display="inline-block">
@@ -105,8 +107,7 @@ const AcceptInvite = () => {
             </Heading>
             <Text color={'gray.500'}>
                 It seems like the token has expired or the invite was cancelled. <br></br>
-                Please request another invite from your Team. <br></br>
-                Error = {response.error}
+                Please request another invite from your Team or check if you are already a member. <br></br>
             </Text>
         </Box>
         )
