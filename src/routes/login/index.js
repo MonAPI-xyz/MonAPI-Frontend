@@ -3,8 +3,6 @@ import TextInput from '../../components/forms/textinput/index.js';
 import PasswordInput from '../../components/forms/passwordinput/index.js';
 import { Button, Spinner, Text,Box, Flex, Grid, GridItem  } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import { connect } from 'unistore/preact';
-import { actions } from '../../config/store/store.js';
 import axios from 'axios';
 import BASE_URL from '../../config/api/constant.js';
 import { setUserToken } from '../../config/api/auth.js';
@@ -13,9 +11,7 @@ import { useState } from 'preact/hooks';
 import { isAuthenticate } from '../../config/middleware/middleware.js';
 import ROUTE from '../../config/api/route.js';
 
-const Login = connect('user', actions)( 
-    ({ setUser }) =>{
-    
+const Login = () => {
     const paramIsRegistered = new URLSearchParams(window.location.search).get('isRegistered')
     const paramIsChangePassword = new URLSearchParams(window.location.search).get('isChangePassword')
     const [isRegistered, setIsRegistered] = useState(null)
@@ -45,7 +41,6 @@ const Login = connect('user', actions)(
             .then((response) => {
                 setResponseMessage('')
                 setUserToken(response['data']['token'])
-                setUser(response['data']['email'])
                 route(ROUTE.LOGIN)
             })
         } catch(error) {
@@ -140,6 +135,6 @@ const Login = connect('user', actions)(
             route(ROUTE.DASHBOARD)
         
 }
-)
+
 
 export default Login;
