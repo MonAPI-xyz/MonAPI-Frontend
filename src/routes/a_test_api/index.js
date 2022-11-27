@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import style from './style.css';
 import {methodOption} from './optionHelper.js'
-import { Button, Text, Box, Flex, Grid, GridItem, Radio, RadioGroup, Textarea, FormControl } from '@chakra-ui/react';
+import { Button, Text, Box, Flex, Grid, GridItem, Radio, RadioGroup, Textarea, FormControl, Spinner } from '@chakra-ui/react';
 import KeyValueForm from '../../components/createAPIMonitor/keyValueForm';
 import { useState } from 'preact/hooks';
 import Dropdown from '../../components/forms/dropdown';
@@ -17,8 +17,8 @@ const TestAPI = () => {
     const [selectedTab, setSelectedTab] = useState(0);	
     const [bodyType, setBodyType] = useState("EMPTY");  
     
-    const [isLoadingCreate, setLoadingCreate] = useState(false) 
-    const [responseMessage, setResponseMessage] = useState('');
+    const [isLoading, setLoading] = useState(false) 
+    const [responseMessage, setResponseMessage] = useState('-');
 
 	const {
         handleSubmit,
@@ -37,21 +37,24 @@ const TestAPI = () => {
         }
     });
 
-    const onSubmit = (data) => {
-        if (!isLoadingCreate) {
-            setLoadingCreate(true);            
-            axios.post(`${BASE_URL}/api-test/`, data, {
-                headers: {
-                    Authorization:`Token ${getUserToken()}`
-                }
-            }).then((response)=>{   
+    const onSubmit = (data) => {        
+        setLoading(true);            
+        axios.post(`${BASE_URL}/api-test/`, data, {
+            headers: {
+                Authorization:`Token ${getUserToken()}`
+            }
+        }).then((response)=>{  
+            try {
+                setResponseMessage(JSON.stringify(JSON.parse(response.data.response), null, 2));
+                setLoading(false);
+                } catch {
                 setResponseMessage(response.data.response);
-                setLoadingCreate(false);
-            }).catch((error)=> {
-                setResponseMessage(error.response.data.error);
-                setLoadingCreate(false);
-            })            
-        }
+                setLoading(false);
+                }
+        }).catch((error)=> {
+            setResponseMessage(error.response.data.error);
+            setLoading(false);
+        })                    
     };
 
 	return(
@@ -201,14 +204,14 @@ const TestAPI = () => {
                             <Box mb='49px' />
                             <Box align="end">
                                 <Button form="form-create-test-api" id='signInButton' colorScheme='teal' type='submit' width='14em' borderRadius={10}>
-                                    submit
+                                    {isLoading ? <Spinner /> : "submit"}
                                 </Button>
                             </Box>
                             <Box>     
                                 <p><b>Response</b><br/>
                                 <span>
                                 <Box bg='gray.100' w='90%' color='black' p={3.5} mt={1.5} borderRadius='lg' class={style[`content-Response`]}>
-                                    <div style={{whiteSpace: "pre-wrap"}}>{responseMessage}</div>     
+                                    <div style={{whiteSpace: "pre-wrap"}}>{responseMessage}</div>
                                 </Box>
                                 </span></p>
                             </Box>
