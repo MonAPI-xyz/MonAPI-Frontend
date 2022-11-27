@@ -47,8 +47,6 @@ describe('Test View Current Team', () => {
             expect(screen.getByText('Admin2'))
             expect(screen.getByText('Test desc'))
             expect(screen.getByText('admin2@admin.com'))
-            expect(screen.getByText('Member'));
-            expect(screen.getByText('Pending'));
 		})
 	})
     test('try to view current team with no description', async () => {
@@ -80,7 +78,6 @@ describe('Test View Current Team', () => {
             expect(screen.getByText('Admin2'))
             expect(screen.getByText('-'))
             expect(screen.getByText('admin2@admin.com'))
-            expect(screen.getByText('Member'));
             })
     })
 })
