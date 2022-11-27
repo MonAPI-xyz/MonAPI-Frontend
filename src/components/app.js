@@ -24,6 +24,7 @@ import Redirect from './redirect/index.js';
 import TestAPI from '../routes/a_test_api/index.js';
 import CreateNewTeam from '../routes/createTeam/index.js';
 import AcceptInvite from '../routes/acceptInvite/index.js';
+import EditTeam from '../routes/editTeam/index.js';
 
 const App = () => {
 	const sentryDSN = process.env.PREACT_APP_SENTRY_DSN;
@@ -60,6 +61,7 @@ const App = () => {
 								<TestAPI path={ROUTE.TEST_API} />
 								<Configuration path={ROUTE.CONFIGURATION} />			
 								<CreateNewTeam path={ROUTE.TEAM_MANAGEMENT} />			
+								<EditTeam path={ROUTE.TEAM_MANAGEMENT_EDIT} />
 								<Redirect path="/:*?" to="/" />
 							</Router>							
 						</DashboardWrapper>
