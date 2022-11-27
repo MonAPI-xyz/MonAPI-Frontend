@@ -25,9 +25,9 @@ describe("Test Accept Invite", () => {
         )
 
         const container = render(<App />)
-        route('/accept-invite?key=abcdefg')
+        route('/invite-member?key=abcdefg')
         await waitFor(async () => {
-            expect(getCurrentUrl()).toBe('/accept-invite?key=abcdefg')
+            expect(getCurrentUrl()).toBe('/invite-member?key=abcdefg')
             expect(screen.getByText('Loading'))
         }, 5000)
     })
@@ -36,7 +36,7 @@ describe("Test Accept Invite", () => {
         deleteUserToken()
 
         const container = render(<App />)
-        route('/accept-invite')
+        route('/invite-member')
 
         await waitFor(async () => {
             expect(screen.getByText('Token Not Passed')).toBeDefined()
@@ -55,10 +55,10 @@ describe("Test Accept Invite", () => {
         }))
 
         const container = render(<App />)
-        route('/accept-invite?key=abcdefg')
+        route('/invite-member?key=abcdefg')
 
         await waitFor(async () => {
-            expect(getCurrentUrl()).toBe('/accept-invite?key=abcdefg')
+            expect(getCurrentUrl()).toBe('/invite-member?key=abcdefg')
             expect(screen.getByText('Loading'))
         }, 5000)
 
@@ -80,10 +80,10 @@ describe("Test Accept Invite", () => {
         }))
 
         const container = render(<App />)
-        route('/accept-invite?key=abcdefg')
+        route('/invite-member?key=abcdefg')
 
         await waitFor(async () => {
-            expect(getCurrentUrl()).toBe('/accept-invite?key=abcdefg')
+            expect(getCurrentUrl()).toBe('/invite-member?key=abcdefg')
             expect(screen.getByText('Loading'))
         }, 5000)
 

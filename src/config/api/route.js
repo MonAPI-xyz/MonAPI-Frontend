@@ -14,7 +14,7 @@ const ROUTE = {
     TEAM_MANAGEMENT: '/team-management',
     VIEW_CURRENT_TEAM: '/team-management/current',
     TEAM_MANAGEMENT_EDIT: '/:id/team-management',
-    ACCEPT_INVITE: '/accept-invite',
+    ACCEPT_INVITE: '/invite-member',
   };
   
 export default ROUTE;
