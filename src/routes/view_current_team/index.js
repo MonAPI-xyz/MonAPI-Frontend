@@ -6,6 +6,7 @@ import BASE_URL from '../../config/api/constant.js';
 import { getUserToken } from '../../config/api/auth.js';
 import { Link } from 'preact-router/match'
 import logo from '../../assets/icons/logo-monapi.svg';
+import TeamMemberComponent from '../../components/teamMemberComponent/index.js';
 
 const ViewCurrentTeam = () => {        
     const [currentTeam,setCurrentTeam]=useState([])
@@ -61,7 +62,7 @@ const ViewCurrentTeam = () => {
                                                 Team Description
                                             </Text>
                                             <Text fontSize='14px' color='black'>
-                                                {currentTeam.description}
+                                                {currentTeam.description!=="" ? currentTeam.description : "-" }                                                 
                                             </Text>
                                         </Box>
                                     </div>
@@ -79,7 +80,8 @@ const ViewCurrentTeam = () => {
                             </div>                                                          
                             </div>    
                             
-                            
+                            <Box mb='20px' />
+
                             <Box mb='20px' /> 
 
                             <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
