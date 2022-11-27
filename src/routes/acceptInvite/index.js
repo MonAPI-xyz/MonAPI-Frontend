@@ -25,7 +25,7 @@ const AcceptInvite = () => {
             })
             .catch((error) => {
                 setIsLoading(false)
-                setResponse(error.response.data)
+                setResponse({error: true})
             })
         }
         
