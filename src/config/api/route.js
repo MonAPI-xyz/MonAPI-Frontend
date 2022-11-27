@@ -13,6 +13,7 @@ const ROUTE = {
     TEST_API: '/test-api',
     TEAM_MANAGEMENT: '/team-management',
     VIEW_CURRENT_TEAM: '/team-management/current',
+    ACCEPT_INVITE: '/accept-invite',
   };
   
 export default ROUTE;
