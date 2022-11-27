@@ -1,19 +1,16 @@
 import { h } from 'preact';
-import { Button, Spinner, Text, Box, Flex, Grid, GridItem } from '@chakra-ui/react';
+import { Button, Spinner, Text, Box, Flex, Grid, GridItem, FormLabel } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import { useState } from 'preact/hooks';
+import { useState, useEffect } from 'preact/hooks';
 import axios from 'axios';
 import { route } from 'preact-router';
-
-import TextInput from '../../components/forms/textinput/index.js';
-import TeamEditor from '../../components/teamEditor/index.js';
 import BASE_URL from '../../config/api/constant.js';
 import ROUTE from '../../config/api/route.js';
 import { getUserToken } from '../../config/api/auth.js';
+import TeamEditor from '../../components/teamEditor/index.js';
 
-const CreateTeam = () => {
-    const [isLoadingCreate, setLoadingCreate] = useState(false);
-
+const EditTeam = ({id}) => {
+    const [isLoadingEdit, setLoadingEdit] = useState(false);
     const {
         handleSubmit,
         register,
@@ -21,30 +18,42 @@ const CreateTeam = () => {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            name: "",
-            description: "",
             logo: null,
         }
     });
+
+    const [currentTeam, setCurrentTeam] = useState()
+
+	useEffect(()=>{
+		axios.get(`${BASE_URL}/team-management/current/`, {
+			headers: {
+				Authorization:`Token ${getUserToken()}`
+			}
+		}).then((response)=>{
+			setCurrentTeam(response.data)
+		})
+	},[])
+
     
     const onSubmit = (data) => {
-        setLoadingCreate(true);
+        setLoadingEdit(true);
         let formData = new FormData()
-        formData.append('name', data.name)
         formData.append('description', data.description)
+        
         if (data.logo) {
             formData.append('logo', data.logo)
         }
 
-        axios.post(`${BASE_URL}/team-management/`, formData, {
+        axios.put(`${BASE_URL}/team-management/${id}/`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization':`Token ${getUserToken()}`
             }
         }).then(()=>{
             route(ROUTE.TEAM_MANAGEMENT + '/current');
-            setLoadingCreate(false);
+            setLoadingEdit(false) 
         })
+        
     };
 
     return (
@@ -55,25 +64,18 @@ const CreateTeam = () => {
                 justify='center'
                 align='center'
             >
-                <Grid w='60vw' h='full' justify='center' templateColumns='repeat(6, 1fr)'>
+                {currentTeam != undefined && <Grid w='60vw' h='full' justify='center' templateColumns='repeat(6, 1fr)'>
                     <GridItem colSpan={6}>
                         <Box verticalAlign='center'>
                             <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
-                                Create New Team
+                                Edit New Team
                             </Text>
-                            <Box as='form' onSubmit={handleSubmit(onSubmit)} id="form-create-new-team">
+                            <Box as='form' onSubmit={handleSubmit(onSubmit)} id="form-edit-team">
                                 <Box w='40vw'>
-                                    <TextInput
-                                        id="name"
-                                        title='Team Name'
-                                        placeholder='Insert Team Name'
-                                        errors={errors}
-                                        rules={{
-                                            required: 'Required',
-                                            minLength: { value: 1, message: 'Required' },
-                                        }}
-                                        register={register}
-                                    />
+                                <FormLabel fontWeight='semibold'>
+                                    Team Name
+                                </FormLabel>
+                                {currentTeam?.name}
                                 </Box>
                                 <Box mb='20px' />                       
 
@@ -81,20 +83,24 @@ const CreateTeam = () => {
                                      errors={errors}
                                      register={register}
                                      control={control}
-                                />       
+                                     description={currentTeam?.description}
+                                     logo={`${BASE_URL}${currentTeam?.logo}`}
+                                />   
                         
-                            <Box mb='10px' />
+                                <Box mb='10px' />
                             </Box>
 
                             <Box mb='30px' />
+                            
+                            <Box mb='30px' />
                             <Box align="start">
-                                <Button form="form-create-new-team" id='signInButton' colorScheme='teal' type='submit' width='14em' borderRadius={10}>
-                                    {isLoadingCreate ? <Spinner /> : 'Create' }
+                                <Button form="form-edit-team" id='signInButton' colorScheme='teal' type='submit' width='10em' borderRadius={10}>
+                                    {isLoadingEdit ? <Spinner /> : 'Edit' }
                                 </Button>
                             </Box>
                         </Box>
                     </GridItem>
-                </Grid>
+                </Grid>}
             </Flex>
         </div>
     );
@@ -102,4 +108,4 @@ const CreateTeam = () => {
 }
 
 
-export default CreateTeam;
+export default EditTeam;
