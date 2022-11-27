@@ -42,8 +42,9 @@ const CreateTeam = () => {
                 'Authorization':`Token ${getUserToken()}`
             }
         }).then(()=>{
-            route(ROUTE.TEAM_MANAGEMENT + '/current');
+            route(`${ROUTE.TEAM_MANAGEMENT}/current`);
             setLoadingCreate(false);
+            window.location.reload();
         })
     };
 

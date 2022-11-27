@@ -57,6 +57,54 @@ describe('Test input', () => {
 		});		
 	});
 
+  test('When empty image and update then success', async () => {
+    const responseCurrentTeam = {
+      "id": 47,
+      "name": "team3",
+      "logo": null,
+      "description": "des",
+      "teammember": [
+          {
+              "team": 47,
+              "user": {
+                  "id": 16,
+                  "username": "hugoirdev@gmail.com",
+                  "email": "hugoirdev@gmail.com",
+                  "first_name": "",
+                  "last_name": ""
+              },
+              "verified": true
+          }
+      ]
+  }
+   
+		axios.get.mockImplementation(() => {
+      return Promise.resolve({data: responseCurrentTeam})
+    })
+
+		render(<EditTeam />);
+
+    const response = {
+      "id": 43,
+      "name": "Hugoirdev"
+    }
+
+    const mockPut = jest.fn()
+		axios.put.mockImplementation(() => {
+      mockPut()
+      return Promise.resolve({data: response})
+    })
+    const descField = await screen.findByPlaceholderText('Insert Team Description');
+    userEvent.type(descField, 'teamdesc')
+
+		const edit = screen.getByText('Save');
+		userEvent.click(edit);
+		await waitFor(() => {
+      expect(getCurrentUrl()).toBe('/')
+      expect(mockPut).toHaveBeenCalledTimes(0)
+		});		
+	});
+
   test('When user fill inputs completely, then success', async () => {
 		render(<EditTeam />);
 
