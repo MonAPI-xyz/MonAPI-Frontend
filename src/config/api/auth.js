@@ -2,7 +2,7 @@ const getUserToken = () => {
     if (typeof window !== "undefined") {
         return localStorage.getItem('MONAPI_TOKEN');
     }
-    return "";
+    return null;
 }
 
 const setUserToken = (token) => {
