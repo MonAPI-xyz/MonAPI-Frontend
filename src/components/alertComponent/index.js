@@ -33,7 +33,7 @@ function AlertComponent({isButton, displayText, header, body, buttonLeftText, bu
             {body}
           </AlertDialogBody>
           <AlertDialogFooter>
-            <Button id='leftButton-popup' ref={cancelRef} onClick={() => {setPopupOpen(false)}}>
+            <Button data-testid={'buttonCancelAlert'} id='leftButton-popup' ref={cancelRef} onClick={() => {setPopupOpen(false)}}>
               {buttonLeftText}
             </Button>
             <Button id='rightButton-popup' colorScheme={buttonRightColor} onClick={onSubmit} ml={3}>

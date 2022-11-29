@@ -24,6 +24,7 @@ describe('Test configuration sites', () => {
 	
 	test('test save config', async () => {
 		const response = {
+			"utc":0,
 			"is_slack_active": false,
 			"slack_token": "",
 			"slack_channel_id": "",
@@ -63,6 +64,7 @@ describe('Test configuration sites', () => {
 
 	test('test save config loading', async () => {
 		const response = {
+			"utc":0,
 			"is_slack_active": false,
 			"slack_token": "",
 			"slack_channel_id": "",
@@ -109,6 +111,7 @@ describe('Test configuration sites', () => {
 
 	test('test save config failed', async () => {
 		const response = {
+			"utc":0,
 			"is_slack_active": false,
 			"slack_token": "",
 			"slack_channel_id": "",
@@ -148,6 +151,7 @@ describe('Test configuration sites', () => {
 
 	test('when do wrong input on Threshold, then appears error message', async () => {
 		const response = {
+			"utc":0,
 			"is_slack_active": false,
 			"slack_token": "",
 			"slack_channel_id": "",

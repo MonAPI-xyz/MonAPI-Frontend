@@ -1,7 +1,5 @@
 import { h } from 'preact';
 import Login from '../../../src/routes/login/index.js';
-import { Provider } from 'unistore/preact';
-import { store } from '../../../src/config/store/store';
 import { screen, waitFor, render } from '@testing-library/preact';
 import * as axios from 'axios';
 import { getCurrentUrl, route } from 'preact-router';
@@ -116,7 +114,7 @@ describe('Test Failed Login', () => {
 
 describe('Test Form Login', () => {
 	test('require to fill the both email and password', async () => {
-		render(<Provider store={store}><Login /></Provider>);
+		render(<Login />);
 
 		const signIn = screen.getByText('Sign In');
 		userEvent.click(signIn);
@@ -127,7 +125,7 @@ describe('Test Form Login', () => {
 	});
 
 	test('email minimum length should be 3', async () => {
-		render(<Provider store={store}><Login /></Provider>);
+		render(<Login />);
 		const emailField = await screen.findByPlaceholderText('john@example.com');
 		const signIn = screen.getByText('Sign In');
 
@@ -139,7 +137,7 @@ describe('Test Form Login', () => {
 	});
 
 	test('password minimum length should be 8', async () => {
-		render(<Provider store={store}><Login /></Provider>);
+		render(<Login />);
 		const passwordField = await screen.findByPlaceholderText('************');
 		const signIn = screen.getByText('Sign In');
 		

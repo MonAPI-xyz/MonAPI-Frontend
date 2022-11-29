@@ -6,3 +6,8 @@
     color: #226666!important;
     font-weight: 700;
 }
+
+.team-list-accordion{
+    max-height: 120px;
+    overflow-y: scroll;
+}

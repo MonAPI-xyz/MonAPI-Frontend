@@ -13,17 +13,17 @@ describe('Test Auth Function Without Window', () => {
 	});
 
 	test('get user token', async () => {
-		expect(getUserToken()).toEqual('');
+		expect(getUserToken()).toEqual(null);
 	});
 
 	test('set user token', async () => {
 		setUserToken('unsupported');
-		expect(getUserToken()).toEqual('');
+		expect(getUserToken()).toEqual(null);
 	});
 
 	test('delete user token', async () => {
 		deleteUserToken();
-		expect(getUserToken()).toEqual('');
+		expect(getUserToken()).toEqual(null);
 	});
 
 });

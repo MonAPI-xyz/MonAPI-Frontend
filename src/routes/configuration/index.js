@@ -10,20 +10,12 @@ import BASE_URL from '../../config/api/constant.js';
 import { getUserToken } from '../../config/api/auth.js';
 import style from './style.css';
 import { useEffect } from 'react';
+import { timeWindowOption, timezoneOption } from './optionHelper.js';
 
 const Configuration = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [responseMessage, setResponseMessage] = useState('')
 		const [successMessage, setSuccessMessage] = useState('');
-
-		const timeWindowOption = [
-			{ key: "1H", value: "1 Hour",},
-			{ key: "2H", value: "2 Hours",},
-			{ key: "3H", value: "3 Hours",},
-			{ key: "6H", value: "6 Hours",},
-			{ key: "12H", value: "12 Hours",},
-			{ key: "24H", value: "24 Hours",},
-		]
 
     const {
         handleSubmit,
@@ -33,6 +25,7 @@ const Configuration = () => {
 		setValue,
 	} = useForm({
         defaultValues: {
+						utc: 0,
             is_slack_active:false,
             slack_token:'',
             slack_channel_id:'',
@@ -81,6 +74,7 @@ const Configuration = () => {
 			}
 		}).then((response)=> {
 			const fields = [
+				'utc',
 				'is_slack_active',
 				'slack_token',
 				'slack_channel_id',
@@ -174,6 +168,25 @@ const Configuration = () => {
 														/>
 												</Box>
 												<p style={{ textAlign: 'left' }}>Time window is how we calculate your average success rate for last X hours</p>
+											</Box>
+
+											<Box mb='20px' />
+											<Box>
+												<Box w='40vw'>
+														<Dropdown
+																id="utc"
+																title='Timezone'
+																dataTestId='dropdownTimezone'
+																placeholder=''
+																errors={errors}
+																options={timezoneOption}
+																rules={{
+																		required: 'Required',
+																		minLength: { value: 1, message: 'Required' },
+																}}
+																register={register}
+														/>
+												</Box>
 											</Box>
 										</AccordionPanel>
 										</AccordionItem>
