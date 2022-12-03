@@ -63,7 +63,7 @@ const Login = () => {
                     <Box verticalAlign='center'>
                     {isRegistered && (
                     <Text color='green'>
-                        User Created Successfully!
+                        Please verify your account before logging-in by checking your email.
                     </Text>
                     )}
                     {isChangePassword && (
