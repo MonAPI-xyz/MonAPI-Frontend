@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { Box, Text, Spinner } from '@chakra-ui/react';
 
 function LoadingPage(){

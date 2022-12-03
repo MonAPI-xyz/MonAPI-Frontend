@@ -1,8 +1,6 @@
 import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import { useEffect } from "react";
-import { Box, Heading, Text, Flex, Spinner } from '@chakra-ui/react';
-import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
 import BASE_URL from '../../config/api/constant.js';
 import axios from "axios";
 
@@ -59,29 +57,6 @@ const VerifyUser = () => {
     } else {
         return <InvalidPage headMessage={"Token Invalid"}
                             bodyMessage1={"Please check the link you followed are correctly copied from the email you receive."}/>
-        return (
-        <Box textAlign="center" py={10} px={6}>
-            <Box display="inline-block">
-            <Flex
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-                bg={'red.500'}
-                rounded={'50px'}
-                w={'55px'}
-                h={'55px'}
-                textAlign="center">
-                <CloseIcon boxSize={'20px'} color={'white'} />
-            </Flex>
-            </Box>
-            <Heading as="h2" size="xl" mt={6} mb={2}>
-                Token Invalid
-            </Heading>
-            <Text color={'gray.500'}>
-                Please check the link you followed are correctly copied from the email you receive. <br></br>
-            </Text>
-        </Box>
-        )
     }
 
 }

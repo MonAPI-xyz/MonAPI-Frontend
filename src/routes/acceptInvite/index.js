@@ -1,8 +1,6 @@
 import { h } from "preact";
 import { useState } from 'preact/hooks';
 import { useEffect } from "react";
-import { Box, Heading, Text, Flex, Spinner } from '@chakra-ui/react';
-import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
 import BASE_URL from '../../config/api/constant.js';
 import axios from "axios";
 
