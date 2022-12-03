@@ -6,6 +6,10 @@ import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
 import BASE_URL from '../../config/api/constant.js';
 import axios from "axios";
 
+import SuccessPage from '../../components/successPage/index.js';
+import InvalidPage from '../../components/invalidPage/index.js';
+import LoadingPage from '../../components/loadingPage/index.js';
+
 const VerifyUser = () => {
 
     const paramVerifyToken = new URLSearchParams(window.location.search).get('key')
@@ -40,55 +44,21 @@ const VerifyUser = () => {
     if (paramVerifyToken){
         setVerifyToken(paramVerifyToken);
     } else {
-        return (
-            <Box textAlign="center" py={10} px={6}>
-                <Box display="inline-block">
-                <Flex
-                    flexDirection="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    bg={'red.500'}
-                    rounded={'50px'}
-                    w={'55px'}
-                    h={'55px'}
-                    textAlign="center">
-                    <CloseIcon boxSize={'20px'} color={'white'} />
-                </Flex>
-                </Box>
-                <Heading as="h2" size="xl" mt={6} mb={2}>
-                    Token Not Passed
-                </Heading>
-                <Text color={'gray.500'}>
-                    You are not supposed to see this page.
-                </Text>
-            </Box>
-        )
+        return <InvalidPage headMessage={"Token Not Passed"}
+                            bodyMessage1={"You are not supposed to see this page."} />
     }
 
     if (isLoading) {
-        return (
-        <Box textAlign="center" py={10} px={6}>
-            <Text color={'gray.500'}>Loading</Text>
-            <Spinner />
-            <Text color={'gray.500'}>We are Accessing Your Request</Text>
-        </Box>
-        )
+        return <LoadingPage />
     }
 
     if (response.success) {
-        return (
-            <Box textAlign="center" py={10} px={6}>
-            <CheckCircleIcon boxSize={'50px'} color={'green.500'} />
-            <Heading as="h2" size="xl" mt={6} mb={2}>
-                User Email Verified
-            </Heading>
-            <Text color={'gray.500'}>
-                You are now a verified user!
-                You can login now.
-            </Text>
-            </Box>
-        )
+        return <SuccessPage headMessage={"User Email Verified"} 
+                            bodyMessage1={`You are now a verified user!`}
+                            bodyMessage2={'You can login now.'}/>
     } else {
+        return <InvalidPage headMessage={"Token Invalid"}
+                            bodyMessage1={"Please check the link you followed are correctly copied from the email you receive."}/>
         return (
         <Box textAlign="center" py={10} px={6}>
             <Box display="inline-block">
