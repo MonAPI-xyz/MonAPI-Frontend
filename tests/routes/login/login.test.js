@@ -182,7 +182,7 @@ describe('Test Form Login', () => {
 		route('/login?isRegistered=true')
 
 		await waitFor(async () => {
-            expect(screen.getByText('Please verify your account before logging-in by checking your email.'))
+            expect(screen.getByText('Check your email to verify your account.'))
 		})
 	})
 
