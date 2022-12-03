@@ -102,7 +102,7 @@ describe('Test Register', () => {
         userEvent.click(registerButton)
 
         await waitFor(async () => {
-            expect(screen.getByText('User Created Successfully!')).toBeDefined()
+            expect(screen.getByText('Please verify your account before logging-in by checking your email.')).toBeDefined()
         })
 
         await waitFor(async () => {
