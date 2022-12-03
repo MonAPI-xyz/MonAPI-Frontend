@@ -25,6 +25,7 @@ import ViewCurrentTeam from '../routes/view_current_team/index.js';
 import { UserContext } from '../config/context';
 import { useState } from 'preact/hooks';
 import AcceptInvite from '../routes/acceptInvite/index.js';
+import StatusPageDashboard from '../routes/statusPageDashboard';
 import EditTeam from '../routes/editTeam/index.js';
 
 const App = () => {
@@ -51,6 +52,7 @@ const App = () => {
 					<ForgetPassword path={ROUTE.FORGET_PASSWORD} />
 					<ForgetPasswordToken path={ROUTE.FORGET_PASSWORD_TOKEN} />
 					<AcceptInvite path={ROUTE.ACCEPT_INVITE} />
+					<StatusPageDashboard path={ROUTE.STATUS_PAGE_DASHBOARD} />
 
 					<AuthenticationChecker path="/:*?">
 						<DashboardWrapper path="/:*?">
