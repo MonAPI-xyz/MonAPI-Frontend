@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
 import { CloseIcon } from '@chakra-ui/icons';
 
