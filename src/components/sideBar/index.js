@@ -130,6 +130,7 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
           <MenuItem
             icon={<FaInfoCircle />}>
             Status Page
+            <Link class={style['menu-button']} activeClassName={style['active']} href="/status-page/" /> 
           </MenuItem>
           <MenuItem
             icon={<FaCog />}>
