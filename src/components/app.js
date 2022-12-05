@@ -27,6 +27,7 @@ import { useState } from 'preact/hooks';
 import AcceptInvite from '../routes/acceptInvite/index.js';
 import StatusPageDashboard from '../routes/statusPageDashboard';
 import EditTeam from '../routes/editTeam/index.js';
+import VerifyUser from '../routes/verifyUser/index.js';
 
 const App = () => {
 	const sentryDSN = process.env.PREACT_APP_SENTRY_DSN;
@@ -53,6 +54,7 @@ const App = () => {
 					<ForgetPasswordToken path={ROUTE.FORGET_PASSWORD_TOKEN} />
 					<AcceptInvite path={ROUTE.ACCEPT_INVITE} />
 					<StatusPageDashboard path={ROUTE.STATUS_PAGE_DASHBOARD} />
+					<VerifyUser path={ROUTE.VERIFY} />
 
 					<AuthenticationChecker path="/:*?">
 						<DashboardWrapper path="/:*?">
