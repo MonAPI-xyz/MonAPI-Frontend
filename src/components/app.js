@@ -31,6 +31,7 @@ import VerifyUser from '../routes/verifyUser/index.js';
 
 const App = () => {
 	const sentryDSN = process.env.PREACT_APP_SENTRY_DSN;
+	const googleAnalyticsTag = process.env.PREACT_APP_GOOGLE_ANALYTICS_TAG;
 	const [currentTeamId, setCurrentTeamId] = useState()
 	if (sentryDSN !== "") {
 		Sentry.init({
@@ -45,6 +46,17 @@ const App = () => {
 	}
 	
 	return (<div id="app">
+		{googleAnalyticsTag !== "" && <div>
+			<script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsTag}`} />
+			<script>
+			{`window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', '${googleAnalyticsTag}');`}
+			</script>
+		</div>}
+
 		<UserContext.Provider value={{currentTeam: [currentTeamId, setCurrentTeamId]}}>
 			<ChakraProvider theme={theme}>
 				<Router>
