@@ -1,9 +1,10 @@
 import { h } from 'preact';
-import { render, fireEvent, waitFor, screen } from '@testing-library/preact';
+import { render, fireEvent, waitFor, screen, getByTestId } from '@testing-library/preact';
 import * as axios from 'axios';
 import App from '../../../src/components/app.js';
 import { route } from 'preact-router'
 import { setUserToken } from '../../../src/config/api/auth'
+import SideBar from '../../../src/components/sideBar/index.js';
 
 jest.mock('axios');
 
@@ -13,20 +14,20 @@ describe('Test sideBar', () => {
     setUserToken('d16c4059484867e8d12ff535072509e3f29719e7');
     const response = [
       {
-          "id": 1,
-          "name": "test teqam"
+          id: 1,
+          name: "test teqam"
       },
       {
-          "id": 2,
-          "name": "test teqam2"
+          id: 2,
+          name: "test teqam2"
       },
       {
-          "id": 3,
-          "name": "test teqam3"
+          id: 3,
+          name: "test teqam3"
       }
     ]
 		axios.get.mockImplementation(() => Promise.resolve({data: response}))
-    render(<App/>);
+    render(<App />);
 
     await waitFor(() => {
       expect(screen.queryAllByRole('listitem').length).toBe(7)
@@ -38,20 +39,20 @@ describe('Test sideBar', () => {
     setUserToken('d16c4059484867e8d12ff535072509e3f29719e7');
     const response = [
       {
-          "id": 1,
-          "name": "test teqam"
+          id: 1,
+          name: "test teqam"
       },
       {
-          "id": 2,
-          "name": "test teqam2"
+          id: 2,
+          name: "test teqam2"
       },
       {
-          "id": 3,
-          "name": "test teqam3"
+          id: 3,
+          name: "test teqam3"
       }
     ]
 		axios.get.mockImplementation(() => Promise.resolve({data: response}))
-    render(<App/>);
+    render(<App />);
     
 
     fireEvent.click(screen.getByText('Logout'));
@@ -64,20 +65,20 @@ describe('Test sideBar', () => {
     setUserToken('d16c4059484867e8d12ff535072509e3f29719e7');
     const response = [
       {
-          "id": 1,
-          "name": "test teqam"
+          id: 1,
+          name: "test teqam"
       },
       {
-          "id": 2,
-          "name": "test teqam2"
+          id: 2,
+          name: "test teqam2"
       },
       {
-          "id": 3,
-          "name": "test teqam3"
+          id: 3,
+          name: "test teqam3"
       }
     ]
 		axios.get.mockImplementation(() => Promise.resolve({data: response}))
-    render(<App/>);
+    render(<App />);
 
     fireEvent.click(screen.getByText('Logout'));
     fireEvent.click(screen.getByRole('button', {name:'Close'}));
@@ -91,7 +92,7 @@ describe('Test sideBar', () => {
     const responseMonitor = []
 		axios.get.mockImplementation(() => Promise.resolve({data: responseMonitor}))
     setUserToken("TOKEN")
-    render(<App/>);
+    render(<App />);
     route('/');
     await waitFor(() => {
       expect(screen.getByText('Logout')).toBeDefined();
@@ -109,7 +110,7 @@ describe('Test sideBar', () => {
     const responseMonitor = []
 		axios.get.mockImplementation(() => Promise.resolve({data: responseMonitor}))
     setUserToken("TOKEN")
-    render(<App/>);
+    render(<App />);
     route('/');
     await waitFor(() => {
       expect(screen.getByText('Logout')).toBeDefined();
@@ -127,7 +128,12 @@ describe('Test sideBar', () => {
 
   test('When click arrow icon, then the collapsed status to be true', async () => {
     setUserToken('d16c4059484867e8d12ff535072509e3f29719e7');
-    render(<App/>);
+    render(<App />);
+    route('/');
+
+    await waitFor(() => {
+      expect(screen.getByText('API Monitors')).toBeDefined();
+    })
 
     fireEvent.click(screen.getByRole('iconarrow'))
     await waitFor(() => {
@@ -138,7 +144,7 @@ describe('Test sideBar', () => {
 
   test('When the collapsed was true and click the arrow icon, then the collapsed status to be false', async () => {
     setUserToken('d16c4059484867e8d12ff535072509e3f29719e7');
-    render(<App/>);
+    render(<App />);
 
     fireEvent.click(screen.getByRole('iconarrow'))
     fireEvent.click(screen.getByRole('iconarrow'))
@@ -150,7 +156,7 @@ describe('Test sideBar', () => {
 
   test('When click accordion, then it become expand', async () => {
     setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
-    render(<App/>);
+    render(<App />);
     
     fireEvent.click(screen.getByTestId('accordionButton', { expanded: false}))
     // const removeButton = await screen.getByTestId('keyValueRemoveButton')
@@ -162,7 +168,7 @@ describe('Test sideBar', () => {
 
   test('When click expanded accordion, then it become shrink', async () => {
     setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
-    render(<App/>);
+    render(<App />);
 
     fireEvent.click(screen.getByRole('button', { expanded: false}))
     fireEvent.click(screen.getByRole('button', { expanded: true}))
@@ -174,28 +180,25 @@ describe('Test sideBar', () => {
   test('Select team from accordion team', async () => {
     const response = [
       {
-          "id": 1,
-          "name": "test teqam"
+          id: 1,
+          name: "test teqam"
       },
       {
-          "id": 2,
-          "name": "test teqam2"
+          id: 2,
+          name: "test teqam2"
       },
       {
-          "id": 3,
-          "name": "test teqam3"
+          id: 3,
+          name: "test teqam3"
       }
     ]
 		axios.get.mockImplementation(() => Promise.resolve({data: response}))
 		setUserToken("token")
-		render(<App/>);
+		render(<App />);
     axios.get.mockImplementation(() => Promise.resolve({data: []}))
     fireEvent.click(screen.getByTestId('accordionButton', { expanded: false}))
     await waitFor(() => {
       fireEvent.click(screen.getByText('test teqam3'))
     })
-    
-    
-		
   })
 })

@@ -27,4 +27,6 @@
 
 .dashboard-inner-sidebar{
     position:fixed;
+    background-color: white;
+    z-index: 99;
 }

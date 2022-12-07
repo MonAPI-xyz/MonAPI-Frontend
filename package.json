@@ -52,7 +52,7 @@
     "preact": "^10.3.2",
     "preact-global-state": "^1.0.5",
     "preact-render-to-string": "^5.1.4",
-    "preact-router": "^3.2.1",
+    "preact-router": "^4.1.0",
     "react": "^18.2.0",
     "react-hook-form": "^7.36.0",
     "react-icons": "^4.4.0",

@@ -64,10 +64,10 @@ describe('Test API Monitors sites', () => {
 		route('/')
 
 		await waitFor(() => {
-			expect(screen.getByText(': 100% Success rate'));
-			expect(screen.getByText(': 1-99% Success rate'));
-			expect(screen.getByText(': 0% Success rate'));
-			expect(screen.getByText(': No data'));
+			expect(screen.getByText('100% Success rate'));
+			expect(screen.getByText('1-99% Success rate'));
+			expect(screen.getByText('0% Success rate'));
+			expect(screen.getByText('No data'));
 		})
 	})
 

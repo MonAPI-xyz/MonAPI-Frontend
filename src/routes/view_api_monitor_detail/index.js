@@ -33,6 +33,7 @@ const ViewAPIMonitorDetail = ({id}) => {
   const [deletePopup, setDeletePopup] = useState(false) 
   const [isLoadingDelete, setIsLoadingDelete] = useState(false)
   const [selectValue, setSelectValue] = useState("30MIN")
+  const [isLoading, setIsLoading] = useState(false)
 
   const onDelete = () => {
     setIsLoadingDelete(true)
@@ -47,6 +48,7 @@ const ViewAPIMonitorDetail = ({id}) => {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     axios.get(`${BASE_URL}/monitor/${id}/`, {
       params:{
         range: `${selectValue}`
@@ -56,8 +58,9 @@ const ViewAPIMonitorDetail = ({id}) => {
       } 
     }).then((response) => {
       setDetail(response.data)
+      setIsLoading(false);
     })
-  }, [selectValue]);
+  }, [id, selectValue]);
 
   const onChange = (e) => {
     setSelectValue(e.target.value)
@@ -77,7 +80,7 @@ const ViewAPIMonitorDetail = ({id}) => {
                 isButton={true}
                 displayText='Delete'
                 header='Delete'
-                body='Are you sure want to delete this API monitor?'
+                body='Are you sure want to delete this API monitor? Deleting API Monitor also removes related error logs. This action cannot be undone!'
                 buttonLeftText='Cancel'
                 buttonRightText={isLoadingDelete ? <Spinner /> : 'Yes'}
                 popupOpen={deletePopup}
@@ -87,6 +90,7 @@ const ViewAPIMonitorDetail = ({id}) => {
           </div>
         </ButtonGroup>
       </Flex>
+
       <div class={style['container-flex-column']}>
         <div class={style.requestItem}>
           <p><b>Request URL</b></p>
@@ -107,16 +111,20 @@ const ViewAPIMonitorDetail = ({id}) => {
             ))}
             </Select>
         </div>
+        {isLoading ?
+          <div class={style['spinner-container']}><Spinner /></div>
+        :
         <div class={style['chart-container']}>
-        <div class={style['chart']}>
-          <SuccessRatePercentageChart 
-          success_rate={detail.success_rate}/>
+          <div class={style['chart']}>
+            <SuccessRatePercentageChart 
+            success_rate={detail.success_rate}/>
+          </div>
+          <div class={style['chart']}>
+            <ResponseTimeChart 
+            response_time={detail.response_time}/>
+          </div>
         </div>
-        <div class={style['chart']}>
-          <ResponseTimeChart 
-          response_time={detail.response_time}/>
-        </div>
-      </div>
+        }
       </div>
     </div>
   )

@@ -35,7 +35,7 @@ describe('Test test API sites', () => {
         
         const requestUrl = await screen.findByPlaceholderText("Request URL");
         const method = await screen.getByTestId('dropdownMethod');
-        const submitButton = await screen.getByText('submit');
+        const submitButton = await screen.getByText('Submit');
         
         userEvent.type(requestUrl, 'www.example.com')
         userEvent.selectOptions(method, 'GET'); 
@@ -56,7 +56,7 @@ describe('Test test API sites', () => {
 		
 		const requestUrl = await screen.findByPlaceholderText("Request URL");
         const method = await screen.getByTestId('dropdownMethod');
-        const submitButton = await screen.getByText('submit');
+        const submitButton = await screen.getByText('Submit');
         
         userEvent.type(requestUrl, 'www.example.com')
         userEvent.selectOptions(method, 'POST');    
@@ -113,7 +113,7 @@ describe('Test test API sites', () => {
 		
 		const requestUrl = await screen.findByPlaceholderText("Request URL");
         const method = await screen.getByTestId('dropdownMethod');
-        const submitButton = await screen.getByText('submit');
+        const submitButton = await screen.getByText('Submit');
         
         userEvent.type(requestUrl, 'www.example.com')
         userEvent.selectOptions(method, 'POST');    
@@ -170,7 +170,7 @@ describe('Test test API sites', () => {
 		
 		const requestUrl = await screen.findByPlaceholderText("Request URL");
         const method = await screen.getByTestId('dropdownMethod');
-        const submitButton = await screen.getByText('submit');
+        const submitButton = await screen.getByText('Submit');
         
         userEvent.type(requestUrl, 'www.example.com')
         userEvent.selectOptions(method, 'POST');    
@@ -212,7 +212,8 @@ describe('Test test API sites', () => {
         userEvent.click(submitButton)
 		
         await waitFor(() => {
-            expect(screen.getByText("test response"));
+            expect(screen.getByText("test response")).toBeDefined();
+            expect(screen.queryAllByText('Loading...')).toHaveLength(0);
         })
 	})
 });

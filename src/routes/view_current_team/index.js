@@ -8,6 +8,7 @@ import { getUserToken } from '../../config/api/auth.js';
 import { Link } from 'preact-router/match'
 import logo from '../../assets/icons/logo-monapi.svg';
 import TeamMemberComponent from '../../components/teamMemberComponent/index.js';
+import style from './style.css';
 
 import { useForm } from 'react-hook-form';
 
@@ -57,8 +58,6 @@ const ViewCurrentTeam = () => {
     
     return (
         <div style={{padding: "40px 20px"}}>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous" />
-			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" />
             <Flex
                 h="full"
                 backgroundRepeat='no-repeat'
@@ -68,17 +67,19 @@ const ViewCurrentTeam = () => {
                 <Grid w='60vw' h='full' justify='center' templateColumns='repeat(6, 1fr)'>
                     <GridItem colSpan={6}>
                         <Box verticalAlign='center'>
-                            <div class="d-flex justify-content-between">
+                            <div class={style['team-management-header']}>
                                 <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
                                     Team Management
                                 </Text>  
                                 <Link href="/team-management/">
-                                    <button type="button" class="btn btn-success">Create New Team</button>
+                                    <Button colorScheme='teal' borderRadius={10}>
+                                        Create New Team
+                                    </Button>
                                 </Link>
                             </div>
 
                             <div style="width:50%">
-                                <div class="d-flex justify-content-between">
+                                <div class={style['team-details']}>
                                     <div>
                                         <Box w='40vw'>
                                             <Text  fontSize='16px' fontWeight='semibold' color='black'>
@@ -107,7 +108,9 @@ const ViewCurrentTeam = () => {
                             <Box mb='20px' />
                             <div class="float-right">
                                 <Link href={`/${currentTeam.id}/team-management`}>
-                                    <button type="button" class="btn btn-success">Edit</button>
+                                    <Button colorScheme='teal' borderRadius={10}>
+                                        Edit
+                                    </Button>
                                 </Link>  
                             </div>                                                          
                             </div>    
@@ -128,12 +131,14 @@ const ViewCurrentTeam = () => {
                                         w={'300px'}
                                     />
                                 </Flex>
-                                <Box mb="20px"/>
+                                <Box mb="20px" />
                                 <Button data-testid='test-inviteButton' id='inviteButton' colorScheme='teal' type='submit' borderRadius={10}>
                                         Invite
                                 </Button>
                                 {listErrors(extraError)}
                             </Box>
+
+                            <Box mb='40px' />
 
                             <Text mb={23} fontSize='32px' fontWeight='semibold' color='black'>
                                 Team Members List
@@ -144,10 +149,11 @@ const ViewCurrentTeam = () => {
                             />
                             {currentTeam.teammember && currentTeam.teammember.map((val)=>(
                                 <TeamMemberComponent
-                                email={val.user.email}
-                                verified={val.verified} 
-                                cancelUserId= {val.user.id}
-                                header={false}
+                                    key={val.user.id}
+                                    email={val.user.email}
+                                    verified={val.verified} 
+                                    cancelUserId= {val.user.id}
+                                    header={false}
                                 />
                             ))}
                             

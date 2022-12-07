@@ -1,0 +1,10 @@
+.team-details {
+    display: flex;
+    flex-direction: row;
+}
+
+.team-management-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
