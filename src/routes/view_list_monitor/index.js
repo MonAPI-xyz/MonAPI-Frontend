@@ -19,7 +19,7 @@ const ViewListMonitor = () => {
 	const [monitor,setMonitor]=useState([])
 	const [detail, setDetail]=useState({})
 	const {currentTeam} = useContext(UserContext);
-  	const [currentTeamId] = currentTeam;
+	const [currentTeamId] = currentTeam;
 	const [isLoadingStats, setIsLoadingStats] = useState(false);
 	const [isLoadingMonitor, setIsLoadingMonitor] = useState(false);
 	  

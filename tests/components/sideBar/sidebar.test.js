@@ -1,10 +1,9 @@
 import { h } from 'preact';
-import { render, fireEvent, waitFor, screen, getByTestId } from '@testing-library/preact';
+import { render, fireEvent, waitFor, screen } from '@testing-library/preact';
 import * as axios from 'axios';
 import App from '../../../src/components/app.js';
 import { route } from 'preact-router'
 import { setUserToken } from '../../../src/config/api/auth'
-import SideBar from '../../../src/components/sideBar/index.js';
 
 jest.mock('axios');
 

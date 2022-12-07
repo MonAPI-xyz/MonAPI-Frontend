@@ -74,7 +74,7 @@ const ViewAPIMonitorDetail = ({id}) => {
         </Box>
         <Spacer />
         <ButtonGroup gap='2'>
-          <Button colorScheme='blueChill' onClick={() => route('/'+`${id}`+'/edit/')}>Edit</Button>
+          <Button colorScheme='blueChill' onClick={() => route(`/${id}/edit/`)}>Edit</Button>
           <div onClick={() => {setDeletePopup(true)}}>
             <AlertComponent
                 isButton={true}
@@ -117,11 +117,11 @@ const ViewAPIMonitorDetail = ({id}) => {
         <div class={style['chart-container']}>
           <div class={style['chart']}>
             <SuccessRatePercentageChart 
-            success_rate={detail.success_rate}/>
+            success_rate={detail.success_rate} />
           </div>
           <div class={style['chart']}>
             <ResponseTimeChart 
-            response_time={detail.response_time}/>
+            response_time={detail.response_time} />
           </div>
         </div>
         }
