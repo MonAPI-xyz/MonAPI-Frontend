@@ -129,7 +129,7 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
             <Link class={style['menu-button']} href="/test-api/" /> 
           </MenuItem>
           <MenuItem
-            className={router.url === "/team-management/current/" && style['menu-item-active']}
+            className={router.url.includes("/team-management") && style['menu-item-active']}
             icon={<FaUserPlus />}>
             Team Management
             <Link class={style['menu-button']} href="/team-management/current/" /> 
