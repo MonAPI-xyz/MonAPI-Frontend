@@ -135,6 +135,7 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
             <Link class={style['menu-button']} href="/team-management/current/" /> 
           </MenuItem>
           <MenuItem
+            className={router.url === "/status-page/" && style['menu-item-active']}
             icon={<FaInfoCircle />}>
             Status Page
             <Link class={style['menu-button']} activeClassName={style['active']} href="/status-page/" /> 
