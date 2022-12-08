@@ -23,6 +23,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     const [assertionType, setAssertionType] = useState("DISABLED");
     const [selectedTab, setSelectedTab] = useState(0);
     const [isLoadingCreate, setLoadingCreate] = useState(false)
+    const [isLoadingCategory, setLoadingCategory] = useState(true)
     const [isLoadingPreviousStep, setLoadingPreviousStep] = useState(true)
     const [previousStep, setPreviousStep] = useState([])
     const [categoryList, setCategoryList] = useState([]);
@@ -145,6 +146,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                 name: "-"
             }].concat(response.data)
 			setCategoryList(newResponse)
+            setLoadingCategory(false)
 		})
     }, [])
 
@@ -237,6 +239,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                                 <Box mb='20px' />
 
                                 <Box w='40vw'>
+                                    {isLoadingCategory ? <Spinner ml={"20px"} /> :
                                     <Dropdown
                                         id="status_page_category_id"
                                         title='Select Category'
@@ -249,6 +252,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                                         valueName='name' 
                                         register={register}
                                     />
+                                    }
                                 </Box>
 
                                 <Box mb='20px' />
