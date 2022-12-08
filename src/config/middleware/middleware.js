@@ -13,7 +13,9 @@ const AuthenticationChecker = ({children}) => {
         }
     }, [isAuthenticated])
 
-    return isAuthenticated ? children : <div />
+    return (<div>
+        {isAuthenticated && children}
+    </div>)
 }
 
 function isAuthenticate() {
