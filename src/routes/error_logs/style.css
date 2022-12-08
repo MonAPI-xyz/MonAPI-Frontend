@@ -35,3 +35,61 @@ th, td {
 .cursor-pointer {
 	cursor: pointer;
 }
+
+.title {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.error-logs-head{
+	display:flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.pagination-container {
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.pagination-item {
+	padding: 10px;
+}
+
+.pagination-item:hover{
+	color: teal;
+	font-weight: 700;
+}
+
+.pagination-item.active{
+	color: teal;
+	font-weight: 700;
+}
+
+.error-logs-table {
+	font-size: 13px;
+}
+
+.error-logs-table th, .error-logs-table td{
+	padding: 10px;
+}
+
+.error-logs-table th:first-child, .error-logs-table td:first-child{
+	padding-left: 0px;
+}
+
+.error-logs-table th{
+	text-align: left;
+}
+
+.spinner-container {
+	padding: 50px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.modal-details-item{
+	margin: 10px 0px;
+}

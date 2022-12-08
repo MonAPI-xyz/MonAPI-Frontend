@@ -17,6 +17,7 @@ const ROUTE = {
     ACCEPT_INVITE: '/invite-member',
     STATUS_PAGE_DASHBOARD: 'status/:path',
     STATUS_PAGE: '/status-page',
+    VERIFY: '/verify'
   };
   
 export default ROUTE;

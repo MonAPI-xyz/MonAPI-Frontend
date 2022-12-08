@@ -1,4 +1,4 @@
-import { h } from "preact";
+import { h } from 'preact';
 import { useState } from 'preact/hooks';
 import { useEffect } from "react";
 import BASE_URL from '../../config/api/constant.js';
@@ -8,25 +8,21 @@ import style from './style.css';
 import SuccessPage from '../../components/successPage/index.js';
 import InvalidPage from '../../components/invalidPage/index.js';
 import LoadingPage from '../../components/loadingPage/index.js';
-import { Link } from "preact-router";
-import { Button } from "@chakra-ui/react";
+import { Button } from '@chakra-ui/react';
+import { Link } from 'preact-router';
 
-const AcceptInvite = () => {
-    const paramInviteToken = new URLSearchParams(window.location.search).get('key')
-    const [inviteToken, setInviteToken] = useState(null)
+const VerifyUser = () => {
+    const paramVerifyToken = new URLSearchParams(window.location.search).get('key')
+    const [verifyToken, setVerifyToken] = useState(null)
     const [response, setResponse] = useState({})
     const [isLoading, setIsLoading] = useState(true)
 
-    if (paramInviteToken){
-        setInviteToken(paramInviteToken);
-    } 
-
     useEffect(() => {
-        if (inviteToken != null) {
+        if (verifyToken != null) {
             const data = {
-                key: inviteToken,
+                key: verifyToken,
             }
-            axios.post(`${BASE_URL}/invite-member/accept/`, data)
+            axios.post(`${BASE_URL}/register/verify`, data)
             .then(() => {
                 setResponse({
                     success: true
@@ -41,22 +37,25 @@ const AcceptInvite = () => {
             })
         }
         
-    }, [inviteToken])
+    }, [verifyToken])
+
+    if (paramVerifyToken){
+        setVerifyToken(paramVerifyToken);
+    }
 
     return (<div>
-        {!paramInviteToken ? 
+        {!paramVerifyToken ?
             <InvalidPage headMessage={"Token Not Passed"}
                 bodyMessage1={"You are not supposed to see this page."} />
         : isLoading ?
             <LoadingPage />
         : response.success ?
-            <SuccessPage headMessage={"Team Invite Accepted"}
-                bodyMessage1={"You are now a part of a new team!"}
-                bodyMessage2={"Login to work with everyone else now."} />
-        : 
+            <SuccessPage headMessage={"User Email Verified"} 
+                bodyMessage1={`You are now a verified user!`}
+                bodyMessage2={'You can login now.'} />
+        :
             <InvalidPage headMessage={"Token Invalid"}
-                bodyMessage1={"It seems like the token has expired or the invite was cancelled."}
-                bodyMessage2={"Please request another invite from your Team or check if you are already a member."} />
+                bodyMessage1={"Please check the link you followed are correctly copied from the email you receive."} />
         }
 
         {!isLoading && 
@@ -69,4 +68,4 @@ const AcceptInvite = () => {
     </div>)
 }
 
-export default AcceptInvite;
+export default VerifyUser;

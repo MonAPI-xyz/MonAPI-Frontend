@@ -524,6 +524,38 @@ describe('Test Create API Monitor with Assertion', () => {
         })
     })
 
+    test('when create with Partial Text assertion type then success', async () => {
+        const response = []
+        axios.post.mockImplementation(() => Promise.resolve({data: response}))
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+        render(<CreateAPIMonitor />);
+        
+        const monitorName = await screen.findByPlaceholderText("Monitor Name");
+        const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const interval = screen.getByTestId("dropdownInterval");
+        const method = screen.getByTestId('dropdownMethod');
+        const createAPIMonitorButton = screen.getByText('Create API Monitor');
+        
+        userEvent.type(monitorName, 'API Monitor 1')
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(interval, '1 Minute');
+        userEvent.selectOptions(method, 'GET');    
+
+        const assertionButton = screen.getByText('Assertions')
+        userEvent.click(assertionButton)
+
+        const textButton = screen.getByText('Partial Text')
+        userEvent.click(textButton)
+
+        const textArea = screen.getByPlaceholderText('Type assertion here')
+        userEvent.type(textArea, 'test assertion')
+
+        userEvent.click(createAPIMonitorButton)
+        await waitFor(() => {
+            expect(getCurrentUrl()).toBe('/create');
+        })
+    })
+
     test('when create with JSON assertion type and exclude key (+try delete exclude key) then success', async () => {
         const response = []
         axios.post.mockImplementation(() => Promise.resolve({data: response}))

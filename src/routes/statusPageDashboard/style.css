@@ -1,0 +1,17 @@
+.status-page-category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid #efefef;
+    padding: 15px 15px;
+}
+
+.status-page-category-item:first-child{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.status-page-category-item:last-child{
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}

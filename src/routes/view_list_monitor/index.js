@@ -13,92 +13,105 @@ import style_detail from '../view_api_monitor_detail/style.css' ;
 import style_bar from '../../components/success_rate/style.css' ;
 import moment from "moment";
 import { UserContext } from '../../config/context';
+import { Button, Spinner } from '@chakra-ui/react';
 
 const ViewListMonitor = () => {	
-
 	const [monitor,setMonitor]=useState([])
 	const [detail, setDetail]=useState({})
 	const {currentTeam} = useContext(UserContext);
-  	const [currentTeamId] = currentTeam;
+	const [currentTeamId] = currentTeam;
+	const [isLoadingStats, setIsLoadingStats] = useState(false);
+	const [isLoadingMonitor, setIsLoadingMonitor] = useState(false);
 	  
 	useEffect(()=>{
+		setIsLoadingMonitor(true);
 		axios.get(`${BASE_URL}/monitor/`, {
 			headers: {
 				Authorization:`Token ${getUserToken()}`
 			}
 		}).then((response)=>{
 			setMonitor(response.data)
+			setIsLoadingMonitor(false);
 		})
 	},[currentTeamId])
 
 	useEffect(() => {
+		setIsLoadingStats(true);
 		axios.get(`${BASE_URL}/monitor/stats/`, {
 		  headers: {
 			Authorization: `Token ${getUserToken()}`
 		  } 
 		}).then((response) => {
-		  setDetail(response.data)
+		  setDetail(response.data);
+		  setIsLoadingStats(false);
 		})
 	  }, [currentTeamId]);
 
 	return(
 		<div class={style.home}>
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous" />
-			<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" />
-
 			<div class={style_detail['container-flex-column']}>
-				
-				<div class={style_detail['chart-container']}>
-					<div class={style_detail['chart']}>
-						<SuccessRatePercentageChart 
-						success_rate = {detail.success_rate}/>
+				{isLoadingStats ? 
+					<div class={style['spinner-container']}><Spinner /></div>
+				: 
+					<div class={style_detail['chart-container']}>
+						<div class={style_detail['chart']}>
+							<SuccessRatePercentageChart 
+							success_rate = {detail.success_rate} 
+							stepSizeInSecond = {3600} />
+						</div>
+						<div class={style_detail['chart']}>
+							<ResponseTimeChart 
+							response_time={detail.response_time} 
+							stepSizeInSecond = {3600} />
+						</div>				
 					</div>
-					<div class={style_detail['chart']}>
-						<ResponseTimeChart 
-						response_time={detail.response_time}/>
-					</div>				
-				</div>
+				}
 			</div>
 
-			<div class="d-flex justify-content-between">
-				<h2>API Monitors</h2>
+			<div class={style['api-monitor-title']}>
+				<h2 class={style['title']}>API Monitors</h2>
 				<Link href="/create">
-					<button type="button" class="btn btn-success">Create New</button>
+					<Button colorScheme='teal' borderRadius={10}>
+						Create New
+					</Button>
 				</Link>
 			</div>
-			<br/>
+			<br />
 			{(monitor.length != 0)?
-				<div>
-					<div class="d-flex justify-content-between">
-						<div class="d-flex justify-content-between">
-							<div class={style_bar['green-bar']}></div> 
-							<p>: 100% Success rate</p>
-						</div>
-						<div class="d-flex justify-content-between"> 
-							<div class={style_bar['yellow-bar']}></div>
-							<p>: 1-99% Success rate</p>
-						</div>
-						<div class="d-flex justify-content-between"> 
-							<div class={style_bar['red-bar']}></div>
-							<p>: 0% Success rate</p>
-						</div>
-						<div class="d-flex justify-content-between"> 
-							<div class={style_bar['grey-bar']}></div>
-							<p>: No data</p>
-						</div>
+				<div class={style['monitor-legends']}>
+					<div class={style['monitor-legends-item']}>
+						<div class={style_bar['green-bar']} /> 
+						<p class={style['monitor-legends-text']}>100% Success rate</p>
+					</div>
+					<div class={style['monitor-legends-item']}> 
+						<div class={style_bar['yellow-bar']} />
+						<p class={style['monitor-legends-text']}>1-99% Success rate</p>
+					</div>
+					<div class={style['monitor-legends-item']}> 
+						<div class={style_bar['red-bar']} />
+						<p class={style['monitor-legends-text']}>0% Success rate</p>
+					</div>
+					<div class={style['monitor-legends-item']}> 
+						<div class={style_bar['grey-bar']} />
+						<p class={style['monitor-legends-text']}>No data</p>
 					</div>
 				</div>				
 				:
-				<div/>
+				<div />
 			}
-			<table style="width:100%">
-				{(monitor.length != 0)?
+
+			{isLoadingMonitor ?
+			 <div class={style['spinner-container']}><Spinner /></div>
+			: 
+			<table class={style['monitor-list-table']}>
+				{(monitor.length != 0 && !isLoadingMonitor) ?
 					<tr>
-						<th>API Name</th>
-						<th>Path URL</th>
-						<th>Success Rate</th>
-						<th>Average Response Time</th>
+						<th style={'width:15%;'}>API Name</th>
+						<th style={'width:25%;'}>Path URL</th>
+						<th style={'width:10%;'}>Success Rate</th>
+						<th style={'width:10%;'}>Response Time (Avg)</th>
 						<th>Success Rate History (24h)</th>
+						<th width={'25px'}> </th>
 					</tr>
 					:
 					<p style="text-align: center">There is no monitor. You can click green button "Create New" in the middle right side</p>
@@ -118,7 +131,7 @@ const ViewListMonitor = () => {
 							</div>
 							<p>Last checked: {val.last_result ? moment(val.last_result.execution_time).fromNow() : "-"}</p>													
 						</td>
-						<td>
+						<td width={'25px'}>
 							<Link data-testid={"linkViewApiMonitorDetail"} aria-label="view-api-monitor-detail" href={`/${val.id}/detail/`}>
 								<FaAngleRight />
 							</Link>
@@ -126,7 +139,7 @@ const ViewListMonitor = () => {
 					</tr>
 				))}
 			</table>
-
+			}
 		</div>
 	)
 	

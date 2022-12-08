@@ -384,6 +384,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                                                 <Radio id='assertion_type_disabled' color="gray.300" value='DISABLED'>Disabled</Radio>
                                                 <Radio id='assertion_type_text' value='TEXT' name="assertion_type">Text</Radio>
                                                 <Radio id='assertion_type_json' value='JSON' name="assertion_type">JSON</Radio>
+                                                <Radio id='assertion_type_json' value='PARTIAL' name="assertion_type">Partial Text</Radio>
                                             </Flex>
                                             </RadioGroup>
                                         )}

@@ -28,7 +28,7 @@ import {
   FaRegArrowAltCircleRight
 } from 'react-icons/fa';
 import { getUserToken, deleteUserToken } from '../../config/api/auth.js';
-import { route } from 'preact-router';
+import { route, useRouter } from 'preact-router';
 import { Link } from 'preact-router/match';
 import { useEffect, useState, useContext } from 'preact/hooks';
 import AlertComponent from '../alertComponent/index.js';
@@ -41,6 +41,9 @@ import style from './style.css';
 import { UserContext } from '../../config/context/index.js';
 
 const SideBar = ({menuCollapse, setMenuCollapse}) => {
+  // Trigger re-render when route change
+  const router = useRouter()[0];
+
   const [logoutPopup, setLogoutPopup] = useState(false) 
   const [isLoadingLogout, setIsLoadingLogout] = useState(false)
   const [listTeam, setListTeam] = useState([])
@@ -108,24 +111,28 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
       <SidebarContent>
         <Menu>
           <MenuItem
+            className={router.url === "/" && style['menu-item-active']}
             icon={<FaTachometerAlt />}>
             Dashboard
-            <Link class={style['menu-button']} activeClassName={style['active']} href="/" />
+            <Link class={style['menu-button']} href="/" />
           </MenuItem>   
           <MenuItem
+            className={router.url === "/error-logs/" && style['menu-item-active']}
             icon={<FaExclamationCircle />}>
             Error Logs
-            <Link class={style['menu-button']} activeClassName={style['active']} href="/error-logs/" /> 
+            <Link class={style['menu-button']} href="/error-logs/" /> 
           </MenuItem>
           <MenuItem
+            className={router.url === "/test-api/" && style['menu-item-active']}
             icon={<FaPlay />}>
             API Test
-            <Link class={style['menu-button']} activeClassName={style['active']} href="/test-api/" /> 
+            <Link class={style['menu-button']} href="/test-api/" /> 
           </MenuItem>
           <MenuItem
+            className={router.url === "/team-management/current/" && style['menu-item-active']}
             icon={<FaUserPlus />}>
             Team Management
-            <Link class={style['menu-button']} activeClassName={style['active']} href="/team-management/current/" /> 
+            <Link class={style['menu-button']} href="/team-management/current/" /> 
           </MenuItem>
           <MenuItem
             icon={<FaInfoCircle />}>
@@ -133,9 +140,10 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
             <Link class={style['menu-button']} activeClassName={style['active']} href="/status-page/" /> 
           </MenuItem>
           <MenuItem
+            className={router.url === "/configuration/" && style['menu-item-active']}
             icon={<FaCog />}>
             Configuration
-            <Link class={style['menu-button']} activeClassName={style['active']} href="/configuration/" /> 
+            <Link class={style['menu-button']} href="/configuration/" /> 
           </MenuItem>
         </Menu>
       </SidebarContent>
