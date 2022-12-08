@@ -24,6 +24,7 @@ describe("Edit is Integrated with Backend", () => {
                 body: "TEST RAW BODY"
             },
             previous_step_id: null,
+			status_page_category_id: null,
             success_rate: [],
             response_time: [],
             assertion_type: "DISABLED",
@@ -44,6 +45,7 @@ describe("Edit is Integrated with Backend", () => {
                  body_form: [],
                  raw_body: null,
                  previous_step_id: null,
+				 status_page_category_id: null,
                  assertion_type: "DISABLED",
                  assertion_value: "",
                  is_assert_json_schema_only: false,
@@ -59,6 +61,12 @@ describe("Edit is Integrated with Backend", () => {
                     return Promise.resolve({data: get_detail})
                 case `${BASE_URL}/monitor/`:
                     return Promise.resolve({data: get_list})
+				case `${BASE_URL}/status-page/category/`:
+					return Promise.resolve({data: {
+						"id": 2,
+						"team": 14,
+						"name": "abc"
+					}, status: 201})					
             }
         });
 
@@ -85,6 +93,7 @@ describe("Edit is Integrated with Backend", () => {
             body_form: [],
             raw_body: null,
             previous_step_id: null,
+			status_page_category_id: null,
             success_rate: [],
             response_time: [],
             assertion_type: "DISABLED",
@@ -105,6 +114,7 @@ describe("Edit is Integrated with Backend", () => {
                  body_form: [],
                  raw_body: null,
                  previous_step_id: null,
+				 status_page_category_id: null,
                  assertion_type: "DISABLED",
                  assertion_value: "",
                  is_assert_json_schema_only: false,
@@ -391,6 +401,12 @@ describe("Edit is Integrated with Backend", () => {
                     return Promise.resolve({data: get_detail})
                 case `${BASE_URL}/monitor/`:
                     return Promise.resolve({data: get_list})
+				case `${BASE_URL}/status-page/category/`:
+					return Promise.resolve({data: {
+						"id": 2,
+						"team": 14,
+						"name": "abc"
+					}, status: 201})	
             }
         })
 
@@ -404,7 +420,7 @@ describe("Edit is Integrated with Backend", () => {
         })
 
 
-        render(<EditAPIMonitor id = {2}/>);
+        render(<EditAPIMonitor id = {2} />);
         await waitFor(async () => {
             expect(screen.getByText('Edit Your API Monitor'));
         })
@@ -429,6 +445,7 @@ test("Edit front end is integrated with backend negative", async () => {
             body_form: [],
             raw_body: null,
             previous_step_id: null,
+			status_page_category_id: null,
             success_rate: [],
             response_time: [],
             assertion_type: "DISABLED",
@@ -449,6 +466,7 @@ test("Edit front end is integrated with backend negative", async () => {
                  body_form: [],
                  raw_body: null,
                  previous_step_id: null,
+				 status_page_category_id: null,
                  assertion_type: "DISABLED",
                  assertion_value: "",
                  is_assert_json_schema_only: false,
@@ -735,6 +753,13 @@ test("Edit front end is integrated with backend negative", async () => {
                     return Promise.resolve({data: get_detail})
                 case `${BASE_URL}/monitor/`:
                     return Promise.resolve({data: get_list})
+				case `${BASE_URL}/status-page/category/`:
+					return Promise.resolve({data: {
+						"id": 2,
+						"team": 14,
+						"name": "abc"
+					}, status: 201})
+					
             }
         })
 
