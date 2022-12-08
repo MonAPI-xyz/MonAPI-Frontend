@@ -1,6 +1,6 @@
 import { h } from 'preact';
 
-function ChartConfig(title, labels, data, backgroundColor, y_scale_config) {
+function ChartConfig(title, labels, data, backgroundColor, xScaleConfig, y_scale_config, tooltipConfig) {
   return {
     type: "bar",
     data: {
@@ -35,12 +35,11 @@ function ChartConfig(title, labels, data, backgroundColor, y_scale_config) {
         legend: {
           display: false
         },
+        tooltip: tooltipConfig,
       },
       scales: {
         y: y_scale_config,
-        x: {
-          display: false
-        },
+        x: xScaleConfig,
       }
     },
   };

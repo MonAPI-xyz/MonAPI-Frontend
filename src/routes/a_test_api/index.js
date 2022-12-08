@@ -46,11 +46,10 @@ const TestAPI = () => {
         }).then((response)=>{  
             try {
                 setResponseMessage(JSON.stringify(JSON.parse(response.data.response), null, 2));
-                setLoading(false);
-                } catch {
+            } catch {
                 setResponseMessage(response.data.response);
-                setLoading(false);
-                }
+            }
+            setLoading(false);
         }).catch((error)=> {
             setResponseMessage(error.response.data.error);
             setLoading(false);
@@ -204,11 +203,12 @@ const TestAPI = () => {
                             <Box mb='49px' />
                             <Box align="end">
                                 <Button form="form-create-test-api" id='signInButton' colorScheme='teal' type='submit' width='14em' borderRadius={10}>
-                                    {isLoading ? <Spinner /> : "submit"}
+                                    {isLoading ? <Spinner /> : "Submit"}
                                 </Button>
                             </Box>
+                            <Box mb='49px' />
                             <Box>     
-                                <p><b>Response</b><br/>
+                                <p><b>Response</b><br />
                                 <span>
                                 <Box bg='gray.100' w='90%' color='black' p={3.5} mt={1.5} borderRadius='lg' class={style[`content-Response`]}>
                                     <div style={{whiteSpace: "pre-wrap"}}>{responseMessage}</div>
