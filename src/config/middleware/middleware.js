@@ -1,10 +1,19 @@
 import { h } from "preact"
 import { route } from "preact-router"
+import { useEffect } from "react"
 import { getUserToken } from "../api/auth"
 import ROUTE from "../api/route"
 
 const AuthenticationChecker = ({children}) => {
-    return isAuthenticate() ? children : route(ROUTE.LOGIN)
+    const isAuthenticated = isAuthenticate();
+
+    useEffect(()=>{
+        if (!isAuthenticated) {
+            route(ROUTE.LOGIN, true)
+        }
+    }, [isAuthenticated])
+
+    return isAuthenticated ? children : <div />
 }
 
 function isAuthenticate() {
