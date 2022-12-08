@@ -27,6 +27,7 @@ import { useState } from 'preact/hooks';
 import AcceptInvite from '../routes/acceptInvite/index.js';
 import StatusPageDashboard from '../routes/statusPageDashboard';
 import EditTeam from '../routes/editTeam/index.js';
+import StatusPage from '../routes/statusPage/index.js';
 import VerifyUser from '../routes/verifyUser/index.js';
 
 const App = () => {
@@ -82,6 +83,7 @@ const App = () => {
 								<ViewCurrentTeam path={ROUTE.VIEW_CURRENT_TEAM} />			
 								<CreateNewTeam path={ROUTE.TEAM_MANAGEMENT} />			
 								<EditTeam path={ROUTE.TEAM_MANAGEMENT_EDIT} />
+								<StatusPage path={ROUTE.STATUS_PAGE} />
 								<Redirect path="/:*?" to="/" />
 							</Router>							
 						</DashboardWrapper>

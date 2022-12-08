@@ -50,6 +50,10 @@ describe('Test Create API Monitor', () => {
             const multiStep = screen.getByTestId("dropdownMultiStep");
             userEvent.selectOptions(multiStep, '-');
         })
+        await waitFor(() => {
+            const selectCategory = screen.getByTestId("selectCategory");
+            userEvent.selectOptions(selectCategory, '-');
+        })
         const method = await screen.getByTestId('dropdownMethod');
         const createAPIMonitorButton = await screen.getByText('Create API Monitor');
         
