@@ -12,7 +12,7 @@ import BASE_URL from '../../config/api/constant.js';
 import { getUserToken } from '../../config/api/auth.js';
 import { methodOption, intervalOption } from './optionHelper.js'
 import style from './style.css';
-import DropdownCategory from '../forms/dropdownCategory/index.js';
+
 
 function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     // headerMessage: String
@@ -237,13 +237,14 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                                 <Box mb='20px' />
 
                                 <Box w='40vw'>
-                                    <DropdownCategory
+                                    <Dropdown
                                         id="status_page_category_id"
                                         title='Select Category'
                                         dataTestId='selectCategory'
                                         placeholder=''
                                         errors={errors}
                                         options={categoryList}
+                                        isCategory={true}
                                         keyName='name'
                                         valueName='name' 
                                         register={register}

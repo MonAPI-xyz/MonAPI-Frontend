@@ -141,7 +141,7 @@ const StatusPage = () => {
                             {categoryList.length == 0 ? 'No Category List' :
                             <ol style={{paddingLeft:'18px'}}>
                                 {categoryList.map((item, index) => ( 
-                                <li key={index}>
+                                <li key={item.id}>
                                     {item.name}
                                 </li>
                                 )) }
