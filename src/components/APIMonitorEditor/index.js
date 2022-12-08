@@ -12,6 +12,7 @@ import BASE_URL from '../../config/api/constant.js';
 import { getUserToken } from '../../config/api/auth.js';
 import { methodOption, intervalOption } from './optionHelper.js'
 import style from './style.css';
+import DropdownCategory from '../forms/dropdownCategory/index.js';
 
 function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     // headerMessage: String
@@ -24,6 +25,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     const [isLoadingCreate, setLoadingCreate] = useState(false)
     const [isLoadingPreviousStep, setLoadingPreviousStep] = useState(true)
     const [previousStep, setPreviousStep] = useState([])
+    const [categoryList, setCategoryList] = useState([]);
     const [responseMessage, setResponseMessage] = useState('');
 
     const {
@@ -59,7 +61,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
             }
         }).then( async (response) => {
             const fields = ["name", "method", "url", "schedule", "body_type", "query_params",
-                "headers", "body_form", "assertion_type", "assertion_value",
+                "headers", "body_form", "assertion_type", "assertion_value", "status_page_category_id",
                 "is_assert_json_schema_only", "exclude_keys"]
             fields.forEach(field => setValue(field, response.data[field]));
             if (response.data["raw_body"]) {
@@ -129,6 +131,21 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
             setPreviousStep(await transformPreviousStepResponse(response.data))
             setLoadingPreviousStep(false)
         })
+    }, [])
+
+    useEffect(()=> {
+		axios.get(`${BASE_URL}/status-page/category/`, {
+			headers: {
+				Authorization:`Token ${getUserToken()}`
+			}
+		}).then((response)=>{
+             const newResponse = [{
+                id: "",
+                team: -1,
+                name: "-"
+            }].concat(response.data)
+			setCategoryList(newResponse)
+		})
     }, [])
 
     return (
@@ -213,6 +230,22 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                                             required: 'Required',
                                             minLength: { value: 1, message: 'Required' },
                                         }}
+                                        register={register}
+                                    />
+                                </Box>
+
+                                <Box mb='20px' />
+
+                                <Box w='40vw'>
+                                    <DropdownCategory
+                                        id="status_page_category_id"
+                                        title='Select Category'
+                                        dataTestId='selectCategory'
+                                        placeholder=''
+                                        errors={errors}
+                                        options={categoryList}
+                                        keyName='name'
+                                        valueName='name' 
                                         register={register}
                                     />
                                 </Box>

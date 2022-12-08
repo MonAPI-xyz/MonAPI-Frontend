@@ -43,7 +43,7 @@ const StatusPage = () => {
 		}).then((response)=>{
 			setCategoryList(response.data)
 		})
-    }, [categoryList])
+    }, [])
     
     const onSaveUrl = (data) => {
         const formData = new FormData()
@@ -70,7 +70,8 @@ const StatusPage = () => {
                 'Authorization':`Token ${getUserToken()}`
             }
         }).then((response)=>{
-            categoryList.push(response.data)
+            const newCategoryList = categoryList.concat([response.data])
+            setCategoryList(newCategoryList)
             setValue2('name', '')
         })
         
