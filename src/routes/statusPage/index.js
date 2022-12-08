@@ -101,7 +101,7 @@ const StatusPage = () => {
                             <Box mb='10px' />
                             <Box as='form' onSubmit={handleSubmit(onSaveUrl)} id='form-save-url'>
                                 <Flex align='center'>
-                                    <Text>https://status.monapi.com/</Text>
+                                    <Text>{window.location.origin}/status/</Text>
                                     <Box mx='10px' />
                                     
                                     <Box w="30%" >
