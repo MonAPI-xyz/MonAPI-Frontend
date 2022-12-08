@@ -20,7 +20,6 @@ const StatusPageDashboard = ({path}) => {
     }).then((response) => {
 			setMonitor(response.data)
 		}).catch((error) => {
-      console.log(error.response.data.error)
       setErrorMessage(error.response.data.error)
     })
 	},[path])

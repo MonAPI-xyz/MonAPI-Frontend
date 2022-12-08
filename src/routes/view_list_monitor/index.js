@@ -56,11 +56,13 @@ const ViewListMonitor = () => {
 					<div class={style_detail['chart-container']}>
 						<div class={style_detail['chart']}>
 							<SuccessRatePercentageChart 
-							success_rate = {detail.success_rate} />
+							success_rate = {detail.success_rate} 
+							stepSizeInSecond = {3600} />
 						</div>
 						<div class={style_detail['chart']}>
 							<ResponseTimeChart 
-							response_time={detail.response_time} />
+							response_time={detail.response_time} 
+							stepSizeInSecond = {3600} />
 						</div>				
 					</div>
 				}
@@ -79,19 +81,19 @@ const ViewListMonitor = () => {
 				<div class={style['monitor-legends']}>
 					<div class={style['monitor-legends-item']}>
 						<div class={style_bar['green-bar']} /> 
-						<p>100% Success rate</p>
+						<p class={style['monitor-legends-text']}>100% Success rate</p>
 					</div>
 					<div class={style['monitor-legends-item']}> 
 						<div class={style_bar['yellow-bar']} />
-						<p>1-99% Success rate</p>
+						<p class={style['monitor-legends-text']}>1-99% Success rate</p>
 					</div>
 					<div class={style['monitor-legends-item']}> 
 						<div class={style_bar['red-bar']} />
-						<p>0% Success rate</p>
+						<p class={style['monitor-legends-text']}>0% Success rate</p>
 					</div>
 					<div class={style['monitor-legends-item']}> 
 						<div class={style_bar['grey-bar']} />
-						<p>No data</p>
+						<p class={style['monitor-legends-text']}>No data</p>
 					</div>
 				</div>				
 				:

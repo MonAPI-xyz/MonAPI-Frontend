@@ -28,6 +28,15 @@ const ViewAPIMonitorDetail = ({id}) => {
     { value: "720MIN", label: "12 Hours Ago" },
     { value: "1440MIN", label: "24 Hours Ago" },
   ];
+
+  const stepSizeInSeconds = {
+    "30MIN": 120,
+    "60MIN": 240,
+    "180MIN": 480,
+    "360MIN": 1200,
+    "720MIN": 2400,
+    "1440MIN": 3600,
+  }
   
   const [detail, setDetail]=useState([])
   const [deletePopup, setDeletePopup] = useState(false) 
@@ -117,11 +126,13 @@ const ViewAPIMonitorDetail = ({id}) => {
         <div class={style['chart-container']}>
           <div class={style['chart']}>
             <SuccessRatePercentageChart 
-            success_rate={detail.success_rate} />
+            success_rate={detail.success_rate} 
+            stepSizeInSecond={stepSizeInSeconds[selectValue]} />
           </div>
           <div class={style['chart']}>
             <ResponseTimeChart 
-            response_time={detail.response_time} />
+            response_time={detail.response_time} 
+            stepSizeInSecond={stepSizeInSeconds[selectValue]} />
           </div>
         </div>
         }

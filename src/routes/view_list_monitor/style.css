@@ -90,3 +90,7 @@ transform: translateY(4px);
 	flex-direction: row;
 	justify-content: center;
 }
+
+.monitor-legends-text {
+	font-size: 13px;
+}

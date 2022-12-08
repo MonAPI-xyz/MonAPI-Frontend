@@ -291,7 +291,6 @@ describe('Integration test detail page', () => {
     ]
 
     axios.get.mockImplementation((url) => {
-      console.log("URL ", url)
       if(url.includes('/1')) {
         return Promise.resolve({ data: responseDetail });
       } else if (url.includes('/available_team')) {

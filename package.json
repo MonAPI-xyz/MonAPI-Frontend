@@ -47,6 +47,8 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "0.21.2",
     "chart.js": "^3.9.1",
+    "chartjs-adapter-date-fns": "^2.0.1",
+    "date-fns": "^2.29.3",
     "framer-motion": "^7.3.5",
     "moment": "^2.29.4",
     "preact": "^10.3.2",

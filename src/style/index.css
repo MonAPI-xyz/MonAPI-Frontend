@@ -35,7 +35,8 @@
 }
 
 html, body {
-	height: 100%;
+	min-height: 100%;
+	height: max-content;
 	width: 100%;
 	padding: 0;
 	margin: 0;
@@ -50,7 +51,8 @@ html, body {
 }
 
 #app {
-	height: 100%;
+	min-height: 100%;
+	height: max-content;
 }
 
 #app .pro-sidebar-inner {
