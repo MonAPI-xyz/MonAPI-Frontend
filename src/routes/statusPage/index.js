@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { Button, Text, Box, Flex, Grid, GridItem, Input } from '@chakra-ui/react';
+import { Button, Text, Box, Flex, Grid, GridItem, Input, Spinner } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useState, useEffect } from 'preact/hooks';
 import axios from 'axios';
@@ -8,8 +8,16 @@ import BASE_URL from '../../config/api/constant.js';
 import { getUserToken } from '../../config/api/auth.js';
 
 const StatusPage = () => {
+    const [successMessageSaveUrl, setSuccessMessageSaveUrl] = useState('');
     const [errorMessageSaveUrl, setErrorMessageSaveUrl] = useState('');
+    const [isLoadingLoadUrl, setIsLoadingLoadUrl] = useState(true);
+    const [isLoadingSaveUrl, setIsLoadingSaveUrl] = useState(false);
+
+
     const [categoryList, setCategoryList] = useState([]);
+    const [successMessageCategory, setSuccessMessageCategory] = useState('');
+    const [isLoadingLoadCategory, setIsLoadingLoadCategory] = useState(true);
+    const [isLoadingAddCategory, setIsLoadingAddCategory] = useState(false);
     const [path, setPath] = useState('');
 
     const {
@@ -32,6 +40,7 @@ const StatusPage = () => {
 		}).then((response)=>{
 			setValue("path", response.data["path"])
             setPath(response.data['path'])
+            setIsLoadingLoadUrl(false)
 		})
     }, [])
 
@@ -42,37 +51,46 @@ const StatusPage = () => {
 			}
 		}).then((response)=>{
 			setCategoryList(response.data)
+            setIsLoadingLoadCategory(false)
 		})
     }, [])
     
     const onSaveUrl = (data) => {
+        setIsLoadingSaveUrl(true)
         const formData = new FormData()
         formData.append('path', data.path)
 
         axios.post(`${BASE_URL}/status-page/config/`, formData, {
             headers: {
-                'Authorization':`Token ${getUserToken()}`
+                Authorization:`Token ${getUserToken()}`
             }
         }).then((response)=>{
             setErrorMessageSaveUrl('')
             setPath(response.data['path'])
+            setIsLoadingSaveUrl(false);
+            setSuccessMessageSaveUrl('Success update URL for status page');
         }).catch((error)=> {
             setErrorMessageSaveUrl(error.response.data.path[0]);
+            setIsLoadingSaveUrl(false);
+            setSuccessMessageSaveUrl('');
         })
         
     };
     const onAddCategory = (data) => {
+        setIsLoadingAddCategory(true);
         const formData = new FormData()
         formData.append('name', data.name)
 
         axios.post(`${BASE_URL}/status-page/category/`, data, {
             headers: {
-                'Authorization':`Token ${getUserToken()}`
+                Authorization:`Token ${getUserToken()}`
             }
         }).then((response)=>{
             const newCategoryList = categoryList.concat([response.data])
             setCategoryList(newCategoryList)
             setValue2('name', '')
+            setIsLoadingAddCategory(false);
+            setSuccessMessageCategory('Success add new category');
         })
         
     };
@@ -99,35 +117,38 @@ const StatusPage = () => {
                             </Text>
                             
                             <Box mb='10px' />
-                            <Box as='form' onSubmit={handleSubmit(onSaveUrl)} id='form-save-url'>
-                                <Flex align='center'>
-                                    <Text>{window.location.origin}/status/</Text>
-                                    <Box mx='10px' />
-                                    
-                                    <Box w="30%" >
-                                        <Input
-                                            bgColor='#F1F1F1'
-                                            borderRadius={10}
-                                            id='path'
-                                            placeholder='custompath'
-                                            {...register('path', {
-                                                required: 'Required',
-                                                minLength: { value: 1, message: 'Required' },
-                                            })}
-                                        />
-                                    </Box>
-                                    <Box mx='12px' />
-                                    <Link href={`/status/${path}`} ><Text as="u">Preview Page</Text></Link>
+                            {isLoadingLoadUrl ? <Spinner /> : 
+                                <Box as='form' onSubmit={handleSubmit(onSaveUrl)} id='form-save-url'>
+                                    <Flex align='center'>
+                                        <Text>{window.location.origin}/status/</Text>
+                                        <Box mx='10px' />
+                                        
+                                        <Box w="30%" >
+                                            <Input
+                                                bgColor='#F1F1F1'
+                                                borderRadius={10}
+                                                id='path'
+                                                placeholder='custompath'
+                                                {...register('path', {
+                                                    required: 'Required',
+                                                    minLength: { value: 1, message: 'Required' },
+                                                })}
+                                            />
+                                        </Box>
+                                        <Box mx='12px' />
+                                        <Link href={`/status/${path}`} ><Text as="u">Preview Page</Text></Link>
 
-                                </Flex>
-                                {errorMessageSaveUrl != '' && <Text fontSize='14px' color='red.500'>{errorMessageSaveUrl}</Text>}
-                                <Box mb={errorMessageSaveUrl ? '14px' : '20px'} />
-                                <Box align="start">
-                                    <Button form="form-save-url" id='saveUrlButton' colorScheme='teal' type='submit' width='10em' borderRadius={10}>
-                                        Save
-                                    </Button>
+                                    </Flex>
+                                    {errorMessageSaveUrl != '' && <Text fontSize='14px' color='red.500'>{errorMessageSaveUrl}</Text>}
+                                    <Box mb={errorMessageSaveUrl ? '14px' : '20px'} />
+                                    {successMessageSaveUrl && <Text color="green">{successMessageSaveUrl}</Text>}
+                                    <Box align="start">
+                                        <Button form="form-save-url" id='saveUrlButton' colorScheme='teal' type='submit' width='10em' borderRadius={10}>
+                                            {isLoadingSaveUrl ? <Spinner /> : "Save"}
+                                        </Button>
+                                    </Box>
                                 </Box>
-                            </Box>
+                            }
                         </Box>
 
                         <Box mb="40px" />
@@ -136,11 +157,12 @@ const StatusPage = () => {
                             Category
                         </Text>
                         <Box mb="20px" />
-
+                        
+                        {isLoadingLoadCategory ? <Spinner /> : 
                         <Box>
-                            {categoryList.length == 0 ? 'No Category List' :
+                            {categoryList.length == 0 ? 'No Category Exists' :
                             <ol style={{paddingLeft:'18px'}}>
-                                {categoryList.map((item, index) => ( 
+                                {categoryList.map((item) => ( 
                                 <li key={item.id}>
                                     {item.name}
                                 </li>
@@ -167,15 +189,15 @@ const StatusPage = () => {
                                 />
                                 </Box>
                                 <Box mb="20px" />
-
+                                {successMessageCategory && <Text color="green">{successMessageCategory}</Text>}
                                 <Box align="start">
                                     <Button form="form-add-category" id='addCategoryButton' colorScheme='teal' type='submit' width='10em' borderRadius={10}>
-                                        Create
+                                        {isLoadingAddCategory ? <Spinner /> : "Create"}
                                     </Button>
                                 </Box>
                             </Box>
-                        
                         </Box>
+                        }
                     </GridItem>
                 </Grid>}
             </Flex>

@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { Box, Text, Image } from '@chakra-ui/react'
+import { Box, Text, Image, Spinner } from '@chakra-ui/react'
 import { useEffect, useState } from 'preact/hooks'
 import { Link } from 'preact-router/match'
 import BASE_URL from '../../config/api/constant';
@@ -12,16 +12,20 @@ import style from './style.css';
 const StatusPageDashboard = ({path}) => {
   const [monitor, setMonitor]=useState([])
   const [errorMessage, setErrorMessage]=useState("")
+  const [isLoading, setIsLoading] = useState(true);
 	  
 	useEffect(()=>{
+    setIsLoading(true);
 		axios.get(`${BASE_URL}/status-page/dashboard/`, {
       params: {
         path
       }
     }).then((response) => {
 			setMonitor(response.data)
+      setIsLoading(false)
 		}).catch((error) => {
       setErrorMessage(error.response.data.error)
+      setIsLoading(false)
     })
 	},[path])
 
@@ -35,8 +39,11 @@ const StatusPageDashboard = ({path}) => {
     <Box p='40px' mx='20%'>
       <Box p='20px' align="center" display='flex' flexDirection='column'>
         <Text fontSize='4xl' as='b' mb='40px'>Status Page</Text>
-        
-        {(monitor.length != 0) ?
+
+        {isLoading ? 
+          <div class={style['spinner-container']}><Spinner /> </div>  
+        :
+          (monitor.length != 0) ?
           <Box py='20px'>
             <Text pb='20px' textAlign='left'>Bar chart is calculated based on the last 24 hours where each bar block represents 1 hour</Text>
             <Box display="flex" justifyContent="space-between">
@@ -69,8 +76,8 @@ const StatusPageDashboard = ({path}) => {
               </Box>
             }
             <div>
-            {monitor.map((val) => (
-                <div class={style['status-page-category-item']}>
+            {monitor.map((val, idx) => (
+                <div class={style['status-page-category-item']} key={idx}>
                   <Text textAlign='left' fontSize='2xl' as='b'>{val.name}</Text>
                   <Box pt='10px' display='flex' flexDirection='row' justifyContent='left' width={'100%'}>
                       {val.success_rate_category.map((hour, idx)=>(
@@ -85,8 +92,8 @@ const StatusPageDashboard = ({path}) => {
             }
             </div>
           </Box>
-				:
-				  <Text fontSize='2xl'>No data</Text>
+        :
+          <Text fontSize='2xl'>No data</Text>
         }
 
         { errorMessage === "" ? <div /> : <Text color='red' fontSize='2xl'>{errorMessage}</Text> }
