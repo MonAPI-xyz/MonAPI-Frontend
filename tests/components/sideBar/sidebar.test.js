@@ -176,6 +176,41 @@ describe('Test sideBar', () => {
     })
   })
 
+  test('sidebar have class active when match route', async () => {
+    setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+    render(<App />)
+    
+    route('/')
+    await waitFor(() => {
+      expect(screen.getByTestId('menu-item-dashboard').classList.contains('menu-item-active')).toBeTruthy()
+    })
+
+    route('/error-logs/')
+    await waitFor(() => {
+      expect(screen.getByTestId('menu-item-error-logs').classList.contains('menu-item-active')).toBeTruthy()
+    })
+
+    route('/test-api/')
+    await waitFor(() => {
+      expect(screen.getByTestId('menu-item-test-api').classList.contains('menu-item-active')).toBeTruthy()
+    })
+
+    route('/team-management/current/')
+    await waitFor(() => {
+      expect(screen.getByTestId('menu-item-team-management').classList.contains('menu-item-active')).toBeTruthy()
+    })
+
+    route('/status-page/')
+    await waitFor(() => {
+      expect(screen.getByTestId('menu-item-status-page').classList.contains('menu-item-active')).toBeTruthy()
+    })
+
+    route('/configuration/')
+    await waitFor(() => {
+      expect(screen.getByTestId('menu-item-configuration').classList.contains('menu-item-active')).toBeTruthy()
+    })
+  })
+
   test('Select team from accordion team', async () => {
     const response = [
       {
@@ -197,7 +232,8 @@ describe('Test sideBar', () => {
     axios.get.mockImplementation(() => Promise.resolve({data: []}))
     fireEvent.click(screen.getByTestId('accordionButton', { expanded: false}))
     await waitFor(() => {
-      fireEvent.click(screen.getByText('test teqam3'))
+      expect(screen.getByText('test teqam3')).toBeDefined()
     })
+    fireEvent.click(screen.getByText('test teqam3'))
   })
 })
