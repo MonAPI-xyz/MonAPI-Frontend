@@ -92,6 +92,54 @@ describe('Test input status page', () => {
         });
     })
 
+    test('When user fill emtpy url, then send null to backend', async () => {
+        const response = {
+            path: null
+        }
+
+        let postData = null;
+        axios.get.mockImplementation((url) => {
+            if (url.includes('/config/')) {
+                return Promise.resolve({ data: {
+                    path: null
+                } }) 
+            }
+            if (url.includes('/status-page/category/')) {
+                return Promise.resolve({ data: [
+                    {
+                        id: 1,
+                        team: 14,
+                        name: "new category"
+                    }
+                ] }) 
+            }
+        })
+        axios.post.mockImplementation((url, data) => {
+            if (url.includes('/status-page/config/')) {
+                postData = data;
+                return Promise.resolve({data: response, status: 201})
+            }
+        })
+    
+        render(<StatusPage />);
+
+        await waitFor(() => {
+            expect(screen.getByText('Save')).toBeDefined()
+        });
+
+        const pathField = await screen.findByPlaceholderText('custompath');
+        userEvent.type(pathField, 'abceef')
+        userEvent.clear(pathField)
+    
+        const save = screen.getByText('Save');
+        userEvent.click(save);
+        await waitFor(() => {
+          expect(postData).toEqual({
+            path: null,
+          })
+        });
+    })
+
     test('When user fill the save url, then show loading spinner', async () => {
         const response = {
             path: "abceef"
