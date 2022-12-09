@@ -11,67 +11,67 @@ jest.mock('axios')
 describe('Edit button route correctly', () => {
   jest.setTimeout(30000);
   test('When edit button is clicked, user is redirected', async () => {
-    const responseDashboard = [{"id":1,"name":"Test","method":"GET","url":"url","schedule":"5MIN","body_type":"FORM","query_params":[],"headers":[],"body_form":[],"raw_body":[],"success_rate":100.0,"avg_response_time":0,"success_rate_history":[{"date":"2022-09-30","hour":17,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":18,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":19,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":20,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":21,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":22,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":23,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":0,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":1,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":2,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":3,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":4,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":5,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":6,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":7,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":8,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":9,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":10,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":11,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":12,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":13,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":14,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":15,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":16,"minute":0,"success":0,"failed":0}]}]
+    const responseDashboard = [{id:1,name:"Test",method:"GET",url:"url",schedule:"5MIN",body_type:"FORM",query_params:[],headers:[],body_form:[],raw_body:[],success_rate:100.0,avg_response_time:0,success_rate_history:[{date:"2022-09-30",hour:17,minute:0,success:0,failed:0},{date:"2022-09-30",hour:18,minute:0,success:0,failed:0},{date:"2022-09-30",hour:19,minute:0,success:0,failed:0},{date:"2022-09-30",hour:20,minute:0,success:0,failed:0},{date:"2022-09-30",hour:21,minute:0,success:0,failed:0},{date:"2022-09-30",hour:22,minute:0,success:0,failed:0},{date:"2022-09-30",hour:23,minute:0,success:0,failed:0},{date:"2022-10-01",hour:0,minute:0,success:0,failed:0},{date:"2022-10-01",hour:1,minute:0,success:0,failed:0},{date:"2022-10-01",hour:2,minute:0,success:0,failed:0},{date:"2022-10-01",hour:3,minute:0,success:0,failed:0},{date:"2022-10-01",hour:4,minute:0,success:0,failed:0},{date:"2022-10-01",hour:5,minute:0,success:0,failed:0},{date:"2022-10-01",hour:6,minute:0,success:0,failed:0},{date:"2022-10-01",hour:7,minute:0,success:0,failed:0},{date:"2022-10-01",hour:8,minute:0,success:0,failed:0},{date:"2022-10-01",hour:9,minute:0,success:0,failed:0},{date:"2022-10-01",hour:10,minute:0,success:0,failed:0},{date:"2022-10-01",hour:11,minute:0,success:0,failed:0},{date:"2022-10-01",hour:12,minute:0,success:0,failed:0},{date:"2022-10-01",hour:13,minute:0,success:0,failed:0},{date:"2022-10-01",hour:14,minute:0,success:0,failed:0},{date:"2022-10-01",hour:15,minute:0,success:0,failed:0},{date:"2022-10-01",hour:16,minute:0,success:0,failed:0}]}]
         const responseDetail = {
-          "name":"Test",
-    			"url": "https://pacil.com",
-    			"schedule": "mySchedule",
-    			"success_rate": [
+          name:"Test",
+          url: "https://pacil.com",
+          schedule: "mySchedule",
+          success_rate: [
             {
-              "start_time": "2022-10-12T00:24:54.784248+07:00",
-              "end_time": "2022-10-12T00:25:54.784248+07:00",
-              "success": 20,
-              "failed": 10
+              start_time: "2022-10-12T00:24:54.784248+07:00",
+              end_time: "2022-10-12T00:25:54.784248+07:00",
+              success: 20,
+              failed: 10
             },
             {
-              "start_time": "2022-10-12T00:24:54.784248+07:00",
-              "end_time": "2022-10-12T00:25:54.784248+07:00",
-              "success": 0,
-              "failed": 10
+              start_time: "2022-10-12T00:24:54.784248+07:00",
+              end_time: "2022-10-12T00:25:54.784248+07:00",
+              success: 0,
+              failed: 10
             },
             {
-              "start_time": "2022-10-12T00:24:54.784248+07:00",
-              "end_time": "2022-10-12T00:25:54.784248+07:00",
-              "success": 10,
-              "failed": 0
+              start_time: "2022-10-12T00:24:54.784248+07:00",
+              end_time: "2022-10-12T00:25:54.784248+07:00",
+              success: 10,
+              failed: 0
             },
             {
-              "start_time": "2022-10-12T00:24:54.784248+07:00",
-              "end_time": "2022-10-12T00:25:54.784248+07:00",
-              "success": 0,
-              "failed": 0
-            },
-          ],
-          "response_time": [
-            {
-              "start_time": "2022-10-11T23:55:54.784248+07:00",
-              "end_time": "2022-10-11T23:56:54.784248+07:00",
-              "avg": 20
-            },
-            {
-              "start_time": "2022-10-11T23:55:54.784248+07:00",
-              "end_time": "2022-10-11T23:56:54.784248+07:00",
-              "avg": 0
+              start_time: "2022-10-12T00:24:54.784248+07:00",
+              end_time: "2022-10-12T00:25:54.784248+07:00",
+              success: 0,
+              failed: 0
             },
           ],
-    		}
+          response_time: [
+            {
+              start_time: "2022-10-11T23:55:54.784248+07:00",
+              end_time: "2022-10-11T23:56:54.784248+07:00",
+              avg: 20
+            },
+            {
+              start_time: "2022-10-11T23:55:54.784248+07:00",
+              end_time: "2022-10-11T23:56:54.784248+07:00",
+              avg: 0
+            },
+          ],
+        }
 
         axios.get.mockImplementation((url) => {
           if(url.includes('/1')) {
             return Promise.resolve({ data: responseDetail });
-          } else {
+          } 
             return Promise.resolve({ data: responseDashboard });
-          }
+          
         });
 
-    		setUserToken("TOKEN")
-    		render(<App/>);
-    		route('/')
+        setUserToken("TOKEN")
+        render(<App />);
+        route('/')
 
-    		await waitFor(() => {
-    			expect(screen.getAllByText('Test')).toBeDefined()
-    			expect(getCurrentUrl()).toBe('/');
-    		})
+        await waitFor(() => {
+          expect(screen.getAllByText('Test')).toBeDefined()
+          expect(getCurrentUrl()).toBe('/');
+        })
 
         fireEvent.click(screen.getByTestId('linkViewApiMonitorDetail'));
 
@@ -92,33 +92,33 @@ describe('Test view api monitor detail', () => {
 
   test('When render, then success', async () => {
     const response = {
-      "name":"Test API Name",
-			"url": "https://pacil.com",
-			"schedule": "mySchedule",
-			"success_rate": [
+      name:"Test API Name",
+			url: "https://pacil.com",
+			schedule: "mySchedule",
+			success_rate: [
         {
-          "start_time": "2022-10-12T00:24:54.784248+07:00",
-          "end_time": "2022-10-12T00:25:54.784248+07:00",
-          "success": 20,
-          "failed": 10
+          start_time: "2022-10-12T00:24:54.784248+07:00",
+          end_time: "2022-10-12T00:25:54.784248+07:00",
+          success: 20,
+          failed: 10
         },
         {
-          "start_time": "2022-10-12T00:24:54.784248+07:00",
-          "end_time": "2022-10-12T00:25:54.784248+07:00",
-          "success": 0,
-          "failed": 10
+          start_time: "2022-10-12T00:24:54.784248+07:00",
+          end_time: "2022-10-12T00:25:54.784248+07:00",
+          success: 0,
+          failed: 10
         },
       ],
-      "response_time": [
+      response_time: [
         {
-          "start_time": "2022-10-11T23:55:54.784248+07:00",
-          "end_time": "2022-10-11T23:56:54.784248+07:00",
-          "avg": 20
+          start_time: "2022-10-11T23:55:54.784248+07:00",
+          end_time: "2022-10-11T23:56:54.784248+07:00",
+          avg: 20
         },
         {
-          "start_time": "2022-10-11T23:55:54.784248+07:00",
-          "end_time": "2022-10-11T23:56:54.784248+07:00",
-          "avg": 0
+          start_time: "2022-10-11T23:55:54.784248+07:00",
+          end_time: "2022-10-11T23:56:54.784248+07:00",
+          avg: 0
         },
       ],
 		}
@@ -140,65 +140,65 @@ describe('Test view api monitor detail', () => {
 
   test('When select time, then change value and chart', async () => {
     const response = {
-      "name":"Test",
-			"url": "https://pacil.com",
-			"schedule": "Before select change",
-			"success_rate": [
+      name:"Test",
+			url: "https://pacil.com",
+			schedule: "Before select change",
+			success_rate: [
         {
-          "start_time": "2022-10-12T00:24:54.784248+07:00",
-          "end_time": "2022-10-12T00:25:54.784248+07:00",
-          "success": 5,
-          "failed": 10
+          start_time: "2022-10-12T00:24:54.784248+07:00",
+          end_time: "2022-10-12T00:25:54.784248+07:00",
+          success: 5,
+          failed: 10
         },
         {
-          "start_time": "2022-10-12T00:24:54.784248+07:00",
-          "end_time": "2022-10-12T00:25:54.784248+07:00",
-          "success": 0,
-          "failed": 10
+          start_time: "2022-10-12T00:24:54.784248+07:00",
+          end_time: "2022-10-12T00:25:54.784248+07:00",
+          success: 0,
+          failed: 10
         },
       ],
-      "response_time": [
+      response_time: [
         {
-          "start_time": "2022-10-11T23:55:54.784248+07:00",
-          "end_time": "2022-10-11T23:56:54.784248+07:00",
-          "avg": 20
+          start_time: "2022-10-11T23:55:54.784248+07:00",
+          end_time: "2022-10-11T23:56:54.784248+07:00",
+          avg: 20
         },
         {
-          "start_time": "2022-10-11T23:55:54.784248+07:00",
-          "end_time": "2022-10-11T23:56:54.784248+07:00",
-          "avg": 10
+          start_time: "2022-10-11T23:55:54.784248+07:00",
+          end_time: "2022-10-11T23:56:54.784248+07:00",
+          avg: 10
         },
       ],
 		}
 
     const responseSelect = {
-      "name":"Test",
-			"url": "https://pacil.com",
-			"schedule": "After select change",
-			"success_rate": [
+      name:"Test",
+			url: "https://pacil.com",
+			schedule: "After select change",
+			success_rate: [
         {
-          "start_time": "2022-10-12T00:24:54.784248+07:00",
-          "end_time": "2022-10-12T00:25:54.784248+07:00",
-          "success": 5,
-          "failed": 0
+          start_time: "2022-10-12T00:24:54.784248+07:00",
+          end_time: "2022-10-12T00:25:54.784248+07:00",
+          success: 5,
+          failed: 0
         },
         {
-          "start_time": "2022-10-12T00:24:54.784248+07:00",
-          "end_time": "2022-10-12T00:25:54.784248+07:00",
-          "success": 0,
-          "failed": 0
+          start_time: "2022-10-12T00:24:54.784248+07:00",
+          end_time: "2022-10-12T00:25:54.784248+07:00",
+          success: 0,
+          failed: 0
         },
       ],
-      "response_time": [
+      response_time: [
         {
-          "start_time": "2022-10-11T23:55:54.784248+07:00",
-          "end_time": "2022-10-11T23:56:54.784248+07:00",
-          "avg": 20
+          start_time: "2022-10-11T23:55:54.784248+07:00",
+          end_time: "2022-10-11T23:56:54.784248+07:00",
+          avg: 20
         },
         {
-          "start_time": "2022-10-11T23:55:54.784248+07:00",
-          "end_time": "2022-10-11T23:56:54.784248+07:00",
-          "avg": 0
+          start_time: "2022-10-11T23:55:54.784248+07:00",
+          end_time: "2022-10-11T23:56:54.784248+07:00",
+          avg: 0
         },
       ],
 		}
@@ -231,62 +231,62 @@ describe('Integration test detail page', () => {
 
   test('When click Yes button in Delete popup, then will be render to dashboard page', async () => {
     
-    const responseDashboard = [{"id":1,"name":"Test","method":"GET","url":"url","schedule":"5MIN","body_type":"FORM","query_params":[],"headers":[],"body_form":[],"raw_body":[],"success_rate":100.0,"avg_response_time":0,"success_rate_history":[{"date":"2022-09-30","hour":17,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":18,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":19,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":20,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":21,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":22,"minute":0,"success":0,"failed":0},{"date":"2022-09-30","hour":23,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":0,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":1,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":2,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":3,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":4,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":5,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":6,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":7,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":8,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":9,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":10,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":11,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":12,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":13,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":14,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":15,"minute":0,"success":0,"failed":0},{"date":"2022-10-01","hour":16,"minute":0,"success":0,"failed":0}]}]
+    const responseDashboard = [{id:1,name:"Test",method:"GET",url:"url",schedule:"5MIN",body_type:"FORM",query_params:[],headers:[],body_form:[],raw_body:[],success_rate:100.0,avg_response_time:0,success_rate_history:[{date:"2022-09-30",hour:17,minute:0,success:0,failed:0},{date:"2022-09-30",hour:18,minute:0,success:0,failed:0},{date:"2022-09-30",hour:19,minute:0,success:0,failed:0},{date:"2022-09-30",hour:20,minute:0,success:0,failed:0},{date:"2022-09-30",hour:21,minute:0,success:0,failed:0},{date:"2022-09-30",hour:22,minute:0,success:0,failed:0},{date:"2022-09-30",hour:23,minute:0,success:0,failed:0},{date:"2022-10-01",hour:0,minute:0,success:0,failed:0},{date:"2022-10-01",hour:1,minute:0,success:0,failed:0},{date:"2022-10-01",hour:2,minute:0,success:0,failed:0},{date:"2022-10-01",hour:3,minute:0,success:0,failed:0},{date:"2022-10-01",hour:4,minute:0,success:0,failed:0},{date:"2022-10-01",hour:5,minute:0,success:0,failed:0},{date:"2022-10-01",hour:6,minute:0,success:0,failed:0},{date:"2022-10-01",hour:7,minute:0,success:0,failed:0},{date:"2022-10-01",hour:8,minute:0,success:0,failed:0},{date:"2022-10-01",hour:9,minute:0,success:0,failed:0},{date:"2022-10-01",hour:10,minute:0,success:0,failed:0},{date:"2022-10-01",hour:11,minute:0,success:0,failed:0},{date:"2022-10-01",hour:12,minute:0,success:0,failed:0},{date:"2022-10-01",hour:13,minute:0,success:0,failed:0},{date:"2022-10-01",hour:14,minute:0,success:0,failed:0},{date:"2022-10-01",hour:15,minute:0,success:0,failed:0},{date:"2022-10-01",hour:16,minute:0,success:0,failed:0}]}]
     const responseDetail = {
-      "name":"Test",
-			"url": "https://pacil.com",
-			"schedule": "mySchedule",
-			"success_rate": [
+      name:"Test",
+			url: "https://pacil.com",
+			schedule: "mySchedule",
+			success_rate: [
         {
-          "start_time": "2022-10-12T00:24:54.784248+07:00",
-          "end_time": "2022-10-12T00:25:54.784248+07:00",
-          "success": 20,
-          "failed": 10
+          start_time: "2022-10-12T00:24:54.784248+07:00",
+          end_time: "2022-10-12T00:25:54.784248+07:00",
+          success: 20,
+          failed: 10
         },
         {
-          "start_time": "2022-10-12T00:24:54.784248+07:00",
-          "end_time": "2022-10-12T00:25:54.784248+07:00",
-          "success": 0,
-          "failed": 10
+          start_time: "2022-10-12T00:24:54.784248+07:00",
+          end_time: "2022-10-12T00:25:54.784248+07:00",
+          success: 0,
+          failed: 10
         },
         {
-          "start_time": "2022-10-12T00:24:54.784248+07:00",
-          "end_time": "2022-10-12T00:25:54.784248+07:00",
-          "success": 10,
-          "failed": 0
+          start_time: "2022-10-12T00:24:54.784248+07:00",
+          end_time: "2022-10-12T00:25:54.784248+07:00",
+          success: 10,
+          failed: 0
         },
         {
-          "start_time": "2022-10-12T00:24:54.784248+07:00",
-          "end_time": "2022-10-12T00:25:54.784248+07:00",
-          "success": 0,
-          "failed": 0
+          start_time: "2022-10-12T00:24:54.784248+07:00",
+          end_time: "2022-10-12T00:25:54.784248+07:00",
+          success: 0,
+          failed: 0
         },
       ],
-      "response_time": [
+      response_time: [
         {
-          "start_time": "2022-10-11T23:55:54.784248+07:00",
-          "end_time": "2022-10-11T23:56:54.784248+07:00",
-          "avg": 20
+          start_time: "2022-10-11T23:55:54.784248+07:00",
+          end_time: "2022-10-11T23:56:54.784248+07:00",
+          avg: 20
         },
         {
-          "start_time": "2022-10-11T23:55:54.784248+07:00",
-          "end_time": "2022-10-11T23:56:54.784248+07:00",
-          "avg": 0
+          start_time: "2022-10-11T23:55:54.784248+07:00",
+          end_time: "2022-10-11T23:56:54.784248+07:00",
+          avg: 0
         },
       ],
 		}
     const responseTeam = [
       {
-          "id": 1,
-          "name": "test teqam"
+          id: 1,
+          name: "test teqam"
       },
       {
-          "id": 2,
-          "name": "test teqam2"
+          id: 2,
+          name: "test teqam2"
       },
       {
-          "id": 3,
-          "name": "test teqam3"
+          id: 3,
+          name: "test teqam3"
       }
     ]
 
@@ -295,13 +295,13 @@ describe('Integration test detail page', () => {
         return Promise.resolve({ data: responseDetail });
       } else if (url.includes('/available_team')) {
         return Promise.resolve({ data: responseTeam });
-      } else {
+      } 
         return Promise.resolve({ data: responseDashboard });
-      }
+      
     });
 
 		setUserToken("TOKEN")
-		render(<App/>);
+		render(<App />);
 		route('/')
 
 		await waitFor(() => {

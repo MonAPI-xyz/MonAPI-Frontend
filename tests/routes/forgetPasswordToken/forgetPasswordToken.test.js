@@ -4,7 +4,7 @@ import * as axios from 'axios';
 import { getCurrentUrl, route } from 'preact-router';
 import App from '../../../src/components/app.js';
 import userEvent from '@testing-library/user-event'
-import { deleteUserToken, setUserToken } from '../../../src/config/api/auth.js';
+import { deleteUserToken } from '../../../src/config/api/auth.js';
 
 jest.mock("axios");
 
@@ -12,15 +12,15 @@ describe('Test Change Password', () => {
 	test('try to change password', async () => {
 		deleteUserToken()
 		let response = {
-			"success": true
+			success: true
 		}
 		axios.post.mockImplementation(() => Promise.resolve({ data: response}));
 		
-		render(<App/>);
+		render(<App />);
 		route('/forget_password?key=abcdef')
 
 		await waitFor(() => {
-			expect(screen.getByText('Forget Password'))
+			expect(screen.getByText('Forget Password')).toBeDefined()
 		})
 
 		const emailField = await screen.findByPlaceholderText('New Password');
@@ -44,11 +44,11 @@ describe('Test Change Password', () => {
                 }
             }
         }))
-		render(<App/>);
+		render(<App />);
 		route('/forget_password?key=abcdef')
 
 		await waitFor(() => {
-			expect(screen.getByText('Forget Password'))
+			expect(screen.getByText('Forget Password')).toBeDefined()
 		})
 
 		const emailField = await screen.findByPlaceholderText('New Password');
@@ -59,7 +59,7 @@ describe('Test Change Password', () => {
 		userEvent.click(submit)
 
 		await waitFor(() => {
-			expect(screen.getByText('Error: Please choose password that different from your current password'))
+			expect(screen.getByText('Error: Please choose password that different from your current password')).toBeDefined()
 		})
 	})
 
@@ -82,7 +82,7 @@ describe('Test Change Password', () => {
 		route('/forget_password?key=abcdef')
 
 		await waitFor(() => {
-			expect(screen.getByText('Forget Password'))
+			expect(screen.getByText('Forget Password')).toBeDefined()
 		})
 
 		const newPasswordField = await screen.findByPlaceholderText('New Password');
@@ -97,18 +97,18 @@ describe('Test Change Password', () => {
 		})
 	})
 	
-	test('test key changes on token user', async () => {
+	test('key changes on token user', async () => {
 		deleteUserToken()
 		let response = {
-			"success": true
+			success: true
 		}
 		axios.post.mockImplementation(() => Promise.resolve({ data: response}));
 		
-		render(<App/>);
+		render(<App />);
 		route('/forget_password?key=abcdef')
 
 		await waitFor(() => {
-			expect(screen.getByText('Forget Password'))
+			expect(screen.getByText('Forget Password')).toBeDefined()
 		})
 
 		const emailField = await screen.findByPlaceholderText('New Password');

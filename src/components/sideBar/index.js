@@ -111,36 +111,42 @@ const SideBar = ({menuCollapse, setMenuCollapse}) => {
       <SidebarContent>
         <Menu>
           <MenuItem
+            data-testid="menu-item-dashboard"
             className={router.url === "/" && style['menu-item-active']}
             icon={<FaTachometerAlt />}>
             Dashboard
             <Link class={style['menu-button']} href="/" />
           </MenuItem>   
           <MenuItem
+            data-testid="menu-item-error-logs"
             className={router.url === "/error-logs/" && style['menu-item-active']}
             icon={<FaExclamationCircle />}>
             Error Logs
             <Link class={style['menu-button']} href="/error-logs/" /> 
           </MenuItem>
           <MenuItem
+            data-testid="menu-item-test-api"
             className={router.url === "/test-api/" && style['menu-item-active']}
             icon={<FaPlay />}>
             API Test
             <Link class={style['menu-button']} href="/test-api/" /> 
           </MenuItem>
           <MenuItem
-            className={router.url === "/team-management/current/" && style['menu-item-active']}
+            data-testid="menu-item-team-management"
+            className={router.url.includes("/team-management") && style['menu-item-active']}
             icon={<FaUserPlus />}>
             Team Management
             <Link class={style['menu-button']} href="/team-management/current/" /> 
           </MenuItem>
           <MenuItem
+            data-testid="menu-item-status-page"
             className={router.url === "/status-page/" && style['menu-item-active']}
             icon={<FaInfoCircle />}>
             Status Page
             <Link class={style['menu-button']} activeClassName={style['active']} href="/status-page/" /> 
           </MenuItem>
           <MenuItem
+            data-testid="menu-item-configuration"
             className={router.url === "/configuration/" && style['menu-item-active']}
             icon={<FaCog />}>
             Configuration

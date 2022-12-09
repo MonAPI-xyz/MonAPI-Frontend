@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { render, waitFor, screen, fireEvent } from '@testing-library/preact';
+import { render, waitFor, screen } from '@testing-library/preact';
 import CreateTeam from '../../../src/routes/createTeam/index.js';
 import userEvent from '@testing-library/user-event'
 import * as axios from 'axios';
@@ -101,7 +101,7 @@ describe('Test input', () => {
 		userEvent.click(Create);
 
 		await waitFor(() => {
-      expect(screen.getByText("Please choose image that the file size less than or equal to 10MB"))
+      expect(screen.getByText("Please choose image that the file size less than or equal to 10MB")).toBeDefined()
 		});		
 	});
 
@@ -126,7 +126,7 @@ describe('Test input', () => {
 		userEvent.click(Create);
 
 		await waitFor(() => {
-			expect(screen.getByText('Loading...'))
+			expect(screen.getByText('Loading...')).toBeDefined()
 		})
 	})
 	

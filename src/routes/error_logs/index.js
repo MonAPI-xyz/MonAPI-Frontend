@@ -90,7 +90,7 @@ const ErrorLogs = () => {
 	useEffect(()=>{
     setIsLoadingDetails(true)
     if (idDetail != undefined) {
-      axios.get(`${BASE_URL}/error-logs/${idDetail}`, {
+      axios.get(`${BASE_URL}/error-logs/${idDetail}/`, {
         headers: {
           Authorization:`Token ${getUserToken()}`
         }
