@@ -57,10 +57,11 @@ const StatusPage = () => {
     
     const onSaveUrl = (data) => {
         setIsLoadingSaveUrl(true)
-        const formData = new FormData()
-        formData.append('path', data.path)
+        if (data.path === '') {
+            data.path = null;
+        }
 
-        axios.post(`${BASE_URL}/status-page/config/`, formData, {
+        axios.post(`${BASE_URL}/status-page/config/`, data, {
             headers: {
                 Authorization:`Token ${getUserToken()}`
             }
@@ -129,16 +130,15 @@ const StatusPage = () => {
                                                 borderRadius={10}
                                                 id='path'
                                                 placeholder='custompath'
-                                                {...register('path', {
-                                                    required: 'Required',
-                                                    minLength: { value: 1, message: 'Required' },
-                                                })}
+                                                {...register('path')}
                                             />
                                         </Box>
                                         <Box mx='12px' />
                                         <Link href={`/status/${path}`} ><Text as="u">Preview Page</Text></Link>
 
                                     </Flex>
+                                    <Box mb={'14px'} />
+                                    <Text fontSize={'14px'} color={'gray'}>You can disable status page by filling empty on path</Text>
                                     {errorMessageSaveUrl != '' && <Text fontSize='14px' color='red.500'>{errorMessageSaveUrl}</Text>}
                                     <Box mb={errorMessageSaveUrl ? '14px' : '20px'} />
                                     {successMessageSaveUrl && <Text color="green">{successMessageSaveUrl}</Text>}
