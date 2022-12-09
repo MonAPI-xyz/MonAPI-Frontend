@@ -1,5 +1,5 @@
 import { h } from 'preact';
-import { render, waitFor, screen, fireEvent } from '@testing-library/preact';
+import { render, waitFor, screen } from '@testing-library/preact';
 import userEvent from '@testing-library/user-event'
 import * as axios from 'axios';
 import { getCurrentUrl } from 'preact-router';
@@ -78,7 +78,7 @@ describe('Test input status page', () => {
             }
         })
     
-        const container = render(<StatusPage />);
+        render(<StatusPage />);
     
         const pathField = await screen.findByPlaceholderText('custompath');
         userEvent.type(pathField, 'abceef')
@@ -121,7 +121,7 @@ describe('Test input status page', () => {
             }
         })
     
-        const container = render(<StatusPage />);
+        render(<StatusPage />);
     
         const pathField = await screen.findByPlaceholderText('custompath');
         userEvent.type(pathField, 'abceef')

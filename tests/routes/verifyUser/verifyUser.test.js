@@ -1,10 +1,7 @@
 import { h } from 'preact';
 import { screen, waitFor, render } from '@testing-library/preact';
 import * as axios from 'axios';
-import userEvent from '@testing-library/user-event'
 import { getCurrentUrl, route } from 'preact-router';
-import { setUserToken } from '../../../src/config/api/auth.js';
-import VerifyUser from '../../../src/routes/verifyUser/index.js';
 import App from '../../../src/components/app.js';
 
 jest.mock("axios");
@@ -25,17 +22,17 @@ describe("Test Verify User", () => {
             })   
         )
 
-        const container = render(<App />)
+        render(<App />)
         route('/verify?key=abcdefg')
         await waitFor(async () => {
             expect(getCurrentUrl()).toBe('/verify?key=abcdefg')
-            expect(screen.getByText('Loading'))
+            expect(screen.getByText('Loading')).toBeDefined()
         }, 5000)
     })
 
     test('if token is not passed show block page', async() => {
 
-        const container = render(<App />)
+        render(<App />)
         route('/verify')
 
         await waitFor(async () => {
@@ -54,12 +51,12 @@ describe("Test Verify User", () => {
             }
         }))
 
-        const container = render(<App />)
+        render(<App />)
         route('/verify?key=abcdefg')
 
         await waitFor(async () => {
             expect(getCurrentUrl()).toBe('/verify?key=abcdefg')
-            expect(screen.getByText('Loading'))
+            expect(screen.getByText('Loading')).toBeDefined()
         }, 5000)
 
         await waitFor(async () => {
@@ -79,12 +76,12 @@ describe("Test Verify User", () => {
             }
         }))
 
-        const container = render(<App />)
+        render(<App />)
         route('/verify?key=abcdefg')
 
         await waitFor(async () => {
             expect(getCurrentUrl()).toBe('/verify?key=abcdefg')
-            expect(screen.getByText('Loading'))
+            expect(screen.getByText('Loading')).toBeDefined()
         }, 5000)
 
         await waitFor(async () => {

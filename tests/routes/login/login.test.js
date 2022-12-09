@@ -13,13 +13,13 @@ describe('Test Success Login', () => {
 	test('try to login and success login and redirected to dashboard', async () => {
 		deleteUserToken()
 		let response = {
-			"response": "Sign-in successful.",
-			"email": "user@gmail.com",
-			"token": "d16c4059484867e8d12ff535072509e3f29719e7"
+			response: "Sign-in successful.",
+			email: "user@gmail.com",
+			token: "d16c4059484867e8d12ff535072509e3f29719e7"
 		}
 		axios.post.mockImplementation(() => Promise.resolve({ data: response}));
 		
-		render(<App/>);
+		render(<App />);
 		route('/login')
 		const emailField = await screen.findByPlaceholderText('john@example.com');
 		const passwordField = await screen.findByPlaceholderText('************');
@@ -38,9 +38,9 @@ describe('Test Success Login', () => {
 	test('when process login then show loader', async () => {
 		deleteUserToken()
 		let response = {
-			"response": "Sign-in successful.",
-			"email": "user@gmail.com",
-			"token": "d16c4059484867e8d12ff535072509e3f29719e7"
+			response: "Sign-in successful.",
+			email: "user@gmail.com",
+			token: "d16c4059484867e8d12ff535072509e3f29719e7"
 		}
 
 		axios.post.mockImplementation(() => 
@@ -51,7 +51,7 @@ describe('Test Success Login', () => {
 			})
 		)
 		
-		render(<App/>);
+		render(<App />);
 		route('/login')
 		const emailField = await screen.findByPlaceholderText('john@example.com');
 		const passwordField = await screen.findByPlaceholderText('************');
@@ -74,7 +74,7 @@ describe('Test Accessing Routes', () => {
 		axios.get.mockImplementation(() => Promise.resolve({data: response}))
 		setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
 		
-		render(<App/>);
+		render(<App />);
 		route('/login')
 
 		await waitFor(() => {
@@ -87,14 +87,14 @@ describe('Test Failed Login', () => {
 	test('try to login and failed login and keep on login page', async () => {
 		deleteUserToken()
 		let response = {
-			"data": {"response": "Invalid email or password."}
+			data: {response: "Invalid email or password."}
 		}
 		axios.post.mockImplementation(() => Promise.reject({
 			status:401,
-			response: response
+			response
 			})
 		);
-		render(<App/>);
+		render(<App />);
 		route('/login')
 		const emailField = await screen.findByPlaceholderText('john@example.com');
 		const passwordField = await screen.findByPlaceholderText('************');
@@ -106,7 +106,7 @@ describe('Test Failed Login', () => {
 		userEvent.click(signIn);
 
 		await waitFor(() => {
-			expect(screen.getByText('Invalid email or password.'))
+			expect(screen.getByText('Invalid email or password.')).toBeDefined()
 			expect(getCurrentUrl()).toBe('/login');
 		})
 	})
@@ -132,7 +132,7 @@ describe('Test Form Login', () => {
 		userEvent.type(emailField, 'us')
 		userEvent.click(signIn);
 		await waitFor(() => {
-			expect(screen.getByText('Minimum length should be 3'))
+			expect(screen.getByText('Minimum length should be 3')).toBeDefined()
 		});
 	});
 
@@ -144,13 +144,13 @@ describe('Test Form Login', () => {
 		userEvent.type(passwordField, 'pass')
 		userEvent.click(signIn);
 		await waitFor(() => {
-			expect(screen.getByText('Minimum length should be 8'))
+			expect(screen.getByText('Minimum length should be 8')).toBeDefined()
 		});
 	});
 
 	test('click sign up text span', async () => {
 		deleteUserToken();
-		render(<App/>);
+		render(<App />);
 		route('/login')
 		
 		userEvent.click(screen.getByText('sign up'));
@@ -162,7 +162,7 @@ describe('Test Form Login', () => {
 
 	test('click forget password text span', async () => {
 		deleteUserToken();
-		render(<App/>);
+		render(<App />);
 		route('/login')
 
 		await waitFor(() => {
@@ -178,21 +178,21 @@ describe('Test Form Login', () => {
 
 	test('successfully registered user is redirected to /login', async() => {
 		deleteUserToken()
-		render(<App/>);
+		render(<App />);
 		route('/login?isRegistered=true')
 
 		await waitFor(async () => {
-            expect(screen.getByText('Check your email to verify your account.'))
+            expect(screen.getByText('Check your email to verify your account.')).toBeDefined()
 		})
 	})
 
 	test('successfully change password user is redirected to /login', async() => {
 		deleteUserToken()
-		render(<App/>);
+		render(<App />);
 		route('/login?isChangePassword=true')
 
 		await waitFor(async () => {
-            expect(screen.getByText('Password changed successfully. Please login with your new password.'))
+            expect(screen.getByText('Password changed successfully. Please login with your new password.')).toBeDefined()
 		})
 	})
 });

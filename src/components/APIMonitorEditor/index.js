@@ -56,17 +56,22 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
 
     useEffect( () => {
         if (mode == 'EDIT') {
-        axios.get(`${BASE_URL}/monitor/${id}`, {
+        axios.get(`${BASE_URL}/monitor/${id}/`, {
             headers: {
                 Authorization: `Token ${getUserToken()}`
             }
         }).then( async (response) => {
             const fields = ["name", "method", "url", "schedule", "body_type", "query_params",
                 "headers", "body_form", "assertion_type", "assertion_value", "status_page_category_id",
-                "is_assert_json_schema_only", "exclude_keys"]
+                "is_assert_json_schema_only"]
             fields.forEach(field => setValue(field, response.data[field]));
             if (response.data["raw_body"]) {
                 setValue("raw_body", response.data["raw_body"]["body"])
+            }
+            if (response.data["exclude_keys"]) {
+                response.data["exclude_keys"].forEach((val, idx)=>{
+                    setValue(`exclude_keys[${idx}].key`, val["exclude_key"])
+                })
             }
             setValue('previous_step_id', response.data['previous_step_id'] === null ? '' : response.data['previous_step_id'])
             setBodyType(response.data['body_type'])
