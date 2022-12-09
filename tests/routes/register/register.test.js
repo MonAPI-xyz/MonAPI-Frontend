@@ -1,10 +1,10 @@
 import { h } from "preact";
 import Register from '../../../src/routes/register/index.js'; // Does not exist YET
-import { fireEvent, screen, waitFor, render } from '@testing-library/preact';
+import { screen, waitFor, render } from '@testing-library/preact';
 import * as axios from 'axios';
 import userEvent from '@testing-library/user-event';
 import { getCurrentUrl, route } from 'preact-router';
-import { deleteUserToken, setUserToken } from '../../../src/config/api/auth.js';
+import { setUserToken } from '../../../src/config/api/auth.js';
 import App from '../../../src/components/app.js';
 
 jest.mock("axios");
@@ -38,12 +38,12 @@ describe('Test Register', () => {
         userEvent.click(registerButton)
 
         await waitFor(async () => {
-            expect(screen.getByText('Error:'))
-            expect(screen.getByText('Enter a valid email address.'))
-            expect(screen.getByText('This password is too short. It must contain at least 8 characters.'))
-            expect(screen.getByText('This password is too common.'))
-            expect(screen.getByText('The password must contain at least 1 digit, 0-9.'))
-            expect(screen.getByText('The password must contain at least 1 uppercase letter, A-Z.'))
+            expect(screen.getByText('Error:')).toBeDefined()
+            expect(screen.getByText('Enter a valid email address.')).toBeDefined()
+            expect(screen.getByText('This password is too short. It must contain at least 8 characters.')).toBeDefined()
+            expect(screen.getByText('This password is too common.')).toBeDefined()
+            expect(screen.getByText('The password must contain at least 1 digit, 0-9.')).toBeDefined()
+            expect(screen.getByText('The password must contain at least 1 uppercase letter, A-Z.')).toBeDefined()
         }, 5000)
 
     })
@@ -75,7 +75,7 @@ describe('Test Register', () => {
         userEvent.click(registerButton)
 
         await waitFor(async () => {
-            expect(screen.getByText('User already registered! Please use a different email to register.'))
+            expect(screen.getByText('User already registered! Please use a different email to register.')).toBeDefined()
         })
 
     })
@@ -143,11 +143,11 @@ describe('Test Register', () => {
     })
 
     test('user can go to /login from "sign in" text', async() => {
-		render(<App/>);
+		render(<App />);
 		route('/register');
 
         await waitFor(async () => {
-            expect(screen.getByText('Sign in'))
+            expect(screen.getByText('Sign in')).toBeDefined()
         })
 		
 		userEvent.click(screen.getByText('Sign in'));
@@ -184,7 +184,7 @@ describe('Test Register', () => {
         userEvent.click(registerButton)
 
         await waitFor(async () => {
-            expect(screen.getByText('Password must match.'))
+            expect(screen.getByText('Password must match.')).toBeDefined()
         }, 5000)
     })
 
@@ -193,7 +193,7 @@ describe('Test Register', () => {
 		axios.get.mockImplementation(() => Promise.resolve({data: response}))
 		setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
 		
-		render(<App/>);
+		render(<App />);
 		route('/register')
 
 		await waitFor(() => {

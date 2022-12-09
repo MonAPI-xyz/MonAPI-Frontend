@@ -1,10 +1,8 @@
 import { h } from "preact";
-import AcceptInvite from '../../../src/routes/acceptInvite/index.js';
-import { fireEvent, screen, waitFor, render } from '@testing-library/preact';
+import { screen, waitFor, render } from '@testing-library/preact';
 import * as axios from 'axios';
-import userEvent from '@testing-library/user-event';
 import { getCurrentUrl, route } from 'preact-router';
-import { deleteUserToken, setUserToken } from '../../../src/config/api/auth.js';
+import { deleteUserToken } from '../../../src/config/api/auth.js';
 import App from '../../../src/components/app.js';
 
 jest.mock("axios");
@@ -24,18 +22,18 @@ describe("Test Accept Invite", () => {
             })   
         )
 
-        const container = render(<App />)
+        render(<App />)
         route('/invite-member?key=abcdefg')
         await waitFor(async () => {
             expect(getCurrentUrl()).toBe('/invite-member?key=abcdefg')
-            expect(screen.getByText('Loading'))
+            expect(screen.getByText('Loading')).toBeDefined()
         }, 5000)
     })
 
     test('if token is not passed show block page', async() => {
         deleteUserToken()
 
-        const container = render(<App />)
+        render(<App />)
         route('/invite-member')
 
         await waitFor(async () => {
@@ -54,12 +52,12 @@ describe("Test Accept Invite", () => {
             }
         }))
 
-        const container = render(<App />)
+        render(<App />)
         route('/invite-member?key=abcdefg')
 
         await waitFor(async () => {
             expect(getCurrentUrl()).toBe('/invite-member?key=abcdefg')
-            expect(screen.getByText('Loading'))
+            expect(screen.getByText('Loading')).toBeDefined()
         }, 5000)
 
         await waitFor(async () => {
@@ -79,12 +77,12 @@ describe("Test Accept Invite", () => {
             }
         }))
 
-        const container = render(<App />)
+        render(<App />)
         route('/invite-member?key=abcdefg')
 
         await waitFor(async () => {
             expect(getCurrentUrl()).toBe('/invite-member?key=abcdefg')
-            expect(screen.getByText('Loading'))
+            expect(screen.getByText('Loading')).toBeDefined()
         }, 5000)
 
         await waitFor(async () => {

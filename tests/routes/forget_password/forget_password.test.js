@@ -4,7 +4,7 @@ import * as axios from 'axios';
 import { getCurrentUrl, route } from 'preact-router';
 import App from '../../../src/components/app.js';
 import userEvent from '@testing-library/user-event'
-import { deleteUserToken, setUserToken } from '../../../src/config/api/auth.js';
+import { deleteUserToken } from '../../../src/config/api/auth.js';
 
 jest.mock("axios");
 
@@ -12,15 +12,15 @@ describe('Test Success Sent Email', () => {
 	test('send email success', async () => {
 		deleteUserToken()
 		let response = {
-			"success": true
+			success: true
 		}
 		axios.post.mockImplementation(() => Promise.resolve({ data: response}));
 		
-		render(<App/>);
+		render(<App />);
 		route('/forget')
 
 		await waitFor(() => {
-			expect(screen.getByText('Forget Password'))
+			expect(screen.getByText('Forget Password')).toBeDefined()
 		})
 
 		const emailField = await screen.findByPlaceholderText('john@example.com');
@@ -31,7 +31,7 @@ describe('Test Success Sent Email', () => {
 		userEvent.click(submit)
 
 		await waitFor(() => {
-			expect(screen.getByText('Please check your email and follow instruction on the email'))
+			expect(screen.getByText('Please check your email and follow instruction on the email')).toBeDefined()
 		})
 	})
 
@@ -52,7 +52,7 @@ describe('Test Success Sent Email', () => {
 		route('/forget')
 
 		await waitFor(() => {
-			expect(screen.getByText('Forget Password'))
+			expect(screen.getByText('Forget Password')).toBeDefined()
 		})
 
 		const emailField = await screen.findByPlaceholderText('john@example.com');
@@ -77,11 +77,11 @@ describe('Test Success Sent Email', () => {
             }
         }))
 		
-		render(<App/>);
+		render(<App />);
 		route('/forget')
 
 		await waitFor(() => {
-			expect(screen.getByText('Forget Password'))
+			expect(screen.getByText('Forget Password')).toBeDefined()
 		})
 
 		const emailField = await screen.findByPlaceholderText('john@example.com');
@@ -92,7 +92,7 @@ describe('Test Success Sent Email', () => {
 		userEvent.click(submit)
 
 		await waitFor(() => {
-			expect(screen.getByText('Error: User not exists with given email'))
+			expect(screen.getByText('Error: User not exists with given email')).toBeDefined()
 		})
 	})
 
@@ -106,11 +106,11 @@ describe('Test Success Sent Email', () => {
             }
         }))
 		
-		render(<App/>);
+		render(<App />);
 		route('/forget')
 
 		await waitFor(() => {
-			expect(screen.getByText('Forget Password'))
+			expect(screen.getByText('Forget Password')).toBeDefined()
 		})
 
 		const emailField = await screen.findByPlaceholderText('john@example.com');
@@ -121,7 +121,7 @@ describe('Test Success Sent Email', () => {
 		userEvent.click(submit)
 
 		await waitFor(() => {
-			expect(screen.getByText('Error: Please enter valid email address'))
+			expect(screen.getByText('Error: Please enter valid email address')).toBeDefined()
 		})
 	})
 
@@ -139,7 +139,7 @@ describe('Test Success Sent Email', () => {
 		route('/forget')
 
 		await waitFor(() => {
-			expect(screen.getByText('Forget Password'))
+			expect(screen.getByText('Forget Password')).toBeDefined()
 		})
 
 		const emailField = await screen.findByPlaceholderText('john@example.com');
@@ -150,13 +150,13 @@ describe('Test Success Sent Email', () => {
 		userEvent.click(submit)
 
 		await waitFor(() => {
-			expect(screen.getByText('Error: We have encountered an error. Please contact our team and try again'))
+			expect(screen.getByText('Error: We have encountered an error. Please contact our team and try again')).toBeDefined()
 		})
 	})
 	
 	test('click already have account redirect to login', async () => {
 		deleteUserToken()
-		render(<App/>);
+		render(<App />);
 		route('/forget')
 
 		await waitFor(() => {

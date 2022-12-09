@@ -63,9 +63,9 @@ describe("Edit is Integrated with Backend", () => {
                     return Promise.resolve({data: get_list})
 				case `${BASE_URL}/status-page/category/`:
 					return Promise.resolve({data: {
-						"id": 2,
-						"team": 14,
-						"name": "abc"
+						id: 2,
+						team: 14,
+						name: "abc"
 					}, status: 201})					
             }
         });
@@ -403,9 +403,9 @@ describe("Edit is Integrated with Backend", () => {
                     return Promise.resolve({data: get_list})
 				case `${BASE_URL}/status-page/category/`:
 					return Promise.resolve({data: {
-						"id": 2,
-						"team": 14,
-						"name": "abc"
+						id: 2,
+						team: 14,
+						name: "abc"
 					}, status: 201})	
             }
         })
@@ -451,7 +451,10 @@ test("Edit front end is integrated with backend negative", async () => {
             assertion_type: "DISABLED",
             assertion_value: "",
             is_assert_json_schema_only: false,
-            exclude_keys: []
+            exclude_keys: [{
+				id: 1,
+				exclude_key: "abc",
+			}]
         }
         const get_list = [
              {
@@ -755,9 +758,9 @@ test("Edit front end is integrated with backend negative", async () => {
                     return Promise.resolve({data: get_list})
 				case `${BASE_URL}/status-page/category/`:
 					return Promise.resolve({data: {
-						"id": 2,
-						"team": 14,
-						"name": "abc"
+						id: 2,
+						team: 14,
+						name: "abc"
 					}, status: 201})
 					
             }
