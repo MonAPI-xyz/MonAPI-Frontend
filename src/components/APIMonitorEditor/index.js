@@ -56,7 +56,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
 
     useEffect( () => {
         if (mode == 'EDIT') {
-        axios.get(`${BASE_URL}/monitor/${id}`, {
+        axios.get(`${BASE_URL}/monitor/${id}/`, {
             headers: {
                 Authorization: `Token ${getUserToken()}`
             }

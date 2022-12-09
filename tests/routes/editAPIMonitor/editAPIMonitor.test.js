@@ -397,7 +397,7 @@ describe("Edit is Integrated with Backend", () => {
             switch(url){
                 case `${BASE_URL}/monitor/stats/`:
                     return Promise.resolve({data: response_stats})
-                case `${BASE_URL}/monitor/2`:
+                case `${BASE_URL}/monitor/2/`:
                     return Promise.resolve({data: get_detail})
                 case `${BASE_URL}/monitor/`:
                     return Promise.resolve({data: get_list})
@@ -752,7 +752,7 @@ test("Edit front end is integrated with backend negative", async () => {
             switch(url){
                 case `${BASE_URL}/monitor/stats/`:
                     return Promise.resolve({data: response_stats})
-                case `${BASE_URL}/monitor/2`:
+                case `${BASE_URL}/monitor/2/`:
                     return Promise.resolve({data: get_detail})
                 case `${BASE_URL}/monitor/`:
                     return Promise.resolve({data: get_list})
