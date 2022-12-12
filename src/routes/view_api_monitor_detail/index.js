@@ -68,6 +68,10 @@ const ViewAPIMonitorDetail = ({id}) => {
     }).then((response) => {
       setDetail(response.data)
       setIsLoading(false);
+    }).catch((err)=>{
+      if (err.response.status === 404) {
+        route('/')
+      }
     })
   }, [id, selectValue]);
 

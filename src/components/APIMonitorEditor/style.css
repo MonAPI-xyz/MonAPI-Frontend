@@ -12,3 +12,9 @@
 .new-api-monitor {
   padding: 40px 20px;
 }
+
+.add-new-category-button{
+  color: teal;
+  cursor: pointer;
+  margin: 5px 0px;
+}
