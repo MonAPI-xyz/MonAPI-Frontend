@@ -31,7 +31,7 @@ const StatusPageDashboard = ({path}) => {
 
   function checkAllResultNotFailed(monitor) {
     return monitor.every((category) =>
-      category.success_rate_category.every((hour) => hour.failed !== 0 && hour.success > 0)
+      category.success_rate_category.every((hour) => hour.failed === 0)
     )
   }
 
@@ -71,7 +71,7 @@ const StatusPageDashboard = ({path}) => {
               </Box>
               :
               <Box py='20px' textAlign='left'>
-                <Text fontSize='xl' as='b'>Some feature(s) are not healthy</Text>
+                <Text fontSize='xl' as='b'>Some endpoint(s) are not healthy</Text>
                 <Text fontSize='lg'>Your experience may be affected</Text>
               </Box>
             }
