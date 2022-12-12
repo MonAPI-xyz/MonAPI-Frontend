@@ -28,6 +28,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     const [previousStep, setPreviousStep] = useState([])
     const [categoryList, setCategoryList] = useState([]);
     const [responseMessage, setResponseMessage] = useState('');
+    const [newCategory, setNewCategory] = useState(false);
 
     const {
         handleSubmit,
@@ -79,9 +80,25 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
         })
     }}, [id, previousStep])
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         if (!isLoadingCreate) {
             setLoadingCreate(true);
+
+            if (newCategory) {
+                data['status_page_category_id'] = '';
+
+                if (data['new_category_name'] !== ''){
+                    let response = await axios.post(`${BASE_URL}/status-page/category/`, {
+                        name: data['new_category_name'],
+                    }, {
+                        headers: {
+                            Authorization:`Token ${getUserToken()}`
+                        }
+                    })
+                    data['status_page_category_id'] = response.data['id'];
+                }
+            }
+
             if (mode == "CREATE") {
                 axios.post(`${BASE_URL}/monitor/`, data, {
                     headers: {
@@ -242,7 +259,6 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                                 </Box>
 
                                 <Box mb='20px' />
-
                                 <Box w='40vw'>
                                     {isLoadingCategory ? <Spinner ml={"20px"} /> :
                                     <Dropdown
@@ -253,12 +269,29 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                                         errors={errors}
                                         options={categoryList}
                                         isCategory={true}
+                                        isDisabled={newCategory}
                                         keyName='name'
                                         valueName='name' 
                                         register={register}
-                                    />
-                                    }
+                                    />}
                                 </Box>
+                                
+                                {newCategory &&
+                                    <Box w='40vw' mt='20px'>
+                                        <TextInput
+                                            id="new_category_name"
+                                            title='Category Name'
+                                            placeholder='Category Name'
+                                            register={register}
+                                            errors={errors}
+                                        />
+                                    </Box>  
+                                }
+                                {newCategory ? 
+                                    <Text className={style['add-new-category-button']} onClick={()=>{setNewCategory(false); setValue('new_category_name', '')}}>or select from existing category</Text>
+                                : 
+                                    <Text className={style['add-new-category-button']} onClick={()=>{setNewCategory(true); setValue('status_page_category_id', '')}}>or create a new category</Text>
+                                }
 
                                 <Box mb='20px' />
                             
