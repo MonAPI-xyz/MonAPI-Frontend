@@ -67,11 +67,11 @@ const StatusPageDashboard = ({path}) => {
             <Box py='20px' />
             { checkAllResultNotFailed(monitor) ? 
               <Box py='20px' textAlign='left'>
-                <Text textAlign='left' fontSize='xl' as='b' py='20px'>All feature(s) are healthy!</Text>
+                <Text textAlign='left' fontSize='xl' as='b' py='20px'>All API endpoint(s) are healthy!</Text>
               </Box>
               :
               <Box py='20px' textAlign='left'>
-                <Text fontSize='xl' as='b'>Some endpoint(s) are not healthy</Text>
+                <Text fontSize='xl' as='b'>Some API endpoint(s) are not healthy</Text>
                 <Text fontSize='lg'>Your experience may be affected</Text>
               </Box>
             }
