@@ -37,7 +37,7 @@ This repository is providing frontend service for MonAPI, written using Preact.
 - [x] API Test
 - [x] Multi-Step API Monitor
 - [x] Team Management
-- [ ] Integrated Status Page
+- [x] Integrated Status Page
 
 
 ## CLI Commands
@@ -67,10 +67,13 @@ For detailed explanation on how things work, checkout the [CLI Readme](https://g
 - [Docker Container](https://github.com/MonAPI-xyz/MonAPI-Frontend/blob/staging/docs/docker.md)
 
 ## Latest Release Notes
-Version: v0.5.0<br>
-Date: 28th November 2022
-1. Team Management
-2. Alerts User-Defined Timezone
+Version: v1.0.0<br>
+Date: 12th December 2022
+1. Status Page Integration
+2. Email register verification
+3. Create new category directly when create API Monitor
+4. Partial Assertions Text
+5. Release 1st version of MonAPI
 
 Full release notes can be found in [Release Notes](https://github.com/MonAPI-xyz/MonAPI-Frontend/blob/staging/docs/release_notes.md)
 
@@ -78,6 +81,8 @@ Full release notes can be found in [Release Notes](https://github.com/MonAPI-xyz
 🌐 [Main Site - https://monapi.xyz](https://monapi.xyz)
 
 📝  [Blog Site - https://blog.monapi.xyz](https://blog.monapi.xyz)
+
+📝  [User Manual - https://docs.monapi.xyz](https://docs.monapi.xyz)
 
 ## Our Teams
 - Lucky Susanto

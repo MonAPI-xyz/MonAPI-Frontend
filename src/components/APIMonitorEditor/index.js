@@ -13,6 +13,7 @@ import { getUserToken } from '../../config/api/auth.js';
 import { methodOption, intervalOption } from './optionHelper.js'
 import style from './style.css';
 
+
 function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     // headerMessage: String
     // buttonMessage: String
@@ -22,9 +23,12 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
     const [assertionType, setAssertionType] = useState("DISABLED");
     const [selectedTab, setSelectedTab] = useState(0);
     const [isLoadingCreate, setLoadingCreate] = useState(false)
+    const [isLoadingCategory, setLoadingCategory] = useState(true)
     const [isLoadingPreviousStep, setLoadingPreviousStep] = useState(true)
     const [previousStep, setPreviousStep] = useState([])
+    const [categoryList, setCategoryList] = useState([]);
     const [responseMessage, setResponseMessage] = useState('');
+    const [newCategory, setNewCategory] = useState(false);
 
     const {
         handleSubmit,
@@ -53,17 +57,22 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
 
     useEffect( () => {
         if (mode == 'EDIT') {
-        axios.get(`${BASE_URL}/monitor/${id}`, {
+        axios.get(`${BASE_URL}/monitor/${id}/`, {
             headers: {
                 Authorization: `Token ${getUserToken()}`
             }
         }).then( async (response) => {
             const fields = ["name", "method", "url", "schedule", "body_type", "query_params",
-                "headers", "body_form", "assertion_type", "assertion_value",
-                "is_assert_json_schema_only", "exclude_keys"]
+                "headers", "body_form", "assertion_type", "assertion_value", "status_page_category_id",
+                "is_assert_json_schema_only"]
             fields.forEach(field => setValue(field, response.data[field]));
             if (response.data["raw_body"]) {
                 setValue("raw_body", response.data["raw_body"]["body"])
+            }
+            if (response.data["exclude_keys"]) {
+                response.data["exclude_keys"].forEach((val, idx)=>{
+                    setValue(`exclude_keys[${idx}].key`, val["exclude_key"])
+                })
             }
             setValue('previous_step_id', response.data['previous_step_id'] === null ? '' : response.data['previous_step_id'])
             setBodyType(response.data['body_type'])
@@ -71,9 +80,25 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
         })
     }}, [id, previousStep])
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         if (!isLoadingCreate) {
             setLoadingCreate(true);
+
+            if (newCategory) {
+                data['status_page_category_id'] = '';
+
+                if (data['new_category_name'] !== ''){
+                    let response = await axios.post(`${BASE_URL}/status-page/category/`, {
+                        name: data['new_category_name'],
+                    }, {
+                        headers: {
+                            Authorization:`Token ${getUserToken()}`
+                        }
+                    })
+                    data['status_page_category_id'] = response.data['id'];
+                }
+            }
+
             if (mode == "CREATE") {
                 axios.post(`${BASE_URL}/monitor/`, data, {
                     headers: {
@@ -129,6 +154,22 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
             setPreviousStep(await transformPreviousStepResponse(response.data))
             setLoadingPreviousStep(false)
         })
+    }, [])
+
+    useEffect(()=> {
+		axios.get(`${BASE_URL}/status-page/category/`, {
+			headers: {
+				Authorization:`Token ${getUserToken()}`
+			}
+		}).then((response)=>{
+             const newResponse = [{
+                id: "",
+                team: -1,
+                name: "-"
+            }].concat(response.data)
+			setCategoryList(newResponse)
+            setLoadingCategory(false)
+		})
     }, [])
 
     return (
@@ -216,6 +257,41 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                                         register={register}
                                     />
                                 </Box>
+
+                                <Box mb='20px' />
+                                <Box w='40vw'>
+                                    {isLoadingCategory ? <Spinner ml={"20px"} /> :
+                                    <Dropdown
+                                        id="status_page_category_id"
+                                        title='Select Category'
+                                        dataTestId='selectCategory'
+                                        placeholder=''
+                                        errors={errors}
+                                        options={categoryList}
+                                        isCategory={true}
+                                        isDisabled={newCategory}
+                                        keyName='name'
+                                        valueName='name' 
+                                        register={register}
+                                    />}
+                                </Box>
+                                
+                                {newCategory &&
+                                    <Box w='40vw' mt='20px'>
+                                        <TextInput
+                                            id="new_category_name"
+                                            title='Category Name'
+                                            placeholder='Category Name'
+                                            register={register}
+                                            errors={errors}
+                                        />
+                                    </Box>  
+                                }
+                                {newCategory ? 
+                                    <Text className={style['add-new-category-button']} onClick={()=>{setNewCategory(false); setValue('new_category_name', '')}}>or select from existing category</Text>
+                                : 
+                                    <Text className={style['add-new-category-button']} onClick={()=>{setNewCategory(true); setValue('status_page_category_id', '')}}>or create a new category</Text>
+                                }
 
                                 <Box mb='20px' />
                             
@@ -351,6 +427,7 @@ function APIMonitorEditor({headerMessage, buttonMessage, mode, id}) {
                                                 <Radio id='assertion_type_disabled' color="gray.300" value='DISABLED'>Disabled</Radio>
                                                 <Radio id='assertion_type_text' value='TEXT' name="assertion_type">Text</Radio>
                                                 <Radio id='assertion_type_json' value='JSON' name="assertion_type">JSON</Radio>
+                                                <Radio id='assertion_type_json' value='PARTIAL' name="assertion_type">Partial Text</Radio>
                                             </Flex>
                                             </RadioGroup>
                                         )}

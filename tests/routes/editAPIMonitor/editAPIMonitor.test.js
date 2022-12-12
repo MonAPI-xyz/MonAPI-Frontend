@@ -24,6 +24,7 @@ describe("Edit is Integrated with Backend", () => {
                 body: "TEST RAW BODY"
             },
             previous_step_id: null,
+			status_page_category_id: null,
             success_rate: [],
             response_time: [],
             assertion_type: "DISABLED",
@@ -44,6 +45,7 @@ describe("Edit is Integrated with Backend", () => {
                  body_form: [],
                  raw_body: null,
                  previous_step_id: null,
+				 status_page_category_id: null,
                  assertion_type: "DISABLED",
                  assertion_value: "",
                  is_assert_json_schema_only: false,
@@ -59,15 +61,21 @@ describe("Edit is Integrated with Backend", () => {
                     return Promise.resolve({data: get_detail})
                 case `${BASE_URL}/monitor/`:
                     return Promise.resolve({data: get_list})
+				case `${BASE_URL}/status-page/category/`:
+					return Promise.resolve({data: {
+						id: 2,
+						team: 14,
+						name: "abc"
+					}, status: 201})					
             }
         });
 
         setUserToken("userToken");
-        render(<EditAPIMonitor id="2"/>);
+        render(<EditAPIMonitor id="2" />);
 
         await waitFor(async () => {
-            expect(screen.getByDisplayValue('NEWLY CREATED'))
-            expect(screen.getByText('OLD CREATED - oldtest/path'))
+            expect(screen.getByDisplayValue('NEWLY CREATED')).toBeDefined()
+            expect(screen.getByText('OLD CREATED - oldtest/path')).toBeDefined()
         }, 5000)
 
     })
@@ -85,6 +93,7 @@ describe("Edit is Integrated with Backend", () => {
             body_form: [],
             raw_body: null,
             previous_step_id: null,
+			status_page_category_id: null,
             success_rate: [],
             response_time: [],
             assertion_type: "DISABLED",
@@ -105,6 +114,7 @@ describe("Edit is Integrated with Backend", () => {
                  body_form: [],
                  raw_body: null,
                  previous_step_id: null,
+				 status_page_category_id: null,
                  assertion_type: "DISABLED",
                  assertion_value: "",
                  is_assert_json_schema_only: false,
@@ -113,272 +123,272 @@ describe("Edit is Integrated with Backend", () => {
          ]
 
 		const response_stats = {
-			"success_rate": [
+			success_rate: [
 				{
-					"start_time": "2022-10-14T10:18:39.865038+07:00",
-					"end_time": "2022-10-14T11:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T10:18:39.865038+07:00",
+					end_time: "2022-10-14T11:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T11:18:39.865038+07:00",
-					"end_time": "2022-10-14T12:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T11:18:39.865038+07:00",
+					end_time: "2022-10-14T12:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T12:18:39.865038+07:00",
-					"end_time": "2022-10-14T13:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T12:18:39.865038+07:00",
+					end_time: "2022-10-14T13:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T13:18:39.865038+07:00",
-					"end_time": "2022-10-14T14:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T13:18:39.865038+07:00",
+					end_time: "2022-10-14T14:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T14:18:39.865038+07:00",
-					"end_time": "2022-10-14T15:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T14:18:39.865038+07:00",
+					end_time: "2022-10-14T15:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T15:18:39.865038+07:00",
-					"end_time": "2022-10-14T16:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T15:18:39.865038+07:00",
+					end_time: "2022-10-14T16:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T16:18:39.865038+07:00",
-					"end_time": "2022-10-14T17:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T16:18:39.865038+07:00",
+					end_time: "2022-10-14T17:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T17:18:39.865038+07:00",
-					"end_time": "2022-10-14T18:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T17:18:39.865038+07:00",
+					end_time: "2022-10-14T18:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T18:18:39.865038+07:00",
-					"end_time": "2022-10-14T19:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T18:18:39.865038+07:00",
+					end_time: "2022-10-14T19:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T19:18:39.865038+07:00",
-					"end_time": "2022-10-14T20:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T19:18:39.865038+07:00",
+					end_time: "2022-10-14T20:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T20:18:39.865038+07:00",
-					"end_time": "2022-10-14T21:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T20:18:39.865038+07:00",
+					end_time: "2022-10-14T21:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T21:18:39.865038+07:00",
-					"end_time": "2022-10-14T22:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T21:18:39.865038+07:00",
+					end_time: "2022-10-14T22:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T22:18:39.865038+07:00",
-					"end_time": "2022-10-14T23:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T22:18:39.865038+07:00",
+					end_time: "2022-10-14T23:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T23:18:39.865038+07:00",
-					"end_time": "2022-10-15T00:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T23:18:39.865038+07:00",
+					end_time: "2022-10-15T00:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T00:18:39.865038+07:00",
-					"end_time": "2022-10-15T01:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T00:18:39.865038+07:00",
+					end_time: "2022-10-15T01:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T01:18:39.865038+07:00",
-					"end_time": "2022-10-15T02:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T01:18:39.865038+07:00",
+					end_time: "2022-10-15T02:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T02:18:39.865038+07:00",
-					"end_time": "2022-10-15T03:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T02:18:39.865038+07:00",
+					end_time: "2022-10-15T03:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T03:18:39.865038+07:00",
-					"end_time": "2022-10-15T04:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T03:18:39.865038+07:00",
+					end_time: "2022-10-15T04:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T04:18:39.865038+07:00",
-					"end_time": "2022-10-15T05:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T04:18:39.865038+07:00",
+					end_time: "2022-10-15T05:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T05:18:39.865038+07:00",
-					"end_time": "2022-10-15T06:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T05:18:39.865038+07:00",
+					end_time: "2022-10-15T06:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T06:18:39.865038+07:00",
-					"end_time": "2022-10-15T07:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T06:18:39.865038+07:00",
+					end_time: "2022-10-15T07:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T07:18:39.865038+07:00",
-					"end_time": "2022-10-15T08:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T07:18:39.865038+07:00",
+					end_time: "2022-10-15T08:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T08:18:39.865038+07:00",
-					"end_time": "2022-10-15T09:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T08:18:39.865038+07:00",
+					end_time: "2022-10-15T09:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T09:18:39.865038+07:00",
-					"end_time": "2022-10-15T10:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T09:18:39.865038+07:00",
+					end_time: "2022-10-15T10:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				}
 			],
-			"response_time": [
+			response_time: [
 				{
-					"start_time": "2022-10-14T10:18:39.865038+07:00",
-					"end_time": "2022-10-14T11:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T10:18:39.865038+07:00",
+					end_time: "2022-10-14T11:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T11:18:39.865038+07:00",
-					"end_time": "2022-10-14T12:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T11:18:39.865038+07:00",
+					end_time: "2022-10-14T12:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T12:18:39.865038+07:00",
-					"end_time": "2022-10-14T13:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T12:18:39.865038+07:00",
+					end_time: "2022-10-14T13:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T13:18:39.865038+07:00",
-					"end_time": "2022-10-14T14:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T13:18:39.865038+07:00",
+					end_time: "2022-10-14T14:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T14:18:39.865038+07:00",
-					"end_time": "2022-10-14T15:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T14:18:39.865038+07:00",
+					end_time: "2022-10-14T15:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T15:18:39.865038+07:00",
-					"end_time": "2022-10-14T16:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T15:18:39.865038+07:00",
+					end_time: "2022-10-14T16:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T16:18:39.865038+07:00",
-					"end_time": "2022-10-14T17:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T16:18:39.865038+07:00",
+					end_time: "2022-10-14T17:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T17:18:39.865038+07:00",
-					"end_time": "2022-10-14T18:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T17:18:39.865038+07:00",
+					end_time: "2022-10-14T18:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T18:18:39.865038+07:00",
-					"end_time": "2022-10-14T19:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T18:18:39.865038+07:00",
+					end_time: "2022-10-14T19:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T19:18:39.865038+07:00",
-					"end_time": "2022-10-14T20:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T19:18:39.865038+07:00",
+					end_time: "2022-10-14T20:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T20:18:39.865038+07:00",
-					"end_time": "2022-10-14T21:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T20:18:39.865038+07:00",
+					end_time: "2022-10-14T21:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T21:18:39.865038+07:00",
-					"end_time": "2022-10-14T22:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T21:18:39.865038+07:00",
+					end_time: "2022-10-14T22:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T22:18:39.865038+07:00",
-					"end_time": "2022-10-14T23:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T22:18:39.865038+07:00",
+					end_time: "2022-10-14T23:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T23:18:39.865038+07:00",
-					"end_time": "2022-10-15T00:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T23:18:39.865038+07:00",
+					end_time: "2022-10-15T00:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T00:18:39.865038+07:00",
-					"end_time": "2022-10-15T01:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T00:18:39.865038+07:00",
+					end_time: "2022-10-15T01:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T01:18:39.865038+07:00",
-					"end_time": "2022-10-15T02:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T01:18:39.865038+07:00",
+					end_time: "2022-10-15T02:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T02:18:39.865038+07:00",
-					"end_time": "2022-10-15T03:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T02:18:39.865038+07:00",
+					end_time: "2022-10-15T03:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T03:18:39.865038+07:00",
-					"end_time": "2022-10-15T04:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T03:18:39.865038+07:00",
+					end_time: "2022-10-15T04:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T04:18:39.865038+07:00",
-					"end_time": "2022-10-15T05:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T04:18:39.865038+07:00",
+					end_time: "2022-10-15T05:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T05:18:39.865038+07:00",
-					"end_time": "2022-10-15T06:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T05:18:39.865038+07:00",
+					end_time: "2022-10-15T06:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T06:18:39.865038+07:00",
-					"end_time": "2022-10-15T07:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T06:18:39.865038+07:00",
+					end_time: "2022-10-15T07:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T07:18:39.865038+07:00",
-					"end_time": "2022-10-15T08:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T07:18:39.865038+07:00",
+					end_time: "2022-10-15T08:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T08:18:39.865038+07:00",
-					"end_time": "2022-10-15T09:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T08:18:39.865038+07:00",
+					end_time: "2022-10-15T09:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T09:18:39.865038+07:00",
-					"end_time": "2022-10-15T10:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T09:18:39.865038+07:00",
+					end_time: "2022-10-15T10:18:39.865038+07:00",
+					avg: 0
 				}
 			]
 		}
@@ -387,10 +397,16 @@ describe("Edit is Integrated with Backend", () => {
             switch(url){
                 case `${BASE_URL}/monitor/stats/`:
                     return Promise.resolve({data: response_stats})
-                case `${BASE_URL}/monitor/2`:
+                case `${BASE_URL}/monitor/2/`:
                     return Promise.resolve({data: get_detail})
                 case `${BASE_URL}/monitor/`:
                     return Promise.resolve({data: get_list})
+				case `${BASE_URL}/status-page/category/`:
+					return Promise.resolve({data: {
+						id: 2,
+						team: 14,
+						name: "abc"
+					}, status: 201})	
             }
         })
 
@@ -404,9 +420,9 @@ describe("Edit is Integrated with Backend", () => {
         })
 
 
-        render(<EditAPIMonitor id = {2}/>);
+        render(<EditAPIMonitor id = {2} />);
         await waitFor(async () => {
-            expect(screen.getByText('Edit Your API Monitor'));
+            expect(screen.getByText('Edit Your API Monitor')).toBeDefined();
         })
         userEvent.click(screen.getByText('Save Edit'));
 
@@ -429,12 +445,16 @@ test("Edit front end is integrated with backend negative", async () => {
             body_form: [],
             raw_body: null,
             previous_step_id: null,
+			status_page_category_id: null,
             success_rate: [],
             response_time: [],
             assertion_type: "DISABLED",
             assertion_value: "",
             is_assert_json_schema_only: false,
-            exclude_keys: []
+            exclude_keys: [{
+				id: 1,
+				exclude_key: "abc",
+			}]
         }
         const get_list = [
              {
@@ -449,6 +469,7 @@ test("Edit front end is integrated with backend negative", async () => {
                  body_form: [],
                  raw_body: null,
                  previous_step_id: null,
+				 status_page_category_id: null,
                  assertion_type: "DISABLED",
                  assertion_value: "",
                  is_assert_json_schema_only: false,
@@ -457,272 +478,272 @@ test("Edit front end is integrated with backend negative", async () => {
          ]
 
 		const response_stats = {
-			"success_rate": [
+			success_rate: [
 				{
-					"start_time": "2022-10-14T10:18:39.865038+07:00",
-					"end_time": "2022-10-14T11:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T10:18:39.865038+07:00",
+					end_time: "2022-10-14T11:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T11:18:39.865038+07:00",
-					"end_time": "2022-10-14T12:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T11:18:39.865038+07:00",
+					end_time: "2022-10-14T12:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T12:18:39.865038+07:00",
-					"end_time": "2022-10-14T13:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T12:18:39.865038+07:00",
+					end_time: "2022-10-14T13:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T13:18:39.865038+07:00",
-					"end_time": "2022-10-14T14:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T13:18:39.865038+07:00",
+					end_time: "2022-10-14T14:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T14:18:39.865038+07:00",
-					"end_time": "2022-10-14T15:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T14:18:39.865038+07:00",
+					end_time: "2022-10-14T15:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T15:18:39.865038+07:00",
-					"end_time": "2022-10-14T16:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T15:18:39.865038+07:00",
+					end_time: "2022-10-14T16:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T16:18:39.865038+07:00",
-					"end_time": "2022-10-14T17:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T16:18:39.865038+07:00",
+					end_time: "2022-10-14T17:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T17:18:39.865038+07:00",
-					"end_time": "2022-10-14T18:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T17:18:39.865038+07:00",
+					end_time: "2022-10-14T18:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T18:18:39.865038+07:00",
-					"end_time": "2022-10-14T19:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T18:18:39.865038+07:00",
+					end_time: "2022-10-14T19:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T19:18:39.865038+07:00",
-					"end_time": "2022-10-14T20:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T19:18:39.865038+07:00",
+					end_time: "2022-10-14T20:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T20:18:39.865038+07:00",
-					"end_time": "2022-10-14T21:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T20:18:39.865038+07:00",
+					end_time: "2022-10-14T21:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T21:18:39.865038+07:00",
-					"end_time": "2022-10-14T22:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T21:18:39.865038+07:00",
+					end_time: "2022-10-14T22:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T22:18:39.865038+07:00",
-					"end_time": "2022-10-14T23:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T22:18:39.865038+07:00",
+					end_time: "2022-10-14T23:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-14T23:18:39.865038+07:00",
-					"end_time": "2022-10-15T00:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-14T23:18:39.865038+07:00",
+					end_time: "2022-10-15T00:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T00:18:39.865038+07:00",
-					"end_time": "2022-10-15T01:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T00:18:39.865038+07:00",
+					end_time: "2022-10-15T01:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T01:18:39.865038+07:00",
-					"end_time": "2022-10-15T02:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T01:18:39.865038+07:00",
+					end_time: "2022-10-15T02:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T02:18:39.865038+07:00",
-					"end_time": "2022-10-15T03:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T02:18:39.865038+07:00",
+					end_time: "2022-10-15T03:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T03:18:39.865038+07:00",
-					"end_time": "2022-10-15T04:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T03:18:39.865038+07:00",
+					end_time: "2022-10-15T04:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T04:18:39.865038+07:00",
-					"end_time": "2022-10-15T05:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T04:18:39.865038+07:00",
+					end_time: "2022-10-15T05:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T05:18:39.865038+07:00",
-					"end_time": "2022-10-15T06:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T05:18:39.865038+07:00",
+					end_time: "2022-10-15T06:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T06:18:39.865038+07:00",
-					"end_time": "2022-10-15T07:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T06:18:39.865038+07:00",
+					end_time: "2022-10-15T07:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T07:18:39.865038+07:00",
-					"end_time": "2022-10-15T08:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T07:18:39.865038+07:00",
+					end_time: "2022-10-15T08:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T08:18:39.865038+07:00",
-					"end_time": "2022-10-15T09:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T08:18:39.865038+07:00",
+					end_time: "2022-10-15T09:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				},
 				{
-					"start_time": "2022-10-15T09:18:39.865038+07:00",
-					"end_time": "2022-10-15T10:18:39.865038+07:00",
-					"success": 0,
-					"failed": 0
+					start_time: "2022-10-15T09:18:39.865038+07:00",
+					end_time: "2022-10-15T10:18:39.865038+07:00",
+					success: 0,
+					failed: 0
 				}
 			],
-			"response_time": [
+			response_time: [
 				{
-					"start_time": "2022-10-14T10:18:39.865038+07:00",
-					"end_time": "2022-10-14T11:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T10:18:39.865038+07:00",
+					end_time: "2022-10-14T11:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T11:18:39.865038+07:00",
-					"end_time": "2022-10-14T12:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T11:18:39.865038+07:00",
+					end_time: "2022-10-14T12:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T12:18:39.865038+07:00",
-					"end_time": "2022-10-14T13:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T12:18:39.865038+07:00",
+					end_time: "2022-10-14T13:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T13:18:39.865038+07:00",
-					"end_time": "2022-10-14T14:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T13:18:39.865038+07:00",
+					end_time: "2022-10-14T14:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T14:18:39.865038+07:00",
-					"end_time": "2022-10-14T15:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T14:18:39.865038+07:00",
+					end_time: "2022-10-14T15:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T15:18:39.865038+07:00",
-					"end_time": "2022-10-14T16:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T15:18:39.865038+07:00",
+					end_time: "2022-10-14T16:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T16:18:39.865038+07:00",
-					"end_time": "2022-10-14T17:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T16:18:39.865038+07:00",
+					end_time: "2022-10-14T17:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T17:18:39.865038+07:00",
-					"end_time": "2022-10-14T18:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T17:18:39.865038+07:00",
+					end_time: "2022-10-14T18:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T18:18:39.865038+07:00",
-					"end_time": "2022-10-14T19:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T18:18:39.865038+07:00",
+					end_time: "2022-10-14T19:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T19:18:39.865038+07:00",
-					"end_time": "2022-10-14T20:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T19:18:39.865038+07:00",
+					end_time: "2022-10-14T20:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T20:18:39.865038+07:00",
-					"end_time": "2022-10-14T21:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T20:18:39.865038+07:00",
+					end_time: "2022-10-14T21:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T21:18:39.865038+07:00",
-					"end_time": "2022-10-14T22:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T21:18:39.865038+07:00",
+					end_time: "2022-10-14T22:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T22:18:39.865038+07:00",
-					"end_time": "2022-10-14T23:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T22:18:39.865038+07:00",
+					end_time: "2022-10-14T23:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-14T23:18:39.865038+07:00",
-					"end_time": "2022-10-15T00:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-14T23:18:39.865038+07:00",
+					end_time: "2022-10-15T00:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T00:18:39.865038+07:00",
-					"end_time": "2022-10-15T01:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T00:18:39.865038+07:00",
+					end_time: "2022-10-15T01:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T01:18:39.865038+07:00",
-					"end_time": "2022-10-15T02:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T01:18:39.865038+07:00",
+					end_time: "2022-10-15T02:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T02:18:39.865038+07:00",
-					"end_time": "2022-10-15T03:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T02:18:39.865038+07:00",
+					end_time: "2022-10-15T03:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T03:18:39.865038+07:00",
-					"end_time": "2022-10-15T04:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T03:18:39.865038+07:00",
+					end_time: "2022-10-15T04:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T04:18:39.865038+07:00",
-					"end_time": "2022-10-15T05:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T04:18:39.865038+07:00",
+					end_time: "2022-10-15T05:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T05:18:39.865038+07:00",
-					"end_time": "2022-10-15T06:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T05:18:39.865038+07:00",
+					end_time: "2022-10-15T06:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T06:18:39.865038+07:00",
-					"end_time": "2022-10-15T07:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T06:18:39.865038+07:00",
+					end_time: "2022-10-15T07:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T07:18:39.865038+07:00",
-					"end_time": "2022-10-15T08:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T07:18:39.865038+07:00",
+					end_time: "2022-10-15T08:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T08:18:39.865038+07:00",
-					"end_time": "2022-10-15T09:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T08:18:39.865038+07:00",
+					end_time: "2022-10-15T09:18:39.865038+07:00",
+					avg: 0
 				},
 				{
-					"start_time": "2022-10-15T09:18:39.865038+07:00",
-					"end_time": "2022-10-15T10:18:39.865038+07:00",
-					"avg": 0
+					start_time: "2022-10-15T09:18:39.865038+07:00",
+					end_time: "2022-10-15T10:18:39.865038+07:00",
+					avg: 0
 				}
 			]
 		}
@@ -731,16 +752,22 @@ test("Edit front end is integrated with backend negative", async () => {
             switch(url){
                 case `${BASE_URL}/monitor/stats/`:
                     return Promise.resolve({data: response_stats})
-                case `${BASE_URL}/monitor/2`:
+                case `${BASE_URL}/monitor/2/`:
                     return Promise.resolve({data: get_detail})
                 case `${BASE_URL}/monitor/`:
                     return Promise.resolve({data: get_list})
+				case `${BASE_URL}/status-page/category/`:
+					return Promise.resolve({data: {
+						id: 2,
+						team: 14,
+						name: "abc"
+					}, status: 201})
+					
             }
         })
 
         setUserToken("User Token");
         const mockFn = jest.fn();
-        const response = []
 
         axios.put.mockImplementation(() => {
              mockFn();
@@ -754,9 +781,9 @@ test("Edit front end is integrated with backend negative", async () => {
         })
 
 
-        render(<EditAPIMonitor id = {2}/>);
+        render(<EditAPIMonitor id = {2} />);
         await waitFor(async () => {
-            expect(screen.getByText('Edit Your API Monitor'));
+            expect(screen.getByText('Edit Your API Monitor')).toBeDefined();
         })
         userEvent.click(screen.getByText('Save Edit'));
 

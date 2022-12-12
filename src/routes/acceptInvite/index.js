@@ -1,117 +1,72 @@
 import { h } from "preact";
 import { useState } from 'preact/hooks';
 import { useEffect } from "react";
-import { Box, Heading, Text, Flex, Spinner } from '@chakra-ui/react';
-import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
 import BASE_URL from '../../config/api/constant.js';
 import axios from "axios";
+import style from './style.css';
+
+import SuccessPage from '../../components/successPage/index.js';
+import InvalidPage from '../../components/invalidPage/index.js';
+import LoadingPage from '../../components/loadingPage/index.js';
+import { Link } from "preact-router";
+import { Button } from "@chakra-ui/react";
 
 const AcceptInvite = () => {
-
     const paramInviteToken = new URLSearchParams(window.location.search).get('key')
     const [inviteToken, setInviteToken] = useState(null)
     const [response, setResponse] = useState({})
     const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(async () => {
+    if (paramInviteToken){
+        setInviteToken(paramInviteToken);
+    } 
+
+    useEffect(() => {
         if (inviteToken != null) {
             const data = {
-                'key': inviteToken
+                key: inviteToken,
             }
             axios.post(`${BASE_URL}/invite-member/accept/`, data)
-            .then((backend_response) => {
-                setIsLoading(false)
+            .then(() => {
                 setResponse({
                     success: true
                 })
-            })
-            .catch((error) => {
                 setIsLoading(false)
+            })
+            .catch(() => {
                 setResponse({
                     success: false
                 })
+                setIsLoading(false)
             })
         }
         
     }, [inviteToken])
 
-    if (paramInviteToken){
-        setInviteToken(paramInviteToken);
-    } else {
-        return (
-            <Box textAlign="center" py={10} px={6}>
-                <Box display="inline-block">
-                <Flex
-                    flexDirection="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    bg={'red.500'}
-                    rounded={'50px'}
-                    w={'55px'}
-                    h={'55px'}
-                    textAlign="center">
-                    <CloseIcon boxSize={'20px'} color={'white'} />
-                </Flex>
-                </Box>
-                <Heading as="h2" size="xl" mt={6} mb={2}>
-                    Token Not Passed
-                </Heading>
-                <Text color={'gray.500'}>
-                    You are not supposed to see this page.
-                </Text>
-            </Box>
-        )
-    }
+    return (<div>
+        {!paramInviteToken ? 
+            <InvalidPage headMessage={"Token Not Passed"}
+                bodyMessage1={"You are not supposed to see this page."} />
+        : isLoading ?
+            <LoadingPage />
+        : response.success ?
+            <SuccessPage headMessage={"Team Invite Accepted"}
+                bodyMessage1={"You are now a part of a new team!"}
+                bodyMessage2={"Login to work with everyone else now."} />
+        : 
+            <InvalidPage headMessage={"Token Invalid"}
+                bodyMessage1={"It seems like the token has expired or the invite was cancelled."}
+                bodyMessage2={"Please request another invite from your Team or check if you are already a member."} />
+        }
 
-    if (isLoading) {
-        return (
-        <Box textAlign="center" py={10} px={6}>
-            <Text color={'gray.500'}>Loading</Text>
-            <Spinner />
-            <Text color={'gray.500'}>We are Accessing Your Request</Text>
-        </Box>
-        )
-    }
-
-    if (response.success) {
-        return (
-            <Box textAlign="center" py={10} px={6}>
-            <CheckCircleIcon boxSize={'50px'} color={'green.500'} />
-            <Heading as="h2" size="xl" mt={6} mb={2}>
-                Team Invite Accepted
-            </Heading>
-            <Text color={'gray.500'}>
-                You are now a part of a new team!
-                Login to work with everyone else now.
-            </Text>
-            </Box>
-        )
-    } else {
-        return (
-        <Box textAlign="center" py={10} px={6}>
-            <Box display="inline-block">
-            <Flex
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-                bg={'red.500'}
-                rounded={'50px'}
-                w={'55px'}
-                h={'55px'}
-                textAlign="center">
-                <CloseIcon boxSize={'20px'} color={'white'} />
-            </Flex>
-            </Box>
-            <Heading as="h2" size="xl" mt={6} mb={2}>
-                Token Invalid
-            </Heading>
-            <Text color={'gray.500'}>
-                It seems like the token has expired or the invite was cancelled. <br></br>
-                Please request another invite from your Team or check if you are already a member. <br></br>
-            </Text>
-        </Box>
-        )
-    }
+        {!isLoading && 
+            <Link href="/login" class={style['login-button']}>
+                <Button colorScheme='teal' width='12em' borderRadius={10}>
+                    Back to login page
+                </Button>
+            </Link>
+        }
+    </div>)
 }
 
 export default AcceptInvite;

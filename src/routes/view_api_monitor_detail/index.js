@@ -28,11 +28,21 @@ const ViewAPIMonitorDetail = ({id}) => {
     { value: "720MIN", label: "12 Hours Ago" },
     { value: "1440MIN", label: "24 Hours Ago" },
   ];
+
+  const stepSizeInSeconds = {
+    "30MIN": 120,
+    "60MIN": 240,
+    "180MIN": 480,
+    "360MIN": 1200,
+    "720MIN": 2400,
+    "1440MIN": 3600,
+  }
   
   const [detail, setDetail]=useState([])
   const [deletePopup, setDeletePopup] = useState(false) 
   const [isLoadingDelete, setIsLoadingDelete] = useState(false)
   const [selectValue, setSelectValue] = useState("30MIN")
+  const [isLoading, setIsLoading] = useState(false)
 
   const onDelete = () => {
     setIsLoadingDelete(true)
@@ -47,6 +57,7 @@ const ViewAPIMonitorDetail = ({id}) => {
   }
 
   useEffect(() => {
+    setIsLoading(true);
     axios.get(`${BASE_URL}/monitor/${id}/`, {
       params:{
         range: `${selectValue}`
@@ -56,8 +67,13 @@ const ViewAPIMonitorDetail = ({id}) => {
       } 
     }).then((response) => {
       setDetail(response.data)
+      setIsLoading(false);
+    }).catch((err)=>{
+      if (err.response.status === 404) {
+        route('/')
+      }
     })
-  }, [selectValue]);
+  }, [id, selectValue]);
 
   const onChange = (e) => {
     setSelectValue(e.target.value)
@@ -71,13 +87,13 @@ const ViewAPIMonitorDetail = ({id}) => {
         </Box>
         <Spacer />
         <ButtonGroup gap='2'>
-          <Button colorScheme='blueChill' onClick={() => route('/'+`${id}`+'/edit/')}>Edit</Button>
+          <Button colorScheme='blueChill' onClick={() => route(`/${id}/edit/`)}>Edit</Button>
           <div onClick={() => {setDeletePopup(true)}}>
             <AlertComponent
                 isButton={true}
                 displayText='Delete'
                 header='Delete'
-                body='Are you sure want to delete this API monitor?'
+                body='Are you sure want to delete this API monitor? Deleting API Monitor also removes related error logs. This action cannot be undone!'
                 buttonLeftText='Cancel'
                 buttonRightText={isLoadingDelete ? <Spinner /> : 'Yes'}
                 popupOpen={deletePopup}
@@ -87,6 +103,7 @@ const ViewAPIMonitorDetail = ({id}) => {
           </div>
         </ButtonGroup>
       </Flex>
+
       <div class={style['container-flex-column']}>
         <div class={style.requestItem}>
           <p><b>Request URL</b></p>
@@ -107,16 +124,22 @@ const ViewAPIMonitorDetail = ({id}) => {
             ))}
             </Select>
         </div>
+        {isLoading ?
+          <div class={style['spinner-container']}><Spinner /></div>
+        :
         <div class={style['chart-container']}>
-        <div class={style['chart']}>
-          <SuccessRatePercentageChart 
-          success_rate={detail.success_rate}/>
+          <div class={style['chart']}>
+            <SuccessRatePercentageChart 
+            success_rate={detail.success_rate} 
+            stepSizeInSecond={stepSizeInSeconds[selectValue]} />
+          </div>
+          <div class={style['chart']}>
+            <ResponseTimeChart 
+            response_time={detail.response_time} 
+            stepSizeInSecond={stepSizeInSeconds[selectValue]} />
+          </div>
         </div>
-        <div class={style['chart']}>
-          <ResponseTimeChart 
-          response_time={detail.response_time}/>
-        </div>
-      </div>
+        }
       </div>
     </div>
   )

@@ -25,10 +25,14 @@ import ViewCurrentTeam from '../routes/view_current_team/index.js';
 import { UserContext } from '../config/context';
 import { useState } from 'preact/hooks';
 import AcceptInvite from '../routes/acceptInvite/index.js';
+import StatusPageDashboard from '../routes/statusPageDashboard';
 import EditTeam from '../routes/editTeam/index.js';
+import StatusPage from '../routes/statusPage/index.js';
+import VerifyUser from '../routes/verifyUser/index.js';
 
 const App = () => {
 	const sentryDSN = process.env.PREACT_APP_SENTRY_DSN;
+	const googleAnalyticsTag = process.env.PREACT_APP_GOOGLE_ANALYTICS_TAG;
 	const [currentTeamId, setCurrentTeamId] = useState()
 	if (sentryDSN !== "") {
 		Sentry.init({
@@ -43,6 +47,17 @@ const App = () => {
 	}
 	
 	return (<div id="app">
+		{googleAnalyticsTag !== "" && <div>
+			<script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsTag}`} />
+			<script>
+			{`window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+
+			gtag('config', '${googleAnalyticsTag}');`}
+			</script>
+		</div>}
+
 		<UserContext.Provider value={{currentTeam: [currentTeamId, setCurrentTeamId]}}>
 			<ChakraProvider theme={theme}>
 				<Router>
@@ -51,6 +66,8 @@ const App = () => {
 					<ForgetPassword path={ROUTE.FORGET_PASSWORD} />
 					<ForgetPasswordToken path={ROUTE.FORGET_PASSWORD_TOKEN} />
 					<AcceptInvite path={ROUTE.ACCEPT_INVITE} />
+					<StatusPageDashboard path={ROUTE.STATUS_PAGE_DASHBOARD} />
+					<VerifyUser path={ROUTE.VERIFY} />
 
 					<AuthenticationChecker path="/:*?">
 						<DashboardWrapper path="/:*?">
@@ -66,6 +83,7 @@ const App = () => {
 								<ViewCurrentTeam path={ROUTE.VIEW_CURRENT_TEAM} />			
 								<CreateNewTeam path={ROUTE.TEAM_MANAGEMENT} />			
 								<EditTeam path={ROUTE.TEAM_MANAGEMENT_EDIT} />
+								<StatusPage path={ROUTE.STATUS_PAGE} />
 								<Redirect path="/:*?" to="/" />
 							</Router>							
 						</DashboardWrapper>

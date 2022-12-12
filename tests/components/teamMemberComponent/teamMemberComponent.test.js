@@ -6,7 +6,7 @@ import axios from "axios";
 jest.mock('axios');
 describe('Test team member component', () => {
     test('when header is true, set up header', async() =>{
-        render(<TeamMemberComponent header={true}/>)
+        render(<TeamMemberComponent header={true} />)
 
         await waitFor(async () => {
             expect(screen.getByText('Members')).toBeDefined()
@@ -15,7 +15,7 @@ describe('Test team member component', () => {
     })
 
     test('when verified is true, status is member', async() =>{
-        render(<TeamMemberComponent email={`test@gmail.com`} verified={true}/>)
+        render(<TeamMemberComponent email={`test@gmail.com`} verified={true} />)
 
         await waitFor(async () => {
             expect(screen.getByText('member')).toBeDefined()
@@ -32,8 +32,9 @@ describe('Test team member component', () => {
         })
     })
 
-    test('when verified is false, status is pending', async() => {
-        const container = render(<TeamMemberComponent email={'test@gmail.com'} verified={false} cancelUserId={1}/>)
+    test('when cancel button clicked then refresh team data', async() => {
+        const mockFn = jest.fn();
+        render(<TeamMemberComponent email={'test@gmail.com'} verified={false} cancelUserId={1} refreshTeamData={mockFn} />)
 
         axios.post.mockImplementation(() => Promise.resolve({
             status: 200,
@@ -44,15 +45,11 @@ describe('Test team member component', () => {
             }
         }))
 
-        delete window.location;
-        window.location = { reload: jest.fn() };
-
         const cancelButton = screen.getByRole('button')
         fireEvent.click(cancelButton)
 
-
         await waitFor(async () => {
-            expect(window.location.reload).toHaveBeenCalled()
+            expect(mockFn).toHaveBeenCalledTimes(1)
         })
     })
 

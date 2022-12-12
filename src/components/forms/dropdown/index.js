@@ -4,7 +4,7 @@ import Asterisk from '../asterisk/index.js';
 import { Select } from '@chakra-ui/react';
 
 const Dropdown = (props) => {
-  const { id, errors, rules, register, title, hasAsterisk = true, placeholder, options, dataTestId, ...rest } = props;
+  const { id, errors, rules, register, title, hasAsterisk = true, placeholder, isDisabled = false, options, dataTestId, isCategory = false, ...rest } = props;
 
   return (
     <FormControl {...rest} isInvalid={errors[id]}>
@@ -16,9 +16,14 @@ const Dropdown = (props) => {
             bgColor='#F1F1F1'
             data-testid={dataTestId}
             name={id}
+            isDisabled={isDisabled}
             {...register(id)}
         >
-            {options.map(({ key, value }) => (
+            {isCategory ? options.map((item) => ( 
+              <option key={item.id} value={item.id}>
+                  {item.name}
+              </option>
+             )) : options.map(({ key, value }) => (
                 <option key={key} value={key}>
                   {value}
                 </option>

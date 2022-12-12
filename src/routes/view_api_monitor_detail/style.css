@@ -35,3 +35,10 @@
   padding: 10px;
   position: relative;
 }
+
+.spinner-container {
+	padding: 50px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}

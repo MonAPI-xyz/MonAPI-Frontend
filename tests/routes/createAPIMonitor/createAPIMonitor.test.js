@@ -50,6 +50,10 @@ describe('Test Create API Monitor', () => {
             const multiStep = screen.getByTestId("dropdownMultiStep");
             userEvent.selectOptions(multiStep, '-');
         })
+        await waitFor(() => {
+            const selectCategory = screen.getByTestId("selectCategory");
+            userEvent.selectOptions(selectCategory, '-');
+        })
         const method = await screen.getByTestId('dropdownMethod');
         const createAPIMonitorButton = await screen.getByText('Create API Monitor');
         
@@ -182,6 +186,177 @@ describe('Test Create API Monitor', () => {
         userEvent.type(formKey, 'Form key')
         userEvent.type(formValue, 'Form value')
 
+        userEvent.click(createAPIMonitorButton)
+        await waitFor(() => {
+            expect(getCurrentUrl()).toBe('/create');
+        })
+	})
+
+    test('fill the create API Monitor with new category then success', async () => {
+        const response = [
+            {
+                id: 2,
+                name: "Test Monitor",
+                method: "GET",
+                url: "Test Path",
+                schedule: "10MIN",
+                body_type: "EMPTY",
+                query_params: [],
+                headers: [],
+                body_form: [],
+                raw_body: null,
+                previous_step_id: 1,
+                assertion_type: "DISABLED",
+                assertion_value: "",
+                is_assert_json_schema_only: false,
+                exclude_keys: []
+            }
+        ]
+        axios.get.mockImplementation(() => Promise.resolve({data: response}))
+		axios.post.mockImplementation((url) => {
+            if (url.includes('/monitor/')){
+                return Promise.resolve({data: response})
+            } else if (url.includes('/status-page/category/')) {
+                return Promise.resolve({data: {id: 1}})
+            }
+        })
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+		render(<CreateAPIMonitor />);
+		
+        const monitorName = await screen.findByPlaceholderText("Monitor Name");
+		const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const interval = await screen.getByTestId("dropdownInterval");
+        await waitFor(() => {
+            const multiStep = screen.getByTestId("dropdownMultiStep");
+            userEvent.selectOptions(multiStep, 'Test Monitor - Test Path');
+        })
+        const method = await screen.getByTestId('dropdownMethod');
+        const createAPIMonitorButton = await screen.getByText('Create API Monitor');
+        
+		userEvent.type(monitorName, 'API Monitor 1')
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(interval, '1 Minute');
+        userEvent.selectOptions(method, 'POST');  
+        
+        const createNewCategoryButton = await screen.getByText('or create a new category');
+        userEvent.click(createNewCategoryButton);
+
+        const categoryNameField = await screen.getByPlaceholderText('Category Name');
+        userEvent.type(categoryNameField, 'New Category Name');
+        
+        userEvent.click(createAPIMonitorButton)
+        await waitFor(() => {
+            expect(getCurrentUrl()).toBe('/create');
+        })
+	})
+
+    test('fill the create API Monitor with empty new category then success', async () => {
+        const response = [
+            {
+                id: 2,
+                name: "Test Monitor",
+                method: "GET",
+                url: "Test Path",
+                schedule: "10MIN",
+                body_type: "EMPTY",
+                query_params: [],
+                headers: [],
+                body_form: [],
+                raw_body: null,
+                previous_step_id: 1,
+                assertion_type: "DISABLED",
+                assertion_value: "",
+                is_assert_json_schema_only: false,
+                exclude_keys: []
+            }
+        ]
+        axios.get.mockImplementation(() => Promise.resolve({data: response}))
+		axios.post.mockImplementation((url) => {
+            if (url.includes('/monitor/')){
+                return Promise.resolve({data: response})
+            } else if (url.includes('/status-page/category/')) {
+                return Promise.resolve({data: {id: 1}})
+            }
+        })
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+		render(<CreateAPIMonitor />);
+		
+        const monitorName = await screen.findByPlaceholderText("Monitor Name");
+		const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const interval = await screen.getByTestId("dropdownInterval");
+        await waitFor(() => {
+            const multiStep = screen.getByTestId("dropdownMultiStep");
+            userEvent.selectOptions(multiStep, 'Test Monitor - Test Path');
+        })
+        const method = await screen.getByTestId('dropdownMethod');
+        const createAPIMonitorButton = await screen.getByText('Create API Monitor');
+        
+		userEvent.type(monitorName, 'API Monitor 1')
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(interval, '1 Minute');
+        userEvent.selectOptions(method, 'POST');  
+        
+        const createNewCategoryButton = await screen.getByText('or create a new category');
+        userEvent.click(createNewCategoryButton);
+        
+        userEvent.click(createAPIMonitorButton)
+        await waitFor(() => {
+            expect(getCurrentUrl()).toBe('/create');
+        })
+	})
+
+    test('fill the create API Monitor with cancel new category then success', async () => {
+        const response = [
+            {
+                id: 2,
+                name: "Test Monitor",
+                method: "GET",
+                url: "Test Path",
+                schedule: "10MIN",
+                body_type: "EMPTY",
+                query_params: [],
+                headers: [],
+                body_form: [],
+                raw_body: null,
+                previous_step_id: 1,
+                assertion_type: "DISABLED",
+                assertion_value: "",
+                is_assert_json_schema_only: false,
+                exclude_keys: []
+            }
+        ]
+        axios.get.mockImplementation(() => Promise.resolve({data: response}))
+		axios.post.mockImplementation((url) => {
+            if (url.includes('/monitor/')){
+                return Promise.resolve({data: response})
+            } else if (url.includes('/status-page/category/')) {
+                return Promise.resolve({data: {id: 1}})
+            }
+        })
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+		render(<CreateAPIMonitor />);
+		
+        const monitorName = await screen.findByPlaceholderText("Monitor Name");
+		const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const interval = await screen.getByTestId("dropdownInterval");
+        await waitFor(() => {
+            const multiStep = screen.getByTestId("dropdownMultiStep");
+            userEvent.selectOptions(multiStep, 'Test Monitor - Test Path');
+        })
+        const method = await screen.getByTestId('dropdownMethod');
+        const createAPIMonitorButton = await screen.getByText('Create API Monitor');
+        
+		userEvent.type(monitorName, 'API Monitor 1')
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(interval, '1 Minute');
+        userEvent.selectOptions(method, 'POST');  
+        
+        const createNewCategoryButton = await screen.getByText('or create a new category');
+        userEvent.click(createNewCategoryButton);
+
+        const selectCategoryButton = await screen.getByText('or select from existing category')
+        userEvent.click(selectCategoryButton);
+        
         userEvent.click(createAPIMonitorButton)
         await waitFor(() => {
             expect(getCurrentUrl()).toBe('/create');
@@ -509,6 +684,38 @@ describe('Test Create API Monitor with Assertion', () => {
         userEvent.click(assertionButton)
 
         const textButton = screen.getByText('Text')
+        userEvent.click(textButton)
+
+        const textArea = screen.getByPlaceholderText('Type assertion here')
+        userEvent.type(textArea, 'test assertion')
+
+        userEvent.click(createAPIMonitorButton)
+        await waitFor(() => {
+            expect(getCurrentUrl()).toBe('/create');
+        })
+    })
+
+    test('when create with Partial Text assertion type then success', async () => {
+        const response = []
+        axios.post.mockImplementation(() => Promise.resolve({data: response}))
+        setUserToken('d16c4059484867e8d12ff535072509e3f29719e7')
+        render(<CreateAPIMonitor />);
+        
+        const monitorName = await screen.findByPlaceholderText("Monitor Name");
+        const requestUrl = await screen.findByPlaceholderText("Request URL");
+        const interval = screen.getByTestId("dropdownInterval");
+        const method = screen.getByTestId('dropdownMethod');
+        const createAPIMonitorButton = screen.getByText('Create API Monitor');
+        
+        userEvent.type(monitorName, 'API Monitor 1')
+        userEvent.type(requestUrl, 'www.example.com')
+        userEvent.selectOptions(interval, '1 Minute');
+        userEvent.selectOptions(method, 'GET');    
+
+        const assertionButton = screen.getByText('Assertions')
+        userEvent.click(assertionButton)
+
+        const textButton = screen.getByText('Partial Text')
         userEvent.click(textButton)
 
         const textArea = screen.getByPlaceholderText('Type assertion here')
