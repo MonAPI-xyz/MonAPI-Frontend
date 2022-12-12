@@ -209,7 +209,7 @@ describe("status page dashboard test", () => {
 
 		await waitFor(() => {
 			expect(screen.getByText('testcategory')).toBeDefined()
-			expect(screen.getByText('Some feature(s) are not healthy')).toBeDefined()
+			expect(screen.getByText('Some API endpoint(s) are not healthy')).toBeDefined()
 		})
   })
 })
