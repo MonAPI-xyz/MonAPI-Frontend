@@ -67,13 +67,10 @@ For detailed explanation on how things work, checkout the [CLI Readme](https://g
 - [Docker Container](https://github.com/MonAPI-xyz/MonAPI-Frontend/blob/staging/docs/docker.md)
 
 ## Latest Release Notes
-Version: v1.0.0<br>
-Date: 12th December 2022
-1. Status Page Integration
-2. Email register verification
-3. Create new category directly when create API Monitor
-4. Partial Assertions Text
-5. Release 1st version of MonAPI
+Version: v1.0.1<br>
+Date: 28th December 2022
+1. Fix bug password validation on forget password
+2. Update pagerduty email configuration title
 
 Full release notes can be found in [Release Notes](https://github.com/MonAPI-xyz/MonAPI-Frontend/blob/staging/docs/release_notes.md)
 
