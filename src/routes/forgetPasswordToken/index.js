@@ -35,7 +35,11 @@ const ForgetPasswordToken = ()=>{
             setIsLoading(false)
         }) 
         .catch((error) => {
-            setErrl(error.response.data.error)
+            if (error.response.data['password']) {
+                setErrl(error.response.data.password)
+            } else if (error.response.data['error']) {
+                setErrl([error.response.data.error])
+            }
             setIsLoading(false)
         });
 
@@ -72,8 +76,12 @@ const ForgetPasswordToken = ()=>{
 
                             {errl.length != 0 && (
                                 <div>
-                                    <Box mb='20px' />
-                                    <Text color='red'>Error: {errl}</Text>                                
+                                <Text color='red'>Error:</Text>
+                                <ul data-testid='errl'>
+                                    {errl.map((e,i) => (
+                                        <li key={i}>{e}</li>
+                                    ))}
+                                </ul>
                                 </div>
                             )}
                             <Box mb='20px' />

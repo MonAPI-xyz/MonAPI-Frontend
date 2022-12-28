@@ -59,7 +59,35 @@ describe('Test Change Password', () => {
 		userEvent.click(submit)
 
 		await waitFor(() => {
-			expect(screen.getByText('Error: Please choose password that different from your current password')).toBeDefined()
+			expect(screen.getByText('Please choose password that different from your current password')).toBeDefined()
+		})
+	})
+
+	test('try to change password invalid password failed', async () => {
+		deleteUserToken()
+		axios.post.mockImplementation(() => Promise.reject({
+            response: {
+                data: {
+                    password : ["The password must contain at least 1 uppercase letter, A-Z."]
+                }
+            }
+        }))
+		render(<App />);
+		route('/forget_password?key=abcdef')
+
+		await waitFor(() => {
+			expect(screen.getByText('Forget Password')).toBeDefined()
+		})
+
+		const emailField = await screen.findByPlaceholderText('New Password');
+		const submit = screen.getByText('Change Password');
+		
+
+		userEvent.type(emailField, 'tes4@gmail.com')
+		userEvent.click(submit)
+
+		await waitFor(() => {
+			expect(screen.getByText('The password must contain at least 1 uppercase letter, A-Z.')).toBeDefined()
 		})
 	})
 
