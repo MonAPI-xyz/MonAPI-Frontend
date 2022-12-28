@@ -308,7 +308,7 @@ const Configuration = () => {
 											<Box w='40vw'>
 												<TextInput
 													id='pagerduty_default_from_email'
-													title='Default From Email'
+													title='Pagerduty Account Email Address'
 													placeholder='Insert bot pagerduty email'
 													errors={errors}
 													register={register}
