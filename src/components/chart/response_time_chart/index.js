@@ -14,7 +14,7 @@ const ResponseTimeChart = ({response_time, stepSizeInSecond}) => {
   const parseISODateToChart = (isoDate) => {
     const date = new Date(isoDate);
     const year = date.getFullYear();
-    const month = date.getMonth();
+    const month = date.getMonth() + 1;
     const dt = date.getDate();
     const hour = date.getHours();
     const minute =date.getMinutes();
